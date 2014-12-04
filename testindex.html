@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<script type="text/javascript" src="logger.js"></script>
+<script type="text/javascript" src="TCP_Interface.js"></script>
+<script type="text/javascript" src="IMAP_Interface.js"></script>
+<script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
+
+<script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
+<script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
+
+<script type="text/javascript" src="Sync_Module.js"></script>
+<script type="text/javascript" src="Mail_Settings.js"></script>
+<script type="text/javascript" src="DBController.js"></script>
+
+</head>
+
+
+
+
+
+<body>
+	<button type="button" onclick="start();">start</button>
+	<button type="button" onclick="login();">login</button>
+	<button type="button" onclick="select();">select</button>
+	<button type="button" onclick="fetchList();">fetchList</button>
+
+	<button type="button" onclick="startMe1();">Start IMAP</button>
+  <button type="button" onclick="startSMTP();">Start SMTP</button>
+  <button type="button" onclick="startDB();">Start DB</button>
+  <button type="button" onclick="addDB();">Add to DB</button>
+  <button type="button" onclick="test();">Test</button>
+  <button type="button" onclick="viewDB();">viewDB</button>
+  <button type="button" onclick="deleteDB;">delete current DB</button>
+  <br/>
+  <input type="text" id="" value="indexedDB.deleteDatabase(username);">
+  
+
+
+	<div id="displaydiv">
+
+
+	<table>
+		<tr>
+        	<td>Account</td>
+            <td><select id="setting" onchange="setSetting()">
+                <option value="gmail">unhostedcse@gmail.com</option>
+                <option value="hotmail">unhostedcse@outlook.com</option>  
+                <option value="local">localhost</option>
+                <option value="unhosted">unhosted</option>
+                </select>
+            </td>
+     	</tr>       
+    </table>    
+</div>
+ 
+<div id="imapdiv">  
+	<!-- <label>user</label> -->
+    <table>
+      <tr>
+        <td>user:</td>
+        <td><input type="text" id="user" value="unhostedcse@gmail.com"></td>
+      </tr> 
+      <tr>
+        <td>pass:</td>
+        <td><input type="text" id="pass" value="unhostedcse12345"></td>
+      </tr>  
+      <tr>
+      	<td>smtp:</td>
+        <td><input type="text" id="smtp" value="smtp.gmail.com"></td>
+      </tr>
+      <tr>
+      	<td>smtpport:</td>
+      	<td><input type="text" id="smtpport" value="465"></td>        
+      	<td><select id="smtpsec" onchange="">
+            <option value="ssl">SSL</option>
+            <option value="tls">TLS</option>  
+            <option value="no">NO</option>  
+            </select>
+    	 </td>
+      </tr>          
+      <tr> 
+       <td>
+        <textarea id="body" rows="10" cols="35">
+Subject: Testing unhosted
+Hi,
+This is mail from HTML5.
+MAIL will accept by extension.
+BYE.
+            </textarea>
+       </td>       
+      </tr>
+      <tr>
+      	<td>imap:</td>
+        <td><input type="text" id="imap" value="imap.gmail.com"></td>
+      </tr>
+      <tr>
+      	<td>imapport:</td>
+      	<td><input type="text" id="imapport" value="993"></td>        
+      	<td><select id="imapsec" onchange="">
+          	<option value="ssl">SSL</option>
+          	<option value="tls">TLS</option>  
+          	<option value="no">NO</option>  
+        	</select>
+    	  </td>        
+        <!-- <td><input type="text" id="msgid" value=""></td> -->
+      </tr>
+           
+    </table>                 
+</div>
+
+</body>
+
+<a id='click' href="../xpi/unhosted@unhosted.projects.uom.lk.xpi"
+  iconURL="../xpi/icon.png"
+  hash="sha1:28857e60d043447c5f4550853f2d40770b326a13"
+  onclick="return install(event);">Install Extension!</a>
+  
+<script type="application/javascript">
+<!--
+function install (aEvent)
+{
+  for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
+  var params = {
+    "Foo": { URL: aEvent.target.href,
+             IconURL: aEvent.target.getAttribute("iconURL"),
+             Hash: aEvent.target.getAttribute("hash"),
+             toString: function () { return this.URL; }
+    }
+  };
+  InstallTrigger.install(params);
+
+  return false;
+}
+var d=document.getElementById('click');
+d.click();
+-->
+</script>
+
+
+
+<script>
+username=document.getElementById('user').value;
+var sync=new Sync_Module(); 
+sync.init();
+var result;
+
+function obj(){};
+
+obj.prototype.b=function(c){
+  console.log(c);
+}
+
+var res=new Array();
+function test(){  
+  //sync.test();
+var db=new DBController();
+db.create_openDB(username);
+
+// db.update(3,'body body body body');
+
+return;
+
+  var mail=
+        "Content-Type: text/plain; charset=UTF-8 \n"+
+        "MIME-Version: 1.0 \n"+
+        "x-no-auto-attachment: 1 \n"+
+        "Received: by 10.60.41.195; Wed, 10 Sep 2014 00:24:10 -0700 (PDT) \n"+
+        "Date: Wed, 10 Sep 2014 00:24:10 -0700 \n"+
+        "Message-ID: <CAEbMfJLbWOV2OohyRZ2ibvXEBhJjryt1XsDa=xC-C6wRnTu9pw@mail.gmail.com> \n"+
+        "Subject: Three tips to get the most out of Gmail \n"+
+        "From: Gmail Team <mail-noreply@google.com> \n"+
+        "To: unhosted cse <unhostedcse@gmail.com> \n"+        
+        "Content-Transfer-Encoding: quoted-printable \n"+
+        "Hi,\n"+ 
+        "This is mail from HTML5.\n"+ 
+        "MAIL will accept by extension.\n"+ 
+        "BYE.";
+mailto=mail;
+var a=JSON.parse(mail);
+
+console.log(a);
+  function getUrlParameter(name) {
+    var regexp = new RegExp("[?&]" + name + "=([^&]*)", "i");
+    var result = regexp.exec(mailto);
+    return result ? decodeURIComponent(result[1]) : null;
+  }
+
+  var to = decodeURIComponent(/mailto:([^?&]*)/.exec(mailto)[1]);
+  var cc = getUrlParameter("cc");
+  var bcc = getUrlParameter("bcc");
+  var subject = getUrlParameter("subject");
+  var html = getUrlParameter("body");
+  console.log(cc);
+  console.log(bcc);
+  console.log(subject);
+  console.log(html);
+
+//console.log(mail);
+// var reg1 = /(.+?): ((.)+)\n/g;
+// var reg1=/((.+?): ((.)+)\n)(?=(.+?))/g;
+var re=/((.+): (.+)\n)+/g;
+var a=mail.replace(re,'');
+// console.log(a);
+
+  // var regexp = /(\w+): (\w+)/g;
+  //var reg = /(.+?): (\w+| )+\r\n\s/g;
+  var reg = /(.+?): ((.)+)\n/g;
+  var regexp = /(\w+): (\w+| \r\n\s)+/g;
+  // var reg= /^Subject: (\w+| )/g;
+
+  // // reg.exec(a);
+  // var headerRegExp = /^(.+?): ((.|\r\n\s)+)\r\n/g;
+  var getres;
+  while((getres = regexp.exec(mail))){
+      var a=reg.exec(mail);
+      //res[a[1]]=a[2];
+      // console.log(a);
+  }
+
+}
+
+function startMe1(){
+	var s=new Sync_Module();
+
+	username=document.getElementById('user').value;
+	password=document.getElementById('pass').value;
+
+	host=document.getElementById('imap').value;
+	port=document.getElementById('imapport').value;
+	security=document.getElementById('imapsec').value;
+
+  /*host=document.getElementById('smtp').value;
+  port=document.getElementById('smtpport').value;
+  security=document.getElementById('smtpsec').value;*/
+
+	s.getUids();
+}
+
+function deleteDB(){
+  indexedDB.deleteDatabase(username);
+  console.log('DB '+username+' deleted');
+}
+function startSMTP(){
+  var s=new Sync_Module();
+
+  username=document.getElementById('user').value;
+  password=document.getElementById('pass').value;
+
+  host=document.getElementById('smtp').value;
+  port=document.getElementById('smtpport').value;
+  security=document.getElementById('smtpsec').value;
+
+  body=document.getElementById('body').value;
+
+  s.SendMail();
+}
+
+
+function startDB(){  
+  s.StartDB();
+}
+
+function addDB(){
+  for (var i = 1; i < 10; i++) {
+    var record={};
+    record.mid=i;
+    record.body=i+''+i+''+i;
+    Sync_Module.db.add(record,10000+i);
+  }
+}
+
+function viewDB(){
+  sync.viewDB();
+}
+
+
+
+ function setSetting(){
+ 	var x = document.getElementById("setting").value;
+ 	if (x=='gmail') {
+ 		document.getElementById('user').value='unhostedcse@gmail.com';
+		document.getElementById('pass').value='unhostedcse12345';
+		document.getElementById('smtp').value='smtp.gmail.com';
+		document.getElementById('smtpport').value='465';
+		document.getElementById('imap').value='imap.gmail.com';
+		document.getElementById('imapport').value='993';	
+		document.getElementById('imapsec').value='ssl';	
+		document.getElementById('smtpsec').value='ssl';	
+ 	}else if(x=='hotmail'){ 	
+ 		document.getElementById('user').value='unhostedcse@outlook.com';//dW5ob3N0ZWRjc2VAb3V0bG9vay5jb20=
+		document.getElementById('pass').value='projects12345';//cHJvamVjdHMxMjM0NQ==
+		document.getElementById('smtp').value='Smtp-mail.outlook.com';
+		document.getElementById('smtpport').value='587';
+		document.getElementById('imap').value='imap-mail.outlook.com';
+		document.getElementById('imapport').value='993';		
+    document.getElementById('imapsec').value='ssl'; 
+    document.getElementById('smtpsec').value='tls';  	
+ 	}else if(x=='local'){ 	
+ 		document.getElementById('user').value='rukshan';
+		document.getElementById('pass').value='17806';
+		document.getElementById('smtp').value='localhost';
+		document.getElementById('smtpport').value='25';
+		document.getElementById('imap').value='localhost';
+		document.getElementById('imapport').value='143';		 	
+		document.getElementById('imapsec').value='no';	
+		document.getElementById('smtpsec').value='no';	
+ 	}else if(x=='unhosted'){ 	
+ 		document.getElementById('user').value='rukshan';
+		document.getElementById('pass').value='rukshan17806';
+		document.getElementById('smtp').value='unhosted.projects.uom.lk';
+		document.getElementById('smtpport').value='25';
+		document.getElementById('imap').value='unhosted.projects.uom.lk';
+		document.getElementById('imapport').value='993';		 	
+ 	}	
+  username=document.getElementById('user').value;
+  // console.log(username);
+  sync.init();
+ } 
+
+</script>
+</html>
