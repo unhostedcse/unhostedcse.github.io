@@ -1,4 +1,9 @@
 CACHE MANIFEST
-# rev 2
+# rev 3
 CACHE:
 /index.html
+./ui/mime.css
+./ui/screen(1).css
+./ui/screen(2).css
+./ui/screen.css
+./ui/webkit.css
