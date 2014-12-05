@@ -1,5 +1,5 @@
 var username="";
-var password="";
+var password="rusasuergi@150";
 var host="";
 var port="";
 var security="";

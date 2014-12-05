@@ -57,21 +57,25 @@ Sync_Module.prototype.getMailBoxesReady = function(mailBoxes){
 	console.log('getMailBoxesReady');
 	console.log("id= "+this.imaps+" result ListFolder= ");
 	var val=result.ListFolder;
-  	for(var i=0;i<val.length;i++){
-    	console.log(val[i].type+" "+val[i].folder);
-    	Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
-  	}
+	var i=0;
 
-	// selectFolder=val[0].folder;
-	// mboxCount=val.length
+	if(val.length>0){
+		Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
+		i++;
+	}
 
-	// mailBoxesDownloaded event
-	$.event.trigger({type:"mailBoxesDownloaded"});
-
-
-	// dbSelectFolder=selectFolder;
-	// console.log('getMailBoxesReady choose '+selectFolder);
-	// Sync_Module.prototype.getUids();
+  	$(document).on("mailBoxesCreated", 
+	function(e){
+		console.log('mailBoxesCreated '+e.folder);
+			if(i==val.length){
+				$.event.trigger({type:"mailBoxesDownloaded"});
+			}else{
+				Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
+				i++;
+			}		
+		}
+	);
+	
 }
 
 Sync_Module.prototype.refresh = function(){

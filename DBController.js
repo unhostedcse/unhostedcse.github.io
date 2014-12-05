@@ -258,6 +258,7 @@ DBController.prototype.addMailBoxes=function(name,path){
 		   	}	
 		}else{
 			console.log(path+' already in database' );
+			$.event.trigger({type:"mailBoxesCreated",folder:path});
 		}
 	}
 	
@@ -282,6 +283,7 @@ DBController.prototype.addMailBoxes=function(name,path){
 	    request.onsuccess = function(event) {
 	        self.database=request.result;    
 	        console.log('open mailBox '+folder);    
+	        $.event.trigger({type:"mailBoxesCreated",folder:folder});
 	    };
 
 	    request.onblocked=function(event){
