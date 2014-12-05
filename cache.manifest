@@ -2498,7 +2498,6 @@ CACHE:
 ./graphics/external.png
 ./graphics/show_panel.png
 ./graphics/button-default.png
-./cache.manifest~
 ./BrowserSetUp.js
 
 
