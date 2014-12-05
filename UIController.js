@@ -74,7 +74,7 @@ $(document).on("mailBoxesRead",
 		mboxList=mboxes;
 
 		if(mboxes && mboxes.length>0){
-			console.log(mboxes[mboxCnt]);
+			console.log(mboxCnt+" "+mboxes[mboxCnt]);
 			selectFolder=mboxes[mboxCnt];
 			dbSelectFolder=selectFolder;
 			// initUnhosted();

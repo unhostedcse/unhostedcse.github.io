@@ -243,11 +243,20 @@ IMAP_Fetch.prototype.getHeaderScenario =function(f){
       if(result.keys.indexOf(parseInt(id))<0){
         IMAP_Fetch.cmds.push([this.fetchBody,id]);
         console.log('id '+id+" not in DB");
+        // alert('max id '+result.keys[result.keys.length-1]+' got id: '+id);
         // console.log(typeof(id)+" "+typeof(result.keys[i]));
       }
       else
         console.log('id '+id+" alread in DB");
   }
+
+  if(IMAP_Fetch.cmds.length==3){
+    console.log(dbSelectFolder+" MailBox Upto date"); 
+    f();/// uptodate
+    return;
+  }
+  console.log(IMAP_Fetch.cmds.length);
+
   IMAP_Fetch.cmds.push(this.logout);
 
   
@@ -266,12 +275,19 @@ IMAP_Fetch.prototype.getBodyScenario =function(f){
 
   for(var i=0;i<result.fetchList.length;i++){
       var id=result.fetchList[i];
-      // if(result.keys.indexOf(parseInt(id))>0){
+      if(result.keys.indexOf(parseInt(id))<0){
         IMAP_Fetch.cmds.push([this.fetchBodyOnly,id]);
-      // }
+      }
       // else
         // console.log('id '+id+" not in DB");
   }
+
+  if(IMAP_Fetch.cmds.length==3){
+    console.log(dbSelectFolder+" MailBox Upto date"); 
+    f();/// uptodate
+    return;
+  }
+
   IMAP_Fetch.cmds.push(this.logout);
 
   

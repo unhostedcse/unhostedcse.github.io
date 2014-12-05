@@ -327,6 +327,7 @@ DBController.prototype.getMailBoxes=function(func){
 	    	if(func)
 	    		func(boxes);
 	    	else{
+	    		mboxCnt=0;
 	    		$.event.trigger({type:"mailBoxesRead",folders: boxes});
 	    	}
 
