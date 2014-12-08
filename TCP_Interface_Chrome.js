@@ -18,7 +18,7 @@ TCP_Interface_Chrome.prototype.connect = function(act,cmd,settings){
 	// element.dispatchEvent(evt);
 
 
-	var editorExtensionId = 'aiclbiicflakbolmkbdkchmmlkcibfdj';
+	var editorExtensionId = 'npaigdaplgecjodmgjhdhkfjabkimdnn';
 	try{
 		chrome.runtime.sendMessage(editorExtensionId, {actionEvt: act, command: cmd, settings:settings},
   		function(response) {

@@ -73,7 +73,7 @@ IMAP_Fetch.prototype.ListFolder=function(){
 }
 
 IMAP_Fetch.prototype.select=function(folder){
-  folder=selectFolder;
+  folder=dbSelectFolder;
   cmd=IMAP_Fetch.imap.select(folder || 'inbox');
   //cmd=IMAP_Fetch.imap.select('[Gmail]/Drafts');
   IMAP_Fetch.imap.onTheResponse=cmd.onResponse;

@@ -195,7 +195,7 @@ DBController.prototype.getMessages=function(cllBack,folder){
 
     	var cursor = event.target.result;    	
     	if(cursor==null){
-    		console.log(UIresult.length);
+    		// console.log(UIresult.length);
     		cllBack(UIresult);
     	}		
 		
@@ -204,7 +204,7 @@ DBController.prototype.getMessages=function(cllBack,folder){
 				var msg=new obj(cursor.key,cursor.value.From,cursor.value.Subject,cursor.value.Date,cursor.value.body);
 				UIresult.push(msg);
 				// console.log(msg);
-				console.log("DB "+cursor.source.transaction.db.name);
+				// console.log("DB "+cursor.source.transaction.db.name);
 		    }	
 
 		    cursor.continue();

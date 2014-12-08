@@ -32,10 +32,11 @@ Sync_Module.prototype.initSMTP = function(){
 
 Sync_Module.prototype.DBReady = function(addMsg,folder,setMailBoxBar){
 	console.log('DB READY ');
-	Sync_Module.db.getMailBoxes(Sync_Module.setMailBoxBar);
+	// Sync_Module.db.getMailBoxes(Sync_Module.setMailBoxBar);
 	Sync_Module.db.getMailBoxes(
 		function(boxs){
 			// console.log(boxs[0]);
+			Sync_Module.setMailBoxBar(boxs);
 			if(boxs && boxs.length>0){
 				Sync_Module.db.getMessages(Sync_Module.addMsg,Sync_Module.folder); 
 			}else{
@@ -62,6 +63,8 @@ Sync_Module.prototype.getMailBoxesReady = function(mailBoxes){
 	if(val.length>0){
 		Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
 		i++;
+	}else{
+		console.log('Empty mail Boxes');
 	}
 
   	$(document).on("mailBoxesCreated", 

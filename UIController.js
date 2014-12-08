@@ -26,6 +26,7 @@ function initUnhosted(){
 	dbSelectFolder=selectFolder;
 	sync=new Sync_Module(clearBody);
 	sync.init(addMsg,dbSelectFolder,setMailBoxBar);
+
 }
 
 function startSMTP(){
@@ -71,12 +72,13 @@ $(document).on("mailBoxesRead",
 		console.log(e.type);
 		
 		var mboxes=e.folders;
+		setMailBoxBar(mboxes);
 		mboxList=mboxes;
 
 		if(mboxes && mboxes.length>0){
 			console.log(mboxCnt+" "+mboxes[mboxCnt]);
-			selectFolder=mboxes[mboxCnt];
-			dbSelectFolder=selectFolder;
+			// selectFolder=mboxes[mboxCnt];
+			dbSelectFolder=mboxes[mboxCnt];
 			// initUnhosted();
 			sync.getUids();
 			mboxCnt++;
@@ -95,8 +97,8 @@ $(document).on("mailBoxesReadNext",
 				}
 
 					console.log(mboxes[mboxCnt]);
-					selectFolder=mboxes[mboxCnt];
-					dbSelectFolder=selectFolder;
+					// selectFolder=mboxes[mboxCnt];
+					dbSelectFolder=mboxes[mboxCnt];
 					// initUnhosted();
 					sync.getUids();
 			mboxCnt++;
@@ -151,7 +153,7 @@ function clearBody(){
 
 function addMsg(mails){
 
-	console.log(mails.length);
+	console.log('mail cnt: '+mails.length);
 	for(var i=0;i<mails.length;i++){
 		var msg=mails[i];
 
@@ -171,7 +173,7 @@ function addMsg(mails){
 		
 
 	}
-
+	$( "div[title='"+selectFolder+"']").addClass('horde-subnavi-active');
 	UIresult="";
 }
 
@@ -192,17 +194,36 @@ $(document).on("click",'.vpRowHoriz.vpRow.DragElt',function() {
 	
 	var body=$(this).find(".body").text();
 
-	document.getElementById('bodyDisplay').innerHTML=body;
+	document.getElementById('bodyDisplay').innerHTML=QPDec(body);
 
 	}
 );
 
+//Quoted printable decoding
+function QPDec(s)
+{
+    return s.replace(/=[\r\n]+/g, "").replace(/=[0-9A-F]{2}/gi,
+		function(v){ 
+			return String.fromCharCode(parseInt(v.substr(1),16)); 
+		}
+	);
+}
+
+//Quoted printable encoding
+function QPEnc(s)
+{
+        return s.replace(/=/g, "=3D").replace(/[^ -~\r\n\t]/g,
+                function(v) { return "=" + v.charCodeAt(0).toString(16); });
+}
+
 // select mailboxs
 $(document).on("click",'.horde-subnavi-point',
-	function() {
-		// console.log('clicked');
+	function(e) {
+		
 		var mailBox=$(this).find("a").text();
-		$('.horde-subnavi .imp-sidebar-mbox .DropElt .DragElt').addClass('horde-subnavi-active');
+
+		// $( "div[title='"+mailBox+"']").addClass('horde-subnavi-active');
+		// console.log(mailBox);
 
 		selectFolder=mailBox;
 		dbSelectFolder=selectFolder;
@@ -216,7 +237,7 @@ function setMailBoxBar(mail){
 	for (var i = 0; i < mail.length; i++) {
 		var name=mail[i];
 		var div=""+
-		'<div class="horde-subnavi imp-sidebar-mbox DropElt DragElt" title="'+name+'" id="anonymous_element_15">'+
+		'<div class="horde-subnavi imp-sidebar-mbox DropElt DragElt" title="'+name+'" id="'+name+'">'+
 	    	'<div class="horde-subnavi-icon inboxImg"></div>'+
 			'<div class="horde-subnavi-point">'+
 	  			'<a>'+name+'</a>'+
