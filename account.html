@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<script type="text/javascript" src="DBController.js"></script>
+<script type="text/javascript" src="Mail_Settings.js"></script>
+<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>
+
+</head>
+
+
+
+
+
+<body>
+  <button type="button" onclick="addDB();">Add Account</button>
+  <button type="button" onclick="viewDB();">View Account</button>
+  <br/>
+
+	<div id="displaydiv">
+
+
+	<table>
+		<tr>
+        	<td>Account</td>
+            <td><select id="accounts" onchange="setSetting()">
+                <option value="gmail">Gmail</option>
+                <option value="hotmail">Outlook</option>  
+                <option value="local">localhost</option>
+                <option value="other">other</option>
+                </select>
+            </td>
+     	</tr>       
+    </table>    
+</div>
+ 
+<div id="imapdiv">  
+	<!-- <label>user</label> -->
+    <table>
+      <tr>
+        <td>user:</td>
+        <td><input type="text" id="user" value="unhostedcse@gmail.com"></td>
+      </tr> 
+      <tr>
+        <td>pass:</td>
+        <td><input type="text" id="pass" value="unhostedcse12345"></td>
+      </tr>  
+      <tr>
+      	<td>smtp:</td>
+        <td><input type="text" id="smtp" value="smtp.gmail.com"></td>
+      </tr>
+      <tr>
+      	<td>smtpport:</td>
+      	<td><input type="text" id="smtpport" value="465"></td>        
+      	<td><select id="smtpsec" onchange="">
+            <option value="ssl">SSL</option>
+            <option value="tls">TLS</option>  
+            <option value="no">NO</option>  
+            </select>
+    	 </td>
+      </tr>          
+      <tr> 
+       <td>
+
+        
+       </td>       
+      </tr>
+      <tr>
+      	<td>imap:</td>
+        <td><input type="text" id="imap" value="imap.gmail.com"></td>
+      </tr>
+      <tr>
+      	<td>imapport:</td>
+      	<td><input type="text" id="imapport" value="993"></td>        
+      	<td><select id="imapsec" onchange="">
+          	<option value="ssl">SSL</option>
+          	<option value="tls">TLS</option>  
+          	<option value="no">NO</option>  
+        	</select>
+    	  </td>        
+        <!-- <td><input type="text" id="msgid" value=""></td> -->
+      </tr>
+           
+    </table>                 
+</div>
+
+</body>
+
+
+<script>
+
+//create_openDB();
+var db=new DBController();
+db.create_open_account_DB();
+
+function addDB(){
+  try{
+      db.addAccount();
+  }catch(e){
+    console.log(e);
+  }
+  
+}
+
+function viewDB(){
+  db.viewAccounts();  
+}
+
+
+ function setSetting(){
+ 	var x = document.getElementById("accounts").value;
+ 	if (x=='gmail') {
+ 		document.getElementById('user').value='unhostedcse@gmail.com';
+		document.getElementById('pass').value='rusasuergi@150';
+		document.getElementById('smtp').value='smtp.gmail.com';
+		document.getElementById('smtpport').value='465';
+		document.getElementById('imap').value='imap.gmail.com';
+		document.getElementById('imapport').value='993';	
+		document.getElementById('imapsec').value='ssl';	
+		document.getElementById('smtpsec').value='ssl';	
+ 	}else if(x=='hotmail'){ 	
+ 		document.getElementById('user').value='unhostedcse@outlook.com';//dW5ob3N0ZWRjc2VAb3V0bG9vay5jb20=
+		document.getElementById('pass').value='projects12345';//cHJvamVjdHMxMjM0NQ==
+		document.getElementById('smtp').value='Smtp-mail.outlook.com';
+		document.getElementById('smtpport').value='587';
+		document.getElementById('imap').value='imap-mail.outlook.com';
+		document.getElementById('imapport').value='993';		
+    document.getElementById('imapsec').value='ssl'; 
+    document.getElementById('smtpsec').value='tls';  	
+ 	}else if(x=='local'){ 	
+ 		document.getElementById('user').value='rukshan';
+		document.getElementById('pass').value='17806';
+		document.getElementById('smtp').value='localhost';
+		document.getElementById('smtpport').value='25';
+		document.getElementById('imap').value='localhost';
+		document.getElementById('imapport').value='143';		 	
+		document.getElementById('imapsec').value='no';	
+		document.getElementById('smtpsec').value='no';	
+ 	}else if(x=='other'){ 	
+ 		document.getElementById('user').value='';
+		document.getElementById('pass').value='';
+		document.getElementById('smtp').value='';
+		document.getElementById('smtpport').value='';
+		document.getElementById('imap').value='';
+		document.getElementById('imapport').value='';		 	
+ 	}	
+ } 
+
+var database;
+function create_openDB(indexedDBName){
+  // console.log('create_openDB');
+  
+  window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+  window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+  window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;  
+  var self=this;
+  if (!window.indexedDB) {
+      alert("Sorry!Your browser doesn't support IndexedDB");
+  }
+
+  // dbVersion++;
+    var request = window.indexedDB.open('accounts');
+
+    // console.log(request.result.version);
+
+    request.onerror = function(event) {
+      console.log(event.target.errorCode);
+    };
+
+    request.onblocked=function(event){
+      console.log('open onblocked '+event);     
+  }
+
+    request.onsuccess = function(event) {
+        database=request.result;        
+        console.log('show content');
+        
+    };
+
+    request.onupgradeneeded = function(event) {
+        var db = event.target.result;
+        var objectStore = db.createObjectStore('accounts', {keyPath: "id",autoIncrement:true});
+        objectStore.createIndex("usernameIndex", "username", { multiEntry: true });
+    };    
+
+}
+
+
+
+</script>
+</html>

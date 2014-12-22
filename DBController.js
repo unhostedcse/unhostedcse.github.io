@@ -1,8 +1,149 @@
-function DBController(){
-	this.database;
-	this.id=0;
-	this.mailBoxTableName='mailBoxes';
-	this.offlineMboxName='unhostedOfflineMbox';
+function DBController() {
+    this.database;
+    this.id = 0;
+    this.mailBoxTableName = 'mailBoxes';
+    this.offlineMboxName = 'unhostedOfflineMbox';
+    this.accountDBName = 'accounts';
+    this.accountTableName = 'accounts';
+    this.account_database;
+}
+
+DBController.prototype.create_open_account_DB=function(fun){
+  window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+  window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+  window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;  
+  var self=this;
+  if (!window.indexedDB) {
+      alert("Sorry!Your browser doesn't support IndexedDB");
+  }
+
+    var request = window.indexedDB.open(this.accountDBName);
+
+    request.onerror = function(event) {
+      console.log(event.target.errorCode);
+    };
+
+    request.onblocked=function(event){
+      console.log('open onblocked '+event);     
+  	}
+
+    request.onsuccess = function(event) {
+        self.account_database=request.result;        
+        console.log(self.accountDBName+' DB ready');
+        self.viewAccounts();
+
+        if(fun) // only one time, when refresh
+        	fun();
+    };
+
+    request.onupgradeneeded = function(event) {
+        var db = event.target.result;
+        var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
+        objectStore.createIndex("usernameIndex", "username", { multiEntry: true });
+        console.log('success');
+    };
+}
+
+DBController.prototype.viewAccounts=function(){
+	// $("#setting").empty(); 
+	// alert('open');         
+  var objectStore = this.account_database.transaction(this.accountTableName).objectStore(this.accountTableName);
+  self=this;
+  objectStore.openCursor().onsuccess = function(event) {
+    var cursor = event.target.result;   
+
+    if (cursor && cursor.value) {       
+      // console.log("DB "+cursor.source.transaction.db.name);
+      var val=cursor.value.username;
+      var id=cursor.key;
+
+      console.log("username "+val);
+      // console.log("userID "+id);
+
+      if(val==username && $("#setting") ){
+      	$("#setting").append('<option value="'+val+'" selected>'+val+'</option>');
+      }else if($("#setting")){
+      	$("#setting").append('<option value="'+val+'">'+val+'</option>');          
+      }
+      cursor.continue();
+    } 
+  }
+}
+
+DBController.prototype.addAccount=function(){
+  var transaction = this.account_database.transaction([this.accountTableName], "readwrite");
+  var objectStore = transaction.objectStore(this.accountTableName);
+
+  var record={
+	  username:document.getElementById('user').value,
+	  password:document.getElementById('pass').value,
+	  imaphost:document.getElementById('imap').value,
+	  imapport:document.getElementById('imapport').value,
+	  imapsecurity:document.getElementById('imapsec').value,
+	  smtphost:document.getElementById('smtp').value,
+	  smtpport:document.getElementById('smtpport').value,
+	  smtpsecurity:document.getElementById('smtpsec').value
+  };
+
+  var userName=document.getElementById('user').value;
+  objectStore.index("usernameIndex").get(userName).onsuccess = function(e) {   
+      if(e.target.result){
+        console.log(userName+' Already Exist!');
+      }else{
+          var request=objectStore.add(record);
+          request.onsuccess = function(event) {
+              console.log(userName+' added to database' );
+          };
+          request.onerror = function (event) {
+              console.log(event);
+          }
+      }
+  }
+}
+
+DBController.prototype.loadAccount=function(userName){
+  var objectStore = this.account_database.transaction(this.accountTableName).objectStore(this.accountTableName);
+  objectStore.index("usernameIndex").get(userName).onsuccess = function(e) {   
+  		var cursor = e.target.result;
+      username=cursor.username;
+      // console.log(username);
+      password=cursor.password;
+      imaphost=cursor.imaphost;
+      imapport=cursor.imapport;
+      imapsecurity=cursor.imapsecurity;
+      smtphost=cursor.smtphost;
+      smtpport=cursor.smtpport;
+      smtpsecurity=cursor.smtpsecurity;   
+      userID=cursor.id;
+
+      $.event.trigger({type:"loadAccount"});   
+    }
+}
+
+DBController.prototype.loadAccountById=function(id,func){
+  var objectStore = this.account_database.transaction(this.accountTableName).objectStore(this.accountTableName);
+  var req=objectStore.get(id);
+
+  req.onsuccess = function(e) {   
+  	  var cursor = e.target.result;
+      username=cursor.username;
+      password=cursor.password;
+      imaphost=cursor.imaphost;
+      imapport=cursor.imapport;
+      imapsecurity=cursor.imapsecurity;
+      smtphost=cursor.smtphost;
+      smtpport=cursor.smtpport;
+      smtpsecurity=cursor.smtpsecurity;   
+      userID=cursor.id;
+
+      if(func){
+      	func(username);
+      }
+    }
+   req.onerror = function(event) {
+    	console.log(event.target.errorCode);
+    };
+
 }
 
 DBController.prototype.create_openDB=function(indexedDBName,folder,DBReady){
@@ -53,6 +194,8 @@ DBController.prototype.create_openDB=function(indexedDBName,folder,DBReady){
 
         // for offline sendmail
         var objectStore = db.createObjectStore(self.offlineMboxName, {keyPath: "id",autoIncrement:true});
+
+        var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
     };   	
 
 }
@@ -139,24 +282,24 @@ DBController.prototype.updateSaveSendMail=function(id){
 }
 
 var dbt;
-DBController.prototype.view=function(db){
-	var objectStore = this.database.transaction("notes").objectStore("notes");
+DBController.prototype.view = function(db) {
+    var objectStore = this.database.transaction("notes").objectStore("notes");
     objectStore.openCursor().onsuccess = function(event) {
-    	var cursor = event.target.result;    	
-    	if (cursor) {	    	
-    		if(cursor.value){
-		    	console.log("DB "+cursor.source.transaction.db.name);//+" "+cursor.value.mid
-		    	console.log("MID "+cursor.key);		    	
-		    	console.log("TO "+cursor.value.To);		    	
-		    	console.log("FROM "+cursor.value.From);
-		    	console.log("Subject "+cursor.value.Subject);		    	
-		    	console.log("DATE "+cursor.value.Date);
-		    	console.log("Received "+cursor.value.Received);	
-				console.log("Body "+cursor.value.body);			    		    	
-		    	console.log("");		    	
-		    }	
-		    cursor.continue();
-	    }	
+        var cursor = event.target.result;
+        if (cursor) {
+            if (cursor.value) {
+                console.log("DB " + cursor.source.transaction.db.name);//+" "+cursor.value.mid
+                console.log("MID " + cursor.key);
+                console.log("TO " + cursor.value.To);
+                console.log("FROM " + cursor.value.From);
+                console.log("Subject " + cursor.value.Subject);
+                console.log("DATE " + cursor.value.Date);
+                console.log("Received " + cursor.value.Received);
+                console.log("Body " + cursor.value.body);
+                console.log("");
+            }
+            cursor.continue();
+        }
     }
 }
 
@@ -184,13 +327,15 @@ DBController.prototype.getMessages=function(cllBack,folder){
 		return;
 	}
 
-    objectStore.openCursor().onsuccess = function(event) {
-    	var obj=function(id,from,sub,date,body){
+    objectStore.openCursor(null, "prev").onsuccess = function(event) {
+    	var obj=function(id,from,sub,date,body,seen,size){
 			this.id=id;
 			this.from=from;
 			this.subject=sub;
 			this.date=date;
 			this.body=body;
+			this.seen=seen;
+			this.size=size;
 		}
 
     	var cursor = event.target.result;    	
@@ -201,7 +346,7 @@ DBController.prototype.getMessages=function(cllBack,folder){
 		
     	if (cursor) {	    	
     		if(cursor.value){		    		
-				var msg=new obj(cursor.key,cursor.value.From,cursor.value.Subject,cursor.value.Date,cursor.value.body);
+				var msg=new obj(cursor.key,cursor.value.From,cursor.value.Subject,cursor.value.Date,cursor.value.body,cursor.value.seen,cursor.value.size);
 				UIresult.push(msg);
 				// console.log(msg);
 				// console.log("DB "+cursor.source.transaction.db.name);
@@ -222,7 +367,7 @@ DBController.prototype.addContain=function(record,id,folder){
 	    var objectStore = transaction.objectStore(folder);
    		
    		if(event.target.result){
-   			console.log('id '+id + ' already in database' );
+   			console.log('id '+id + ' atlready in database' );
    		}else{
    			var request=objectStore.add(record,id);
 		    request.onsuccess = function(event) {
@@ -390,3 +535,18 @@ DBController.prototype.update=function(id,val,folder){
 
 }
 
+DBController.prototype.getMailById=function(id,folder,func){
+    var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
+	var request = objectStore.get(id);
+	request.onerror = function(event) {
+	  // Handle errors!
+	  // console.log(event);
+	};
+	request.onsuccess = function(event) {
+	  var data = request.result;
+	  
+	  if(func){
+	  	func(data);
+	  }	  	
+	};
+}

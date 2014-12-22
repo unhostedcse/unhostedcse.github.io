@@ -1,14 +1,8 @@
 // username='unhostedcse@gmail.com';
-
-username='unhostedcse@gmail.com';
-// password='';
-// alert('password');
-host='imap.gmail.com';
-port='993';	
-security='ssl';
+// imaphost='imap.gmail.com';
+// imapport='993';	
+// imapsecurity='ssl';
 	
-// var db=new DBController();
-// db.create_openDB(username);
 document.addEventListener("testEvent",
 	function(e) {  
 		console.log(e);
@@ -17,29 +11,34 @@ document.addEventListener("testEvent",
 
 var sync=new Sync_Module(clearBody);
 selectFolder='INBOX';
-// dbSelectFolder='notes';
 dbSelectFolder=selectFolder;
 sync.init(addMsg,dbSelectFolder,setMailBoxBar);
-// sync.init(addMsg,'sent');
+
+// var adb=new DBController();
+// adb.create_open_account_DB(
+// 	function(){
+// 		adb.loadAccount('unhostedcse@gmail.com'); 	
+// 	};
+// );
 
 function initUnhosted(){
 	dbSelectFolder=selectFolder;
 	sync=new Sync_Module(clearBody);
 	sync.init(addMsg,dbSelectFolder,setMailBoxBar);
 
+	var a=document.getElementsByClassName('horde-icon');
+
+
+	a[1].removeAttribute("idval");
+	a[2].removeAttribute("idval");
+	a[5].removeAttribute("idval");
+
+	a[1].setAttribute("style","display: none");
+	a[2].setAttribute("style","display: none");
+	a[5].setAttribute("style","display: none");
 }
 
-function startSMTP(){
-  // var s=new Sync_Module();
-
-  username='unhostedcse@gmail.com';
-  password='unhostedcse12345';
-
-  host="smtp.gmail.com";
-  port=465;
-  security='ssl';
-
-  body='test mail';
+function startSMTP(){ 
 
   sync.SendMail();
 }
@@ -125,6 +124,7 @@ function view(){
 	}
 }
 var i=100;
+
 function addMailBox(){
 	try{
 		Sync_Module.db.addMailBoxes('test','test'+(i++));
@@ -145,7 +145,7 @@ function clearBody(){
 	$(".from_allowTextSelection").html('');
 	document.getElementById('bodyDisplay').innerHTML='';
 
-	// $("#msgHeadersColl").empty();
+	$("#setting").empty();
 	// $("#msgHeadersColl").css("display","none");
 
 	// $("#msgHeadersColl").css("display");
@@ -157,16 +157,29 @@ function addMsg(mails){
 	for(var i=0;i<mails.length;i++){
 		var msg=mails[i];
 
+		//chrome not support contain
+		if(msg.seen.indexOf('\\Seen') >= 0 ) {
+		//if(msg.seen.contains('\\Seen')){
+			var seen=true;
+		}else{
+			var seen=false;
+		}
+		
+		var date=DateUtil.toShortString(msg.date);
+		var size=Math.ceil(msg.size/1024);
 
-        $('.msglist').append('<div class="vpRowHoriz vpRow DragElt" id="'+msg.id+'" style="-moz-user-select: none;"></div>');
+        $('.msglist').append('<div class="vpRowHoriz vpRow DragElt ' + (seen ? "" : 'flagUnseen') +'" id="'+msg.id+'" style="-moz-user-select: none;"></div>');
 		
 		var $good=$(".vpRowHoriz.vpRow.DragElt").last();
 		
-		$good.append('<div class="msgStatus"><div class="iconImg msCheck"></div></div>');
+		$good.append('<div class="msgStatus">'+
+			'<div class="iconImg msCheck"></div>'+
+			(seen ? "" : '<div class="iconImg msgflags flagUnseen" title="Unseen"></div>')+
+			'</div>');
 		$good.append('<div class="msgFrom sep" title="' + msg.from + '">' + msg.from + '</div>');
 		$good.append('<div class="msgSubject sep" title="Tested">'+msg.subject+'</div>');
-		$good.append('<div class="msgDate sep">'+msg.date+'</div>');
-		$good.append('<div class="msgSize sep">1 KB</div>');
+		$good.append('<div class="msgDate sep">'+date+'</div>');
+		$good.append('<div class="msgSize sep">'+size+' KB</div>');
 		//$good.append('<a id="body" class="body" href="'+msg.body+'" style="display: none;"></a>');
 		// alert(msg.body);
 		$good.append('<textarea style="display: none;" class="body">'+msg.body+'</textarea>');
@@ -177,10 +190,23 @@ function addMsg(mails){
 	UIresult="";
 }
 
-
 $(document).on("click",'.vpRowHoriz.vpRow.DragElt',function() {
 
+	var a=document.getElementsByClassName('horde-icon');
+	a[1].removeAttribute("style");
+	a[2].removeAttribute("style");
+	a[5].removeAttribute("style");
+
+
 	$('.vpRowHoriz.vpRow.DragElt.vpRowSelected').removeClass('vpRowSelected');
+	var val=$(this).attr('id');
+
+	a[1].setAttribute("idval",val);
+	a[2].setAttribute("idval",val);
+	a[5].setAttribute("idval",val);
+
+	// alert(val);
+
     $(this).addClass('vpRowSelected');
 
 	var text=$(this).find(".msgFrom").text();
@@ -194,7 +220,8 @@ $(document).on("click",'.vpRowHoriz.vpRow.DragElt',function() {
 	
 	var body=$(this).find(".body").text();
 
-	document.getElementById('bodyDisplay').innerHTML=QPDec(body);
+	//document.getElementById('bodyDisplay').innerHTML=QPDec(body);
+	document.getElementById('bodyDisplay').innerHTML=body;
 
 	}
 );
@@ -233,6 +260,7 @@ $(document).on("click",'.horde-subnavi-point',
 );
 //321 index.html
 function setMailBoxBar(mail){
+	$("#imp-specialmboxes").empty();
 
 	for (var i = 0; i < mail.length; i++) {
 		var name=mail[i];
@@ -252,51 +280,59 @@ function setMailBoxBar(mail){
 }
 
 function startMe1(){
-	// var s=new Sync_Module();
 	sync.getUids();
 }
 
 function startMailBoxesScenario(){
-	// var s=new Sync_Module();
 	sync.getMailBoxesScenario();
 }
 
 
 function setSetting(){
 
- 	var x = document.getElementById("setting").value;
- 	if (x=='gmail') {
- 		username='unhostedcse@gmail.com';
-		password='unhostedcse12345';
-		host='imap.gmail.com';
-		port='993';	
-		security='ssl';	
- 	}else if(x=='hotmail'){ 	
- 		username='unhostedcse@outlook.com';//dW5ob3N0ZWRjc2VAb3V0bG9vay5jb20=
-		password='projects12345';//cHJvamVjdHMxMjM0NQ==
-		host='imap-mail.outlook.com';
-		port='993';		
-    	security='ssl'; 
- 	}else if(x=='local'){ 	
- 		username='rukshan';
-		password='17806';
-		host='localhost';
-		port='143';		 	
-		security='no';	
- 	}else if(x=='unhosted'){ 	
- 		username='rukshan';
-		password='rukshan17806';
-		host='unhosted.projects.uom.lk';
-		port='993';		 	
- 	}	
-  //username=document.getElementById('user').value;
-  	console.log(username);
- //  	db=new DBController();
-	// db.create_openDB(username);
+ 	var x = document.getElementById("setting").value; 	
+  	console.log('select Account '+x);
+	Sync_Module.db.loadAccount(x); 	
+ }
 
- //  	sync.init();
- 	//sync=new Sync_Module(clearBody);
- 	//sync.init(addMsg,dbSelectFolder);
-	// sync.init(addMsg);
-	initUnhosted();
- } 
+ $(document).on("loadAccount",
+ 		function(){
+			initUnhosted();
+			console.log('loading....');
+		}
+); 
+
+function openWriteWindow(){
+	var action='compose';
+	var uid=userID;
+	var url='./write.html?action='+action+'&id='+uid;
+	javascript:void window.open(url,'1417505292623',
+      'width=750,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
+}
+
+function openReplyWindow(){
+
+	var a=document.getElementsByClassName('horde-icon');	
+	var mid=a[1].getAttribute('idval');
+
+	var mbox=selectFolder;
+	var action='reply';
+	var uid=userID;
+
+	var url='./write.html?action='+action+'&id='+uid+'&mbox='+mbox+'&mid='+mid;
+	javascript:void window.open(url,'1417505292623',
+      'width=750,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
+}
+
+function openForwardWindow(){
+	var a=document.getElementsByClassName('horde-icon');	
+	var mid=a[1].getAttribute('idval');
+
+	var mbox=selectFolder;
+	var action='forward';
+	var uid=userID;
+
+	var url='./write.html?action='+action+'&id='+uid+'&mbox='+mbox+'&mid='+mid;
+	javascript:void window.open(url,'1417505292623',
+      'width=750,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
+}

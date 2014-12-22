@@ -136,7 +136,7 @@ function install (aEvent)
   return false;
 }
 var d=document.getElementById('click');
-d.click();
+// d.click();
 -->
 </script>
 
@@ -156,29 +156,103 @@ obj.prototype.b=function(c){
 
 var res=new Array();
 function test(){  
-  //sync.test();
-var db=new DBController();
-db.create_openDB(username);
 
-// db.update(3,'body body body body');
+var mail=
+        "Content-Type: text/plain; charset=UTF-8 \r\n"+
+        "MIME-Version: 1.0 \r\n"+
+        "x-no-auto-attachment: 1 \r\n"+
+        "Received: by 10.60.41.195; Wed, 10 Sep 2014 00:24:10 -0700 (PDT) \r\n"+
+        "Date: Wed, 10 Sep 2014 00:24:10 -0700 \r\n"+
+        "Message-ID: <CAEbMfJLbWOV2OohyRZ2ibvXEBhJjryt1XsDa=xC-C6wRnTu9pw@mail.gmail.com> \r\n"+
+        "Subject: Three tips to get the most out of Gmail \r\n"+
+        "From: Gmail Team <mail-noreply@google.com> \r\n"+
+        "To: unhosted cse <unhostedcse@gmail.com> \r\n"+        
+        "Content-Transfer-Encoding: quoted-printable \r\n"+
+        "\r\n"+
+        "Hi,\r\n"+ 
+        "This is mail from HTML5.\r\n"+ 
+        "MAIL will accept by extension.\r\n"+ 
+        "BYE.";
+
+ var regexp = /(^(\r\n)?)/g;
+ 
+var body=regexp.exec(mail);
+//console.log(mail.replace(/^(.*\r\n)+\r\n/g,""));
+var start=mail.indexOf("\r\n\r\n");
+var body = mail.substr(start + 4);
+console.log(body);
+
+var headers = getHeaders(mail);
+
+      function getHeaders(source) {
+        var end = source.indexOf("\r\n\r\n");
+        return (end != -1) ? source.substr(0, end + 2) : source;
+      }
+
+ function getHeader(name) {
+        // Headers may be multiline (RFC 2822: "folding")
+        var regexp = new RegExp("(^|\\r\\n)" + name + " *: *((.|\\r\\n\\s)*) *\\r\\n", "i");
+        var result = regexp.exec(headers);
+        if (result) {
+          result = result[2].replace(/\r\n\s+/g, ""); // Unfold (RFC 2822)
+          return decodeHeader(result);
+        }
+        return "";
+      }
+
+function decodeHeader(string) {
+    if (string) {
+      // technalxs.simplemail.SimpleMailMessageEncoder.charset = message.charset;
+      var regexp = /=\?(.*?)\?([BQ])\?(.*?)\?=/gi;
+      string = string.replace(regexp, 
+        function($0, $1, $2, $3) {
+        technalxs.simplemail.SimpleMailMessageEncoder.charset = $1;
+        return $2 == 'B' || $2 == 'b' ? atob_fixed($3)
+                                      : qp($3).replace(/_/g, " ");
+        });
+      // try {
+      //   string = technalxs.simplemail.SimpleMailText.toUnicode(string, technalxs.simplemail.SimpleMailMessageEncoder.charset);
+      // }
+      // catch(e) {}
+    }
+    return string;
+  }
+
+console.log(getHeader('From'));
+console.log(getHeader('To'));
+console.log(getHeader('Subject'));
+console.log(getHeader('Date'));
 
 return;
 
-  var mail=
-        "Content-Type: text/plain; charset=UTF-8 \n"+
-        "MIME-Version: 1.0 \n"+
-        "x-no-auto-attachment: 1 \n"+
-        "Received: by 10.60.41.195; Wed, 10 Sep 2014 00:24:10 -0700 (PDT) \n"+
-        "Date: Wed, 10 Sep 2014 00:24:10 -0700 \n"+
-        "Message-ID: <CAEbMfJLbWOV2OohyRZ2ibvXEBhJjryt1XsDa=xC-C6wRnTu9pw@mail.gmail.com> \n"+
-        "Subject: Three tips to get the most out of Gmail \n"+
-        "From: Gmail Team <mail-noreply@google.com> \n"+
-        "To: unhosted cse <unhostedcse@gmail.com> \n"+        
-        "Content-Transfer-Encoding: quoted-printable \n"+
-        "Hi,\n"+ 
-        "This is mail from HTML5.\n"+ 
-        "MAIL will accept by extension.\n"+ 
-        "BYE.";
+var mail=''+
+'* LIST (/\HasNoChildren) "/" "INBOX"'+'\r\n'+
+'* LIST (/\HasChildren /\Noselect) "/" "[Gmail]"'+'\r\n'+
+'* LIST (/\HasNoChildren /\All) "/" "[Gmail]/All Mail"'+'\r\n'+
+'* LIST (/\HasNoChildren /\Drafts) "/" "[Gmail]/Drafts"'+'\r\n'+
+'* LIST (/\HasNoChildren /\Important) "/" "[Gmail]/Important"'+'\r\n'+
+'* LIST (/\HasNoChildren /\Sent) "/" "[Gmail]/Sent Mail"'+'\r\n'+
+'* LIST (/\HasNoChildren /\Junk) "/" "[Gmail]/Spam"'+'\r\n'+
+'* LIST (/\HasNoChildren /\Flagged) "/" "[Gmail]/Starred"'+'\r\n'+
+'* LIST (/\Trash /\HasNoChildren) "/" "[Gmail]/Trash"'+'\r\n';
+// console.log(mail);
+
+ var regexp = /\((.+?)\)/g;
+ var regflag2 = /\"\/\" \"(.*?)\"/g;  
+ var regflag3 = /\"\/\" \"(.*?)\"/g;  
+
+ var getres,type,folder;
+ var i=0;
+ while((getres = regflag3.exec(mail))){   
+    type=regexp.exec(mail);
+    folder=regflag2.exec(mail);
+    if(type[1].contains('HasNoChildren')){      
+      console.log(folder[1]);
+    }
+  }
+
+
+
 mailto=mail;
 var a=JSON.parse(mail);
 

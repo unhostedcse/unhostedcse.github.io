@@ -160,8 +160,8 @@ action.       </li>
    </tbody></table>
   </div>
 
-  <div id="composeMessageParent" contenteditable style="height:  50%;">
-   <!-- <textarea style="height:  50%;" name="message" id="composeMessage" class="fixed"> -->
+  <div id="composeMessageParent">
+   <textarea style="height: 43px;" name="message" id="composeMessage" class="fixed">
 </textarea>
   </div>
 
@@ -171,14 +171,23 @@ action.       </li>
 
 
 
-<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script> 
-  <!--
-  <script type="text/javascript" src="js/prototype.js"></script>
-  <script type="text/javascript" src="js/horde.js"></script>
-  <script type="text/javascript" src="js/compose-dimp.js"></script>
-  <script type="text/javascript" src="js/hordecore.js"></script>
-  <script type="text/javascript" src="js/dimpcore.js"></script>
+<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>
 
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/horde.js"></script>
+
+ 
+<!-- <script type="text/javascript" src="UIController.js"></script>    -->
+
+
+  <script type="text/javascript" src="js/compose-dimp.js"></script>
+
+  <script type="text/javascript" src="js/hordecore.js"></script>
+   <script type="text/javascript" src="js/dimpcore.js"></script>
+  
+
+
+  <!---->
   <script type="text/javascript" src="js/viewport_utils.js"></script> 
   <script type="text/javascript" src="js/contextsensitive.js"></script> 
   <script type="text/javascript" src="js/imple.js"></script>
@@ -201,11 +210,13 @@ action.       </li>
 
   <script type="text/javascript" src="js/sound.js"></script>
   <script type="text/javascript" src="js/ckeditor_basic.js"></script>  
-   -->
+  <!-- -->
 
 
 <script type="text/javascript" src="logger.js"></script>
 <script type="text/javascript" src="TCP_Interface.js"></script>
+<script type="text/javascript" src="IMAP_Interface.js"></script>
+<script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
 
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
@@ -213,55 +224,20 @@ action.       </li>
 <script type="text/javascript" src="Sync_Module.js"></script>
 <script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="DBController.js"></script>
+<!-- <script type="text/javascript" src="UIController.js"></script> -->
 <script type="text/javascript" src="BrowserSetUp.js"></script>  
-<script type="text/javascript" src="NewMessage.js"></script>  
 
-<link rel="Stylesheet" type="text/css" href="wys/jHtmlArea.css" />
-<script type="text/javascript" src="wys/jHtmlArea-0.8.js"></script>
-
-<script type="text/javascript">
+ <script type="text/javascript">
+  // alert('ok');
 	
-// $('#composeMessage').htmlarea();
+$('#composeMessage').htmlarea();
 
   var db=new DBController();
   db.create_open_account_DB(load);
 
   function load(){
     var id= parseInt(getParameterByName('id'));
-    var mid= parseInt(getParameterByName('mid'));
-    var mbox= getParameterByName('mbox');
-    var action= getParameterByName('action');
-
-    // alert(id);
-    // alert(mid);
-    // alert(mbox);
-    // alert(action);
-
-    db.loadAccountById(id,setFunc);
-
-    function setFunc(user){
-        // console.log('got user '+user);
-        if(action=='compose')
-          console.log('compose');
-        else if(action=='reply'){
-          console.log('reply');
-
-          db.create_openDB(user,"",
-            function(){
-              db.getMailById(mid,mbox,setReplyWindow);
-            }
-          );
-
-        }else if(action=='forward'){
-          console.log('forward');
-          db.create_openDB(user,"",
-            function(){
-              db.getMailById(mid,mbox,setForwardWindow);
-            }
-          );
-        }
-    }    
-
+    db.loadAccountById(id);
   }
 
   function getParameterByName(name) {
@@ -271,35 +247,7 @@ action.       </li>
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function setReplyWindow(msg){     
-
-  var mail=NewMessage.createReply(msg);
-  // document.getElementById('subject').value="RE: "+msg.Subject;
-  // var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  // data[0].value=msg.From;
-
-  document.getElementById('subject').value=mail.subject;
-  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  data[0].value=mail.to;
-
-}
-
-function setForwardWindow(msg){   
-  // document.getElementById('composeMessage').value=msg.body;
-  // document.getElementById('subject').value="FW: "+msg.Subject;
-  // var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  // data[0].value=msg.From;
-
-  
-  var mail=NewMessage.createForward(msg);
-  
-  document.getElementById('composeMessageParent').innerHTML=mail.body;
-  document.getElementById('subject').value=mail.subject;
-  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  data[0].value=mail.from;
-}
-
-  var text=document.getElementById('composeMessageParent').innerHTML='Hi, this is test text!';
+  var text=document.getElementById('composeMessage').value='Hi, this is test text!';
   var subject=document.getElementById('subject').value='Unhosted subject';
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
   //data[0].value='unhostedcse@gmail.com';
@@ -323,7 +271,7 @@ function setForwardWindow(msg){
       // alert('send'+e);
 
         try{
-        var text=document.getElementById('composeMessageParent').innerHTML;
+        var text=document.getElementById('composeMessage').value;
         var subject=document.getElementById('subject').value;
         var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
 
@@ -399,8 +347,7 @@ var head=""+
 'From: '+username+' <'+username+'>'+'\r\n'+  
 to+'\r\n'+
 //"To: unhosted cse <unhostedcse@gmail.com>"+"\r\n"+
-//"Content-Type: multipart/alternative; boundary=089e01293fa625798e0502b0f0ce"+"\r\n";
-"Content-Type: text/html; charset=UTF-8"+"\r\n";
+"Content-Type: multipart/alternative; boundary=089e01293fa625798e0502b0f0ce"+"\r\n";
 
 body=head+'\r\n'+text;
 

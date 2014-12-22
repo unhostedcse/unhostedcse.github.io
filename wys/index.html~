@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<link rel="Stylesheet" type="text/css" href="jHtmlArea.css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jHtmlArea-0.8.js"></script>
+
+
+</head>
+
+
+
+
+
+<body>
+<textarea id='txtPlain'></textarea>
+<textarea id='txtEditor'></textarea>	
+</body>
+	
+  
+<script type="application/javascript">
+$('#txtEditor').htmlarea();
+</script>
+
+
+
+<script>
+
+
+</script>
+</html>

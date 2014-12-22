@@ -59,26 +59,29 @@ IMAP_Interface.prototype.ListFolder = function() {
       var getres;
       res=response;
       //var regflag1 = /(\\HasNoChildren (\w+))/g;  
+       var regexp = /\((.+?)\)/g;
       var regflag1 = /(\\(HasNoChildren|Noselect)( )*(\\(\w+))*)/g;
       //var regflag1 = /(\\(\w+)( )*(\\(\w+))*)/g;
       var regflag2 = /\"\/\" \"(.*?)\"/g;  
       var regflag3 = /\"\/\" \"(.*?)\"/g;  
       var out=new Array();
-      var type,folder,i=0;
+      var type,folder,i=0,tmp;
   while((getres = regflag3.exec(res))){      
-    // console.log(regflag1.exec(res));
-    // console.log(regflag2.exec(res));
     type=regflag1.exec(res);
     folder=regflag2.exec(res);
-    //console.log(type[5]+" "+folder[2]);
-    // console.log(type[5]+" "+folder[1]);
-    var ruk={
-     type:  type[5],
-     folder: folder[1]
-    };
-    // console.log(ruk);
-    out[i]=ruk;
-    i++;
+    tmp=regexp.exec(res);
+
+    // true || crome not support contain
+    //if(tmp[1].contains('HasNoChildren')){ 
+    if(tmp[1].indexOf('HasNoChildren') >= 0){   
+        var ruk={
+         type:  type[5],
+         folder: folder[1]
+        };
+        out[i]=ruk;
+        i++;
+    }
+    
   }
         
     return out;
@@ -107,6 +110,7 @@ IMAP_Interface.prototype.fetchList = function() {
           if (!flags.match(/Deleted/)) {
             sizes[getid[2]] = getsize[2];
             ids[i++]=getid[2];
+            //ids[i++]=[getid[2],getflag[2]];
           }
         }
         return ids;
@@ -152,7 +156,11 @@ IMAP_Interface.prototype.fetchListFlags = function() {
         return response.replace(/^.*\r\n|\)?\r\n.*\r\n.*\r\n$/g, "");
     }
     this.tag++;
-    var cmd=new IMAPCommand(this.tag,"UID FETCH " + uid + (headersOnly ? " BODY[HEADER]" : " BODY[]"),f);
+
+    //not update seen flag on server
+    var cmd=new IMAPCommand(this.tag,"UID FETCH " + uid + (headersOnly ? " (body.peek[header])" : " (body.peek[])"),f);
+    
+    //var cmd=new IMAPCommand(this.tag,"UID FETCH " + uid + (headersOnly ? " BODY[HEADER]" : " BODY[]"),f);
     this.tcp.connect('fetchBody',JSON.stringify(cmd));
     return cmd;
   }
