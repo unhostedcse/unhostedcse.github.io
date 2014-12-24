@@ -193,6 +193,7 @@ Sync_Module.prototype.getBodyFinished = function(){
 }
 
 Sync_Module.prototype.SendMailReady = function(){
+	alert('Mail Sent!');
 	console.log('finished SendMailReady');
 }
 

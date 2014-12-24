@@ -92,8 +92,9 @@ SMTP_Sendmail.prototype.send = function(fun){
   
   if(smtpsecurity=='tls'){
     //alert('tls');
+    SMTP_Sendmail.cmds.push(this.ehlo);
     SMTP_Sendmail.cmds.push(this.authTls);
-    //SMTP_Sendmail.cmds.push(this.ehlo);
+    SMTP_Sendmail.cmds.push(this.ehlo);
     SMTP_Sendmail.cmds.push(this.authLogin);
     SMTP_Sendmail.cmds.push(this.authLoginLogin);
     SMTP_Sendmail.cmds.push(this.authLoginPassword);

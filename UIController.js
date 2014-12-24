@@ -177,7 +177,7 @@ function addMsg(mails){
 			(seen ? "" : '<div class="iconImg msgflags flagUnseen" title="Unseen"></div>')+
 			'</div>');
 		$good.append('<div class="msgFrom sep" title="' + msg.from + '">' + msg.from + '</div>');
-		$good.append('<div class="msgSubject sep" title="Tested">'+msg.subject+'</div>');
+		$good.append('<div class="msgSubject sep" title="'+msg.subject+'">'+msg.subject+'</div>');
 		$good.append('<div class="msgDate sep">'+date+'</div>');
 		$good.append('<div class="msgSize sep">'+size+' KB</div>');
 		//$good.append('<a id="body" class="body" href="'+msg.body+'" style="display: none;"></a>');
@@ -293,6 +293,9 @@ function setSetting(){
  	var x = document.getElementById("setting").value; 	
   	console.log('select Account '+x);
 	Sync_Module.db.loadAccount(x); 	
+	if(x=="unhostedcse@outlook.com"){
+		selectFolder="Inbox";
+	}
  }
 
  $(document).on("loadAccount",
