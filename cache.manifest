@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 305
+# rev 306
 CACHE:
 ./Mail_Settings.js
 ./js/editor.js
@@ -848,8 +848,6 @@ CACHE:
 ./wys/jHtmlArea.png
 ./wys/jHtmlArea-0.8.js
 ./wys/jquery.js
-./wys/write.html~
-./wys/index.html~
 ./wys/jHtmlArea.css
 ./wys/jHtmlArea_Toolbar_Group_BG.png
 ./signin.html
@@ -1007,7 +1005,6 @@ CACHE:
 ./jquery-1.10.2.js
 ./IMAP_Interface.js
 ./IMAP_Fetch.js
-./cache.manifest~
 ./BrowserSetUp.js
 
 
