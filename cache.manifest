@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 320
+# rev 321
 CACHE:
 ./account.html
 ./BrowserSetUp.js
@@ -9,38 +9,6 @@ CACHE:
 ./IMAP_Fetch.js
 ./IMAP_Interface.js
 /index.html
-./jquery-1.10.2.js
-./jquery-2.1.1.min.js
-./js/accesskeys.js
-./js/autocomplete.js
-./js/base64.js
-./js/ckeditor_basic.js
-./js/compose-base.js
-./js/compose-dimp.js
-./js/contextsensitive.js
-./js/dimpcore.js
-./js/draghandler.js
-./js/editor.js
-./js/effects.js
-./js/growler.js
-./js/horde.js
-./js/hordecore.js
-./js/imagepoll.js
-./js/imageupload.js
-./js/imp.js
-./js/imple.js
-./js/keynavlist.js
-./js/liquidmetal.js
-./js/mime.css
-./js/mozilla.css
-./js/popup.js
-./js/prettyautocomplete.js
-./js/prototype.js
-./js/screen.css
-./js/screen_002.css
-./js/screen_003.css
-./js/sound.js
-./js/viewport_utils.js
 ./logger.js
 ./Mail_Settings.js
 ./NewMessage.js
