@@ -123,6 +123,9 @@ DBController.prototype.updateAccounts=function(id,newData){
 	   };
 	   requestUpdate.onsuccess = function(event) {
 	   	console.log("id " +id +" update "+event.type);
+	   	alert('Updated');
+        location.reload();
+
 	   };
 	};
 
@@ -150,7 +153,9 @@ DBController.prototype.addAccount=function(){
       }else{
           var request=objectStore.add(record);
           request.onsuccess = function(event) {
-              console.log(userName+' added to database' );
+              console.log(userName+' added to database');
+              alert(userName+' added to database');
+              location.reload();
           };
           request.onerror = function (event) {
               console.log(event);
