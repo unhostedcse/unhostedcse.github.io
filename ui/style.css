@@ -1,0 +1,167 @@
+/*.attachment {
+	width: auto;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 5px;
+	margin-right: 5px;
+	color: #3300CC;
+	font-size: 18px;
+	font-variant: small-caps;
+	text-align: center;
+	display: block;
+	background-color: #999999;
+	/*margin-bottom: 1em;*/
+}*/
+
+.attachment{
+  margin-left: 1px;
+  padding-left: 20px;
+  background: url(toolbarOxygen/paperclip.png) center left no-repeat;
+}
+
+/*#bodyDisplay a {
+	text-decoration: none;
+}*/
+
+#composeMessageParent a {
+	text-decoration: none;
+}
+
+.att {
+	background-color: #eceff0;
+	display: inline-block;
+	border: 1px solid #d0d0d0;
+	margin-right: 2px;
+	margin-left: 2px;
+}
+.att:hover {
+	background-color: #33CCFF;
+}
+.iconU {
+	vertical-align: middle;		
+	background-color: transparent;
+	background-position: center top;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 20px;
+	vertical-align: middle;
+	width: 20px;
+}
+
+.logo{
+	
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.downloadU {
+	background-image: url('download.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	/* [disabled]background-position: right; */
+}
+.closeU {
+	background-image: url('closebox.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.accountHolder{
+	margin-right: auto;
+	margin-left: auto;
+	width: 50%;
+}
+
+.accountBox{
+	width: 100%;
+	height: 25px;
+	display: inline-block;
+	background-color: #99CCFF;
+	border: 1px solid #000000;
+	border-radius: 1px;
+	margin-bottom: 2px;
+}
+
+.accountBox:hover {
+	background-color: #33CCFF;
+}
+
+.accountBoxSelect{
+	background-color: #99CC33;
+}
+
+.accountName{
+	display: inline-block;
+}
+
+.accountEdit{
+	background-image: url('graphics/edit.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+	float: right;
+}
+.accountEdit:hover {
+	background-color: #CC3300;
+}
+
+.accountRemove{
+	background-image: url('closebox.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+	float: right;
+}
+.accountRemove:hover {
+	background-color: #CC3300;
+}
+
+.container-form {
+    font-size: 100%;
+    width: 40em;
+    margin: 5em auto;
+
+    background-color: #fff;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 0 2em #ccc;
+    -webkit-box-shadow: 0 0 2em #ccc;
+    box-shadow: 0 0 2em #ccc;
+}
+
+div.container-form .submit-button {
+    display: block;
+    margin: .5em auto;
+    width: auto;
+}
+
+.container-form-nest {
+	font-size: 90%;
+	width: 30em;
+	background-color: #fff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0 0 2em #ccc;
+	-webkit-box-shadow: 0 0 2em #ccc;
+	box-shadow: 0 0 2em #ccc;
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}
+
+.dimpactionPreviousPage{
+    background-image: url("../graphics/nav/left.png");
+}
+
+.dimpactionNextPage {
+    background-image: url("../graphics/nav/right.png");
+}

@@ -1,6 +1,6 @@
 var username="";
 var userID="";
-var password="rusasuergi@150";
+var password="";
 var imaphost="";
 var imapport="";
 var imapsecurity="";
@@ -13,3 +13,8 @@ var selectFolder;
 var dbSelectFolder;
 var dbVersion=10;
 var refresh_interval=100000;
+var Unhosted_version=0.1;
+var autoSync=false;
+var msgPP=10;
+var maxMsg=30;
+var pid=0;

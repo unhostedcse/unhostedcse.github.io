@@ -1,0 +1,24 @@
+.attachment {
+	width: auto;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 5px;
+	margin-right: 5px;
+	color: #3300CC;
+	font-size: 18px;
+	font-variant: small-caps;
+	text-align: center;
+	display: block;
+	background-color: #999999;
+	margin-bottom: 1em;
+}
+
+#bodyDisplay a {
+	text-decoration: none;
+}
+
+#composeMessageParent a {
+	text-decoration: none;
+}

@@ -70,10 +70,16 @@ Sync_Module.prototype.getMailBoxesReady = function(mailBoxes){
 	}
 
   	$(document).on("mailBoxesCreated", 
-	function(e){
-		console.log('mailBoxesCreated '+e.folder);
+		function(e){
+			console.log('mailBoxesCreated '+e.folder);
+			
 			if(i==val.length){
-				$.event.trigger({type:"mailBoxesDownloaded"});
+				if(autoSync){
+					$.event.trigger({type:"mailBoxesDownloaded"});				
+				}else{
+					$.event.trigger({type:"mailBoxesDownloaded-false"});				
+					return;
+				}				
 			}else{
 				Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
 				i++;
@@ -156,7 +162,7 @@ Sync_Module.prototype.getHeadersReady = function(){
 	result.fetchMIME=new Array();
 	console.log("finished adding DB");
 
-	
+	$('#checkmaillink').removeClass('imp-loading');
 	
 }
 
@@ -193,8 +199,23 @@ Sync_Module.prototype.getBodyFinished = function(){
 }
 
 Sync_Module.prototype.SendMailReady = function(){
-	alert('Mail Sent!');
-	console.log('finished SendMailReady');
+	// alert('Mail Sent!');
+	console.log('finished SendMailReady');	
+
+	setTimeout(function(){
+		window.close();
+	},500);
+	
+  	$.notifier({"type": 'info',
+	                "title": 'Mail Sent',
+	                "text": 'Mail Sent Succesfully',
+	                "positionY": "bottom",
+	                "positionX": "left",
+	                "animationIn" : 'bounce',
+                	"animationOut" : 'drop'
+	});	
+
+	
 }
 
 Sync_Module.prototype.SendMail = function(){
@@ -222,3 +243,48 @@ Sync_Module.prototype.viewDB = function(){
 Sync_Module.prototype.test = function(){
  	Sync_Module.db.getKeys();
  }
+
+Sync_Module.prototype.delete = function(ids,folder,completeDelete,cllBack){
+ 	Sync_Module.db.deleteMessages(ids,folder,completeDelete,cllBack);
+}
+
+Sync_Module.CheckNewMail = function(fetchList,keys){
+	var re=new Array();
+ 	var currentCnt=keys.length;
+ 	var newMailCnt=0;
+ 	var id;
+ 	for(var i=fetchList.length-1;i>=0;i--){ // iterate over backword     
+ 	  id=parseInt(fetchList[i]);
+      if(keys.indexOf(id)<0){
+      	re.push(id);
+      	newMailCnt++;
+      }else{
+      	console.log('no more new mail');
+      	break;      	
+      }
+      if(newMailCnt==maxMsg){
+      	break;
+      }
+  	}
+
+  	console.log('new mail '+newMailCnt);
+  	var obj={
+  		"type": 'info',
+		"title": 'New Mail',
+		"text": newMailCnt+' New Mails'
+  	};
+
+  	$.event.trigger({type:"notifier",obj:obj});
+
+  	if(maxMsg<currentCnt+newMailCnt){
+  		var mailDelete=(currentCnt+newMailCnt)-maxMsg;
+  		for (var i = 0; i < mailDelete; i++) {
+  			var id=keys[0];
+  			console.log(id);
+  			Sync_Module.db.deleteMessages([id],selectFolder,false);
+  			console.log('deleteing mail '+id+' of '+selectFolder);
+  		};
+  		
+  	}
+  	return re;
+}
