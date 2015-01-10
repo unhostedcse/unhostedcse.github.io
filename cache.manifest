@@ -60,10 +60,8 @@ CACHE:
 ./ui/screen.css
 ./ui/mime.css
 ./ui/do2.js
-./ui/style.css~
 ./ui/do.js
 ./ui/webkit.css
-./ui/screen(1).css~
 ./ui/style.css
 ./ui/graphics/calendar.png
 ./ui/graphics/administration.png
@@ -1733,5 +1731,4 @@ CACHE:
 ./graphics/show_panel.png
 ./graphics/button-default.png
 ./File.js
-./cache.manifest~
 ./BrowserSetUp.js
