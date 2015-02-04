@@ -165,17 +165,46 @@ action.       </li>
    </tbody></table>
   </div>
 
-  <div contentEditable="true" id="composeMessageParent" style="height:  50%;">
+  <!-- <div contentEditable="true" id="composeMessageParent" style="height:  50%;"> -->
+  
    <!-- <textarea style="height:  50%;" name="message" id="composeMessage" class="fixed"> -->
 <!-- </textarea> -->
-  </div>
+<div id="htmlEditor">
+</div>
 
  </div>
 </form>
 </div>
 
-<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script> 
-  
+<!-- <script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>  -->
+<!-- Ignite UI Required Combined CSS Files -->
+<link href="htmlEditor/infragistics.theme.css" rel="stylesheet" />
+<link href="htmlEditor/infragistics.css" rel="stylesheet" />
+
+<script src="htmlEditor/modernizr-latest.js"></script>
+<script src="htmlEditor/jquery-1.9.1.min.js"></script>
+<script src="htmlEditor/jquery-ui.min.js"></script>
+
+<!-- Ignite UI Required Combined JavaScript Files -->
+<script src="htmlEditor/infragistics.core.js"></script>
+<script src="htmlEditor/infragistics.lob.js"></script>
+
+<script>
+        $(function () {
+            var height = $('html').hasClass('touch') ? 500 : 350;
+
+            $("#htmlEditor").igHtmlEditor({ height: height}); //
+        });
+</script>
+<style type="text/css">
+    /* Override sample's browser styles */
+      #htmlEditor h1, #htmlEditor h2, #htmlEditor h3, #htmlEditor h4, #htmlEditor h5, #htmlEditor h6 { margin: 0px; }
+      #htmlEditor h1 { font-size: 1.9em; }
+    #sampleContainer { overflow: visible; }
+</style>
+
+
+
     <!--
   <script type="text/javascript" src="js/prototype.js"></script>
   <script type="text/javascript" src="js/horde.js"></script>
@@ -210,6 +239,7 @@ action.       </li>
 
 <script type="text/javascript" src="logger.js"></script>
 <script type="text/javascript" src="TCP_Interface.js"></script>
+<script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
 
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
@@ -224,12 +254,28 @@ action.       </li>
 <script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript" src="File.js"></script>
 
+<!-- address Module -->
+<!-- <script type="text/javascript"  src="address_module/ui/jquery-2.1.1.js"></script> -->
+<script type="text/javascript" src="address_module/ui/jquery.csv-0.71.js"></script>
+
+<script src="address_module/db.js"></script>
+<script src="address_module/app.js"></script>
+<script src="address_module/pop.js"></script>
+
+<link rel="stylesheet" href="address_module/style.css">
+<link href="./ui/mime.css" rel="stylesheet" type="text/css">
+<link href="./ui/screen.css" rel="stylesheet" type="text/css">
+<link href="./ui/screen(1).css" rel="stylesheet" type="text/css">
+<link href="./ui/screen(2).css" rel="stylesheet" type="text/css">
+<link href="./ui/webkit.css" rel="stylesheet" type="text/css">
+
+
 <!-- <link rel="Stylesheet" type="text/css" href="wys/jHtmlArea.css" />
 <script type="text/javascript" src="wys/jHtmlArea-0.8.js"></script> -->
 
 <link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
 <!-- <script src="./ui/notification/jquery.min.js"></script> -->
-<script src="./ui/notification/jquery-ui.min.js"></script>
+<!-- <script src="./ui/notification/jquery-ui.min.js"></script> -->
 <script src="./ui/notification/notifier.js"></script>
 
 <script type="text/javascript">
@@ -288,11 +334,33 @@ action.       </li>
     // alert(html);
     // var text=document.getElementById('composeMessageParent').innerHTML;
 
-    var body = document.getElementById('composeMessageParent');
+    //$("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
+
+    // var body = document.getElementById('composeMessageParent');
+
+    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
+    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
+
+    if(isHtml){
+      var body = $("#htmlEditor").igHtmlEditor("getContent", "text");
+    }else{
+      var body = $("#htmlEditor").igHtmlEditor("getContent", "html");
+    }
+
     var range = document.createRange();
-    var documentFragment = range.createContextualFragment(html)
+    var documentFragment = range.createContextualFragment(html);
     // body.contentDocument.
-    body.appendChild(documentFragment);
+    //body.appendChild(documentFragment);
+
+    var div= document.createElement("div");
+    var p= document.createElement("p");
+
+    div.appendChild(documentFragment);
+    div.appendChild(range.createContextualFragment('</br>'));
+    div.appendChild(range.createContextualFragment(body));
+
+    //var content=documentFragment+'</br>'+body;
+    $("#htmlEditor").igHtmlEditor("setContent",div.innerHTML, "html");
     // var message = technalxs.simplemail.SimpleMailNewMessage.getMessage();
 
     // Need this to update RichText Editor
@@ -375,7 +443,11 @@ function setForwardWindow(msg){
   
   var mail=NewMessage.createForward(msg);
   
-  document.getElementById('composeMessageParent').innerHTML=mail.body;
+  // document.getElementById('composeMessageParent').innerHTML=mail.body;
+
+  // $("#htmlEditor").igHtmlEditor("setContent", "This is text content.", "text");
+  $("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
+
   document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
   data[0].value=mail.from;
@@ -405,7 +477,12 @@ function setForwardWindow(msg){
       // alert('send'+e);
 
         try{
-        var text=document.getElementById('composeMessageParent').innerHTML;
+
+        //var text=document.getElementById('composeMessageParent').innerHTML;
+        
+        
+
+
         var subject=document.getElementById('subject').value;
         var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
 
@@ -493,20 +570,16 @@ function sendMail(to){
     message.subject = document.getElementById('subject').value;
     message.file = atta;
 
-    var text=document.getElementById('composeMessageParent').innerHTML;
+    //var text=document.getElementById('composeMessageParent').innerHTML;    
 
-    var html=''+
-    '<head>'+
-    '<link rel="stylesheet" type="text/css" href="chrome://simplemail/skin/message.css">'+
-    '<base target="_blank">'+
-    '</head>'+
-    '<body spellcheck="true">'+
-    '<br>'+
-    //'<a href="file://'+message.file.name+'" style="background: url(moz-icon://.js?size=16)center left no-repeat;" class="attachment">'+
-    //message.file.name +'</a>'+
-    //text+
-    '<a class="attachment" style="background: url(undefined)center left no-repeat;" href="done.txt">done.txt</a>'+
-    '</body>';
+    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
+    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
+
+    if(isHtml){
+      var text = $("#htmlEditor").igHtmlEditor("getContent", "text");
+    }else{
+      var text = $("#htmlEditor").igHtmlEditor("getContent", "html");
+    }    
 
     message.html = text;
 
@@ -597,9 +670,26 @@ $(document).on("newSendMail",
   }
 );
 
+//$(document).on("newSendMail",
+$(".hordeACTrigger.impACTrigger").keypress(function(){
+  search();
+});
+
+// $( "hordeACTrigger impACTrigger").keyup(search);
+
+function search(){
+  // alert('aaa');
+  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+   var add=new Address_Module();
+   add.suggestMails(data[0].value);
+}
 </script> 
 
 
 <div style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;" id="Growler"></div>
 <iframe style="display: none;" src="javascript:false" name="submit_frame"></iframe>
-<div style="display: none;" class="KeyNavList"><ul><li>High</li><li class="selected">Normal</li><li>Low</li></ul></div></body></html>
+<div style="display: none;" class="KeyNavList"><ul><li>High</li><li class="selected">Normal</li><li>Low</li></ul></div>
+
+<div id='bath'>
+</div> 
+</body></html>

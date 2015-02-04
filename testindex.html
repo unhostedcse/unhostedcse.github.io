@@ -247,7 +247,6 @@ var res=new Array();
 var vv;
 
 function test(){
-var url='https://autoconfig.thunderbird.net/v1.1/gmail.com';
 
 var mail='* LIST (\\NoInferiors \\UnMarked \\Trash) "/" "Trash"'+'\r\n'+
 '* LIST (\NoInferiors \UnMarked) "/" INBOX.Sent'+'\r\n'+
@@ -270,40 +269,6 @@ mail=''+
 '* LIST (\HasNoChildren) "." INBOX.Junk'+'\r\n'+
 '* LIST (\HasNoChildren) "." INBOX.Drafts'+'\r\n'+
 '2 OK List completed.'+'\r\n';
-
-
-  var getres;
-  res=mail;
-  var regexp = /\((.+?)\)/g;
-  // var regflag1 = /(\\(HasNoChildren|Noselect)( )*(\\(\w+))*)/g;
-  var or = /(\.|\")/g;
-  var regflag2 = /\"\.\" (.*?)\r\n/g;  
-  var regflag3 = /\"\.\" (.*?)/g;  
-  var out=new Array();
-  var type,folder,i=0,tmp;
-
-  while((getres = regflag3.exec(res))){      
-    // type=regflag1.exec(res);
-    folder=regflag2.exec(res);
-    tmp=regexp.exec(res);
-    // console.log(type);
-    console.log(folder);
-    console.log(folder[1]);
-    // console.log(tmp);
-    // if(tmp[1].indexOf('NoInferiors') >= 0){   
-    //     var ruk={
-    //      // type:  type[5],
-    //      folder: folder[1]
-    //     };
-    //     out[i]=ruk;
-    //     i++;
-    // }    
-  }
-
-console.log(out.length);
-console.log(out);
-
-return;
 
 var att='Date: Sat, 27 Dec 2014 20:24:58 +0530 (IST)'+'\r\n'+
 'From: unhostedcse@gmail.com'+'\r\n'+
@@ -410,7 +375,10 @@ var att='Date: Sat, 27 Dec 2014 20:24:58 +0530 (IST)'+'\r\n'+
       // var type=part.getHeader('Content-Type');
       // var type=part.getHeader('Subject');
 
+      console.log(head);
       console.log(head.body);
+
+      return;
 
       head.body = SimpleMailText.replaceURLs(head.body,
       function(text, url) {

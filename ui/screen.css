@@ -1327,7 +1327,7 @@ ul.horde-tags {
     padding-left: 10px;
 }
 div.GrowlerNoticeExit {
-    background: url("ui/graphics/copied/close.png") no-repeat;
+    background: url("graphics/close.png") no-repeat;
     cursor: pointer;
     float: right;
     height: 20px;
@@ -2053,7 +2053,7 @@ left.horde-point-right {
     display: inline;
 }
 .horde-popdown {
-    background-image: url("../ui/graphics/copied/popdown.png");
+    background-image: url("graphics/popdown.png");
     background-repeat: no-repeat;
     background-position: top center;
     float: right;
@@ -2111,7 +2111,7 @@ left.horde-point-right {
 /* Buttonbar. */
 .horde-buttonbar {
     min-height: 30px;
-    background-image: url("../ui/graphics/copied/buttonbar-bg.png");
+    background-image: url("graphics/buttonbar-bg.png");
     background-repeat: repeat;
     overflow: hidden;
 }
@@ -2171,7 +2171,7 @@ left.horde-point-right {
     float: left;
     height: 22px;
     padding-top: 8px;
-    background-image: url("../ui/graphics/copied/button-split.png");
+    background-image: url("graphics/button-split.png");
     background-repeat: no-repeat;
     background-position: right top;
 }
@@ -2209,7 +2209,7 @@ left.horde-point-right {
     background-position: center left;
 }
 .horde-buttonbar li:hover, .horde-buttonbar li.horde-active {
-    background-image: url("../ui/graphics/copied/button-split.png"), url("graphics/button-active-bg.png");
+    background-image: url("graphics/button-split.png"), url("graphics/button-active-bg.png");
     background-repeat: no-repeat, repeat-x;
 }
 .horde-buttonbar .rightFloat li:hover,
@@ -2218,7 +2218,7 @@ left.horde-point-right {
 }
 .horde-buttonbar .horde-hasmenu {
     padding-right: 24px;
-    background: url("ui/graphics/copied/popdown.png") no-repeat right center;
+    background: url("graphics/popdown.png") no-repeat right center;
 }
 .horde-buttonbar li div {
     display: none;

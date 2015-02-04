@@ -54,7 +54,7 @@ Website : http://www.bouksou.com
         $('.notif').first().remove();  
       }
 
-      $('#notifier').append('<li id="box'+ id +'" class="notif '+ parameters.type +'"><div class="icon"></div><div class="text"><h5>'+ parameters.title.substring(0,30) +'</h5><p>'+ parameters.text.substring(0,100) +'...</p></div><div class="close" data-id="'+ id +'"></div></li>');
+      $('#notifier').append('<li id="box'+ id +'" class="notif '+ parameters.type +'"><div class="icon"></div><div class="textn"><h5>'+ parameters.title.substring(0,30) +'</h5><p>'+ parameters.text.substring(0,100) +'...</p></div><div class="close" data-id="'+ id +'"></div></li>');
       $('#box'+id).css('margin-bottom','15px').effect(parameters.animationIn,parameters.animationIn_duration).delay(parameters.delay).effect(parameters.animationOut,parameters.animationOut_duration, function() {
         this.remove();
       });

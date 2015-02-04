@@ -728,7 +728,7 @@ div.vpRowVert div.msgSubject {
 }
 
 span.attachmentImg {
-    background-image: url("../ui/graphics/copied/attachment.png");
+    background-image: url("../graphics/attachment.png");
 }
 
 /* Context Menus */
@@ -838,7 +838,7 @@ span.logoutIcon {
     background-image: url("../graphics/reply.png");
 }
 .dimpactionForward {
-    background-image: url("../ui/graphics/copied/forward.png");
+    background-image: url("../graphics/forward.png");
 }
 .dimpactionSpam {
     background-image: url("../graphics/spam.png");
@@ -865,7 +865,7 @@ span.logoutIcon {
     background-image: url("../graphics/plus.png");
 }
 .dimpactionDrafts, .dimpactionTemplates {
-    background-image: url("../ui/graphics/copied/drafts.png");
+    background-image: url("../graphics/drafts.png");
 }
 .dimpactionSpellcheck {
     background-image: url("../graphics/spellcheck.png");
@@ -874,7 +874,7 @@ span.logoutIcon {
     background-image: url("../graphics/edit.png");
 }
 .dimpactionResume {
-    background-image: url("../ui/graphics/copied/drafts.png");
+    background-image: url("../graphics/drafts.png");
 }
 .dimpactionFilter {
     background-image: url("../graphics/filters.png");
@@ -888,10 +888,10 @@ span.logoutIcon {
     background-image: url("../graphics/replyall.png");
 }
 #ctx_forward_attach span.iconImg {
-    background-image: url("../ui/graphics/copied/attachment.png");
+    background-image: url("../graphics/attachment.png");
 }
 #ctx_message_forward span.iconImg, #ctx_forward_body span.iconImg, #ctx_forward_both span.iconImg, #ctx_forward_redirect span.iconImg {
-    background-image: url("../ui/graphics/copied/forward.png");
+    background-image: url("../graphics/forward.png");
 }
 #ctx_mbox_empty span.iconImg,
 #ctx_message_delete span.iconImg,
@@ -918,7 +918,7 @@ span.logoutIcon {
     background-image: url("../graphics/message_source.png");
 }
 #ctx_message_resume span.iconImg, #ctx_message_template span.iconImg, #ctx_message_template_edit span.iconImg, #ctx_template_new span.iconImg, #ctx_template_edit span.iconImg, #msg_resume_draft span.iconImg, #msg_template span.iconImg {
-    background-image: url("../ui/graphics/copied/drafts.png");
+    background-image: url("../graphics/drafts.png");
 }
 #ctx_oa_preview_hide span.iconImg, #ctx_oa_preview_show span.iconImg {
     background-image: url("../graphics/preview.png");
@@ -975,7 +975,7 @@ span.logoutIcon {
     background-image: url("../graphics/reload.png");
 }
 #ctx_preview_allparts span.iconImg, #msg_all_parts span.iconImg {
-    background-image: url("../ui/graphics/copied/attachment.png");
+    background-image: url("../graphics/attachment.png");
 }
 #ctx_preview_thread span.iconImg {
     background-image: url("../graphics/thread.png");

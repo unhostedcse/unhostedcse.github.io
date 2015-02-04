@@ -134,7 +134,8 @@ IMAP_Fetch.prototype.fetchBody=function(id){
 
       head=new header();     
 
-      var part = new Part(val);            
+      var part = new Part(val); 
+      // console.log(val);
 
       // try{
       head.To=part.getAddressHeader('To');
@@ -184,7 +185,10 @@ IMAP_Fetch.prototype.fetchBody=function(id){
         result.fetchMIME=new Array();
       }
       result.fetchMIME[id]=head;
-
+      //console.log(head);
+      //skip buferering, save directly at here
+      $.event.trigger({type:"mailbodyDownloaded",id:id,record:head});
+      
       printCmd("id= "+this.imaps+" result fetchBody= "+id+" "+result.fetchBody[id]);
       nextFunc(para);      
   }

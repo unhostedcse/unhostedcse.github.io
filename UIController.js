@@ -1,8 +1,3 @@
-// username='unhostedcse@gmail.com';
-// imaphost='imap.gmail.com';
-// imapport='993';	
-// imapsecurity='ssl';
-	
 document.addEventListener("testEvent",
 	function(e) {  
 		console.log(e);
@@ -63,12 +58,6 @@ function setTime(){
 	$('#horde-date').text(date);
 }
 
-// var adb=new DBController();
-// adb.create_open_account_DB(
-// 	function(){
-// 		adb.loadAccount('unhostedcse@gmail.com'); 	
-// 	};
-// );
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -272,8 +261,15 @@ function addMsg(mails){
 		// $good.append('<div class="iconImg msgflags flagAnswered" title="Flagged for Followup"></div>');
 
 		var from=SimpleMailAddress.parse(msg.from);
-		var name=from.name || from.email;
-		var email=from.email;
+
+		// var name=from.name || from.email; // ori
+		// var email=from.email; // ori
+
+		var name=from && from.name ? from.name : ( from && from.email ? from.email : null);
+		var email=from && from.email ? from.email : null;
+		//var name=from ? from.name || from.email : null;
+
+		
 
 		$good.append('<div class="msgFrom sep" title="' + email + '">' + name + '</div>');
 		$good.append('<div class="msgSubject sep" title="'+msg.subject+'">'+msg.subject+'</div>');
@@ -434,9 +430,7 @@ function setSetting(){
  	var x = document.getElementById("setting").value; 	
   	console.log('select Account '+x);
 	Sync_Module.db.loadAccount(x); 	
-	if(x=="unhostedcse@outlook.com"){
-		selectFolder="Inbox";
-	}
+	
  }
 
  $(document).on("loadAccount",
@@ -524,7 +518,7 @@ function DeleteMessages(){
 
 	$(document).on("notifier",function(event){
 		var ob=event.obj;
-		$.notifier({"type": event.type,
+		$.notifier({"type": ob.type,
 	                "title": ob.title,
 	                "text": ob.text,
 	                "positionY": "bottom",

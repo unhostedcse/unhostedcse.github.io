@@ -32,18 +32,18 @@
 	z-index: 9000;
 }
 
-.notif .text{
+.notif .textn{
 	float: left;
 	margin-left: 10px;
 	width: 80%;
 }
 
-.notif .text h5{
+.notif .textn h5{
 	font-size: 18px;
 	font-weight: bold;
 }
 
-.notif .text p{
+.notif .textn p{
 	margin-top: 5px;
 }
 

@@ -27,8 +27,8 @@ IMAP_Interface.prototype.result=function(value,id){
 }
 
 IMAP_Interface.prototype.start = function(obj){
-	var cmd=new Command(null, null, /\* OK/, /\r\n/);   
-
+	//var cmd=new Command(null, null, /\* OK/, /\r\n/);   
+  var cmd=new Command(null, null, "\\* OK", "\r\n");   
 	this.tcp.connect('connect',JSON.stringify(cmd),JSON.stringify(obj));
 }
 

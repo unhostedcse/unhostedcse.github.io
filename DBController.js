@@ -265,7 +265,7 @@ DBController.prototype.create_openDB=function(indexedDBName,folder,DBReady){
         // for offline sendmail
         var objectStore = db.createObjectStore(self.offlineMboxName, {keyPath: "id",autoIncrement:true});
 
-        var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
+        // var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
     };   	
 
 }
@@ -528,6 +528,7 @@ DBController.prototype.addContain=function(record,id,folder){
 		    request.onsuccess = function(event) {
 		    	//console.log(id+' '+event);
 		    	console.log('id '+id + ' added to database' );
+		    	//initUnhosted();
 		   	};
 		   	request.onerror = function (event) {
 		   		console.log(id+' '+event);
