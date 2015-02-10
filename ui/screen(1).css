@@ -105,7 +105,7 @@ div.partsTreeDiv {
     background-image: url("graphics/folders/open.png");
 }
 .draftsImg, .composetemplatesImg {
-    background-image: url("graphics/folders/drafts.png");
+    background-image: url("../ui/graphics/copied/drafts.png");
 }
 .inboxImg {
     background-image: url("graphics/folders/inbox.png");
@@ -197,7 +197,7 @@ div.partsTreeDiv {
     background-image: url("graphics/flags/encrypted.png");
 }
 .msgflags.flagAttachmsg {
-    background-image: url("graphics/flags/attachment.png");
+    background-image: url("../ui/graphics/copied/attachment.png");
 }
 .msgflags.flagList {
     background-image: url("graphics/flags/group.png");
@@ -215,7 +215,7 @@ div.partsTreeDiv {
     background-image: url("graphics/flags/answered.png");
 }
 .msgflags.flagDraft, span.iconImg.flagDraft {
-    background-image: url("graphics/flags/draft.png");
+    background-image: url("../ui/graphics/copied/draft.png");
 }
 .msgflags.flagForwarded, span.iconImg.flagForwarded {
     background-image: url("graphics/flags/forwarded.png");
@@ -471,7 +471,7 @@ div.mimeStatusMessage, div.mimePartInfo {
 }
 .mimePartInfoAtc div {
     border: 1px dashed;
-    background-image: url("graphics/attachment.png");
+    background-image: url("../ui/graphics/copied/attachment.png");
     background-position: 2px 50%;
     background-repeat: no-repeat;
     padding-left: 35px;

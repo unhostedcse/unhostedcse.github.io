@@ -1,69 +1,25 @@
+// username='unhostedcse@gmail.com';
+// imaphost='imap.gmail.com';
+// imapport='993';	
+// imapsecurity='ssl';
+	
 document.addEventListener("testEvent",
 	function(e) {  
 		console.log(e);
 	}
 ,false);
 
-var db=new DBController();
-db.create_open_account_DB(loadAcc);
+var sync=new Sync_Module(clearBody);
+selectFolder='INBOX';
+dbSelectFolder=selectFolder;
+sync.init(addMsg,dbSelectFolder,setMailBoxBar);
 
-function loadAcc(){
-	var uid=getParameterByName('uid');
-	pid=getParameterByName('pid');
-	var mbox=getParameterByName('mbox');
-	selectFolder=mbox;
-
-	console.log('pid: '+pid);	
-
-	try{
-		uid=parseInt(uid);
-		pid=parseInt(pid);
-		db.loadAccountById(uid,start);
-	}catch(e){
-		location.href='./select.html';
-		console.log('Bad account ID');
-	}	
-}
-
-var sync;
-function start(status){	
-	if(status){
-		showAccountName();
-		db.create_openDB(username,'',
-			function(){
-				db.getMailBoxes(function(boxs){
-					if(boxs && boxs.length>0){
-						selectFolder=selectFolder ? selectFolder : boxs[0];						
-						// selectFolder='INBOX';						
-					}
-					dbSelectFolder=selectFolder;				
-					sync=new Sync_Module(clearBody);
-					sync.init(addMsg,dbSelectFolder,setMailBoxBar);
-					db.closeDB();
-				});
-			});
-
-		setTime();
-	}else{
-		location.href='./select.html';
-	}
-}
-
-function setTime(){
-	var date=new Date();
-	date= date.toUTCString();
-	date = date.replace(/(\w+, \d+ \w+) (\d{2}) /, "$1 20$2 ");
-	date=Date.parse(date)
-	date=DateUtil.toShortString(date);
-	$('#horde-date').text(date);
-}
-
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),results = regex.exec(location.href);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
+// var adb=new DBController();
+// adb.create_open_account_DB(
+// 	function(){
+// 		adb.loadAccount('unhostedcse@gmail.com'); 	
+// 	};
+// );
 
 function initUnhosted(){
 	dbSelectFolder=selectFolder;
@@ -73,61 +29,28 @@ function initUnhosted(){
 	var a=document.getElementsByClassName('horde-icon');
 
 
-	a[3].removeAttribute("idval");
-	a[4].removeAttribute("idval");
+	a[1].removeAttribute("idval");
+	a[2].removeAttribute("idval");
 	a[5].removeAttribute("idval");
 
-	a[3].setAttribute("style","display: none");
-	a[4].setAttribute("style","display: none");
+	a[1].setAttribute("style","display: none");
+	a[2].setAttribute("style","display: none");
 	a[5].setAttribute("style","display: none");
 }
 
 function startSMTP(){ 
+
   sync.SendMail();
-}
-
-
-function showAccountName(){
-	document.getElementById('accountName').innerHTML=username;
 }
 
 //checkmaillink
 $(document).on("click",'#checkmaillink',
 	function(e) {
-
-		$('#checkmaillink').addClass('imp-loading');
 		console.log('refresh mail boxes');
 
-		if(autoSync){
-			sync.getMailBoxesScenario();			
-		}else{
-			if(selectFolder && selectFolder!="" && selectFolder!=null){
-				dbSelectFolder=selectFolder;
-				sync.getUids();
-			}else{
-				sync.getMailBoxesScenario();
-			}
-		}
-	}
-);
+		sync.getMailBoxesScenario();  // uncomment
 
-//after download mboxes
-$(document).on("mailBoxesDownloaded-false", 
-	function(e){
-		console.log('mailBoxesDownloaded');
-
-		db.create_openDB(username,'',
-			function(){
-				db.getMailBoxes(function(boxs){
-					if(boxs && boxs.length>0){
-						selectFolder=boxs[0];						
-					}
-					dbSelectFolder=selectFolder;									
-					db.closeDB();
-					initUnhosted();
-					sync.getUids();
-			});
-		});		
+		// sync.refresh();
 	}
 );
 
@@ -182,33 +105,33 @@ $(document).on("mailBoxesReadNext",
 	}
 );
 
-// $(document).on("composeMail", 
-// 	function(e){
-// 		alert(e.type);
-// 		console.log(e.type);		
-// 	}
-// );
+$(document).on("composeMail", 
+	function(e){
+		alert(e.type);
+		console.log(e.type);		
+	}
+);
 
 
-// function view(){
-// 	try{
-// 		// var db=new DBController();
-// 		// db.create_openDB(username);
-// 		Sync_Module.db.getMessages(addMsg);
+function view(){
+	try{
+		// var db=new DBController();
+		// db.create_openDB(username);
+		Sync_Module.db.getMessages(addMsg);
 
-// 	}catch(e){
-// 		console.log(e);
-// 	}
-// }
-// var i=100;
+	}catch(e){
+		console.log(e);
+	}
+}
+var i=100;
 
-// function addMailBox(){
-// 	try{
-// 		Sync_Module.db.addMailBoxes('test','test'+(i++));
-// 	}catch(e){
-// 		console.log(e);
-// 	}
-// }
+function addMailBox(){
+	try{
+		Sync_Module.db.addMailBoxes('test','test'+(i++));
+	}catch(e){
+		console.log(e);
+	}
+}
 
 function clearBody(){
 	$(".vpRowHoriz.vpRow.DragElt").replaceWith('<div></div>');
@@ -235,7 +158,7 @@ function addMsg(mails){
 		var msg=mails[i];
 
 		//chrome not support contain
-		if(msg.seen && msg.seen.indexOf('\\Seen') >= 0 ) {
+		if(msg.seen.indexOf('\\Seen') >= 0 ) {
 		//if(msg.seen.contains('\\Seen')){
 			var seen=true;
 		}else{
@@ -243,114 +166,62 @@ function addMsg(mails){
 		}
 		
 		var date=DateUtil.toShortString(msg.date);
-
-		if(msg.size=='-')
-			var size=msg.size;
-		else
-			var size=Math.ceil(msg.size/1024);
+		var size=Math.ceil(msg.size/1024);
 
         $('.msglist').append('<div class="vpRowHoriz vpRow DragElt ' + (seen ? "" : 'flagUnseen') +'" id="'+msg.id+'" style="-moz-user-select: none;"></div>');
 		
 		var $good=$(".vpRowHoriz.vpRow.DragElt").last();
 		
-		$good.append(									'<div class="msgStatus">'+
-														'<div class="iconImg msCheck "></div>'+
-										(seen ? ""	: 	'<div class="iconImg msgflags flagUnseen" title="Unseen"></div>')+
-		(msg.attachments && msg.attachments.length>0 ?	'<div class="iconImg msgflags flagAttachmsg" title="Attachments"></div>': "")+
-														'</div>');
-		// $good.append('<div class="iconImg msgflags flagAnswered" title="Flagged for Followup"></div>');
-
-		var from=SimpleMailAddress.parse(msg.from);
-
-		// var name=from.name || from.email; // ori
-		// var email=from.email; // ori
-
-		var name=from && from.name ? from.name : ( from && from.email ? from.email : null);
-		var email=from && from.email ? from.email : null;
-		//var name=from ? from.name || from.email : null;
-
-		
-
-		$good.append('<div class="msgFrom sep" title="' + email + '">' + name + '</div>');
+		$good.append('<div class="msgStatus">'+
+			'<div class="iconImg msCheck"></div>'+
+			(seen ? "" : '<div class="iconImg msgflags flagUnseen" title="Unseen"></div>')+
+			'</div>');
+		$good.append('<div class="msgFrom sep" title="' + msg.from + '">' + msg.from + '</div>');
 		$good.append('<div class="msgSubject sep" title="'+msg.subject+'">'+msg.subject+'</div>');
 		$good.append('<div class="msgDate sep">'+date+'</div>');
 		$good.append('<div class="msgSize sep">'+size+' KB</div>');
-		$good.append('<div class="mid sep" style="display: none;">'+msg.id+'</div>');// for keep mail id
 		//$good.append('<a id="body" class="body" href="'+msg.body+'" style="display: none;"></a>');
+		// alert(msg.body);
+		$good.append('<textarea style="display: none;" class="body">'+msg.body+'</textarea>');
+		
 
-		// $good.append('<textarea style="display: none;" class="body">'+msg.body+'</textarea>');		
 	}
 	$( "div[title='"+selectFolder+"']").addClass('horde-subnavi-active');
 	UIresult="";
 }
 
-function createAttachmentLink(file){	
-	var size=Math.ceil(file.uri.length/1024);
-	var msg=''+
-	'<div class="att">'+
-	'<img src="ui/attachment.png" alt="" width="18" height="18" class="iconU logo"/>'+
-	'<span class="name">'+file.name+'</span>'+
-	'<span class="size"> ('+size+' KB)</span>'+
-	'<a mid="5" class="iconU downloadU" title="Download" download="'+file.name+'" href="'+file.uri+'"> </a>'+
-	// '<a class="iconU closeU" title="Close"></a>'+
-	'</div>';
-	return msg;
-}
-
-// function createAttachmentLink(file){
-
-// 	var link='<a class="attachment" title="'+file.name+'" download="'+file.name+'" href="'+file.uri+'">'+ file.name +'</a>';
-// 	// document.getElementById('bodyDisplay').innerHTML+=link;
-// 	return link;
-
-// }
-
-//show the body after after select a msg
 $(document).on("click",'.vpRowHoriz.vpRow.DragElt',function() {
 
 	var a=document.getElementsByClassName('horde-icon');
-	a[3].removeAttribute("style");
-	a[4].removeAttribute("style");
+	a[1].removeAttribute("style");
+	a[2].removeAttribute("style");
 	a[5].removeAttribute("style");
+
 
 	$('.vpRowHoriz.vpRow.DragElt.vpRowSelected').removeClass('vpRowSelected');
 	var val=$(this).attr('id');
 
-	a[3].setAttribute("idval",val);
-	a[4].setAttribute("idval",val);
+	a[1].setAttribute("idval",val);
+	a[2].setAttribute("idval",val);
 	a[5].setAttribute("idval",val);
+
+	// alert(val);
 
     $(this).addClass('vpRowSelected');
 
 	var text=$(this).find(".msgFrom").text();
 	var sub=$(this).find(".msgSubject").text();
 	var date=$(this).find(".msgDate").text();
-	var mid=parseInt($(this).find(".mid").text());
 
 	$(".from").html(text);
 	$(".subject").html(sub);
 	$("#previewMsg .date").html(date);
 	$(".from_allowTextSelection").html('from');
 	
-	var db=new DBController();
-	db.create_openDB(username ,"",
-            function(){
-              	db.getMailById(mid,selectFolder,function(msg){
-              	var body=msg.body;
-              	var file;
-				var links='';
-				if(msg.attachments && msg.attachments.length>0){
-					for(var j=0;file=msg.attachments[j],j<msg.attachments.length;j++){
-						links+=createAttachmentLink(file);
-					}
-					links+='</br></br>';
-				}
+	var body=$(this).find(".body").text();
 
-				body=links+body;
-				document.getElementById('bodyDisplay').innerHTML=body;
-              });
-            }
-    );	
+	//document.getElementById('bodyDisplay').innerHTML=QPDec(body);
+	document.getElementById('bodyDisplay').innerHTML=body;
 
 	}
 );
@@ -381,17 +252,9 @@ $(document).on("click",'.horde-subnavi-point',
 		// $( "div[title='"+mailBox+"']").addClass('horde-subnavi-active');
 		// console.log(mailBox);
 
-		var uid=getParameterByName('uid');
-		var pid=0;
-		uid=parseInt(uid);
-
-		var url='./index.html?uid='+(uid)+'&pid='+(pid)+'&mbox='+mailBox;
-		location.href=url;
-
-		// selectFolder=mailBox;
-		// dbSelectFolder=selectFolder;
-		// initUnhosted();
-
+		selectFolder=mailBox;
+		dbSelectFolder=selectFolder;
+		initUnhosted();
 		// sync.getUids();
 	}
 );
@@ -416,9 +279,9 @@ function setMailBoxBar(mail){
 	
 }
 
-// function startMe1(){
-// 	sync.getUids();
-// }
+function startMe1(){
+	sync.getUids();
+}
 
 function startMailBoxesScenario(){
 	sync.getMailBoxesScenario();
@@ -430,7 +293,9 @@ function setSetting(){
  	var x = document.getElementById("setting").value; 	
   	console.log('select Account '+x);
 	Sync_Module.db.loadAccount(x); 	
-	
+	if(x=="unhostedcse@outlook.com"){
+		selectFolder="Inbox";
+	}
  }
 
  $(document).on("loadAccount",
@@ -451,7 +316,7 @@ function openWriteWindow(){
 function openReplyWindow(){
 
 	var a=document.getElementsByClassName('horde-icon');	
-	var mid=a[3].getAttribute('idval');
+	var mid=a[1].getAttribute('idval');
 
 	var mbox=selectFolder;
 	var action='reply';
@@ -464,7 +329,7 @@ function openReplyWindow(){
 
 function openForwardWindow(){
 	var a=document.getElementsByClassName('horde-icon');	
-	var mid=a[4].getAttribute('idval');
+	var mid=a[1].getAttribute('idval');
 
 	var mbox=selectFolder;
 	var action='forward';
@@ -474,61 +339,3 @@ function openForwardWindow(){
 	javascript:void window.open(url,'1417505292623',
       'width=750,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
 }
-
-function nextPage(){
-	var uid=getParameterByName('uid');
-	var pid=getParameterByName('pid');
-	uid=parseInt(uid);
-	pid=parseInt(pid);
-
-	var url='./index.html?uid='+(uid)+'&pid='+(pid+1)+'&mbox='+selectFolder;
-	location.href=url;
-}
-
-function previousPage(){
-	var uid=getParameterByName('uid');
-	var pid=getParameterByName('pid');
-	uid=parseInt(uid);
-	pid=parseInt(pid);
-
-	if(pid<1)
-		return;
-	var url='./index.html?uid='+(uid)+'&pid='+(pid-1)+'&mbox='+selectFolder;
-	location.href=url;
-}
-
-function DeleteMessages(){
-	console.log('delete');
-	var ids=new Array();
-	var items=$('.vpRowHoriz.vpRow.DragElt.vpRowSelected');
-	var id;
-	for (var i = 0;i < items.length; i++) {
-		id=items[i].id;
-		ids.push(parseInt(id));
-		console.log(id);	
-	};
-	console.log(ids);
-
-	sync.delete(ids,selectFolder,true,function(){location.reload();});
-}
-
-/////notification
-(function($){
-	// $(document).on("notify1",function(event){console.log(event)});
-
-	$(document).on("notifier",function(event){
-		var ob=event.obj;
-		$.notifier({"type": ob.type,
-	                "title": ob.title,
-	                "text": ob.text,
-	                "positionY": "bottom",
-	                "positionX": "left",
-	                "animationIn" : 'bounce',
-                	"animationOut" : 'drop'
-	    });
-	});    
-})(jQuery);
-
-$(document).on("test",function(event){
-	console.log('test');
-});

@@ -3,12 +3,12 @@
 
   <!-- <meta content="IE=EmulateIE10" http-equiv="X-UA-Compatible"> -->
 
-  <link href="./ui/style.css" rel="stylesheet" type="text/css">
-  <link href="./js/mime.css" rel="stylesheet" type="text/css">
-  <link href="./js/screen_002.css" rel="stylesheet" type="text/css">
-  <link href="./js/screen_003.css" rel="stylesheet" type="text/css">
-  <link href="./js/screen.css" rel="stylesheet" type="text/css">
-  <link href="./js/mozilla.css" rel="stylesheet" type="text/css">
+
+  <link href="./ui/mime.css" rel="stylesheet" type="text/css">
+  <link href="./ui/screen(1).css" rel="stylesheet" type="text/css">
+  <link href="./ui/screen(2).css" rel="stylesheet" type="text/css">
+  <link href="./ui/screen.css" rel="stylesheet" type="text/css">
+  <link href="./ui/mozilla.css" rel="stylesheet" type="text/css">
   <link type="image/x-icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico" rel="shortcut icon">    
   <title>Mail :: New Message</title>
  </head>
@@ -82,8 +82,7 @@
         </div>
       </td>
     </tr>
-    <!-- style="display:none" -->
-    <tr id="sendcc" >
+    <tr id="sendcc" style="display:none">
      <td class="label">
       <span class="composeAddrbook">Cc:</span>
      </td>
@@ -93,9 +92,7 @@
         <input style="width: 500px;" class="hordeACTrigger impACTrigger" autocomplete="off"></li></ul>
         <textarea style="display: none;" cols="75" id="cc" name="cc" rows="1"></textarea></div>     </td>
     </tr>
-
-    <!-- style="display:none" -->
-    <tr id="sendbcc">
+    <tr id="sendbcc" style="display:none">
      <td class="label">
       <span class="composeAddrbook">Bcc:</span>
      </td>
@@ -129,9 +126,7 @@
        <span id="upload_wait" style="display:none"></span>
        <span>
         <label id="compose_upload_add" for="upload">Add Attachment</label>
-        <input id="upload" multiple="" name="file_upload[]" type="file">
-        <span id="anonymous_element_1" class="horde-popdown">
-        </span>       </span>
+        <input id="upload" multiple="" name="file_upload[]" type="file"><span id="anonymous_element_1" class="horde-popdown"></span>       </span>
        <ul id="attach_list" style="display:none"></ul>
       </div>
      </td>
@@ -165,47 +160,19 @@ action.       </li>
    </tbody></table>
   </div>
 
-  <!-- <div contentEditable="true" id="composeMessageParent" style="height:  50%;"> -->
-  
+  <div id="composeMessageParent" contenteditable style="height:  50%;">
    <!-- <textarea style="height:  50%;" name="message" id="composeMessage" class="fixed"> -->
-<!-- </textarea> -->
-<div id="htmlEditor">
-</div>
+</textarea>
+  </div>
 
  </div>
 </form>
 </div>
 
-<!-- <script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>  -->
-<!-- Ignite UI Required Combined CSS Files -->
-<link href="htmlEditor/infragistics.theme.css" rel="stylesheet" />
-<link href="htmlEditor/infragistics.css" rel="stylesheet" />
-
-<script src="htmlEditor/modernizr-latest.js"></script>
-<script src="htmlEditor/jquery-1.9.1.min.js"></script>
-<script src="htmlEditor/jquery-ui.min.js"></script>
-
-<!-- Ignite UI Required Combined JavaScript Files -->
-<script src="htmlEditor/infragistics.core.js"></script>
-<script src="htmlEditor/infragistics.lob.js"></script>
-
-<script>
-        $(function () {
-            var height = $('html').hasClass('touch') ? 500 : 350;
-
-            $("#htmlEditor").igHtmlEditor({ height: height}); //
-        });
-</script>
-<style type="text/css">
-    /* Override sample's browser styles */
-      #htmlEditor h1, #htmlEditor h2, #htmlEditor h3, #htmlEditor h4, #htmlEditor h5, #htmlEditor h6 { margin: 0px; }
-      #htmlEditor h1 { font-size: 1.9em; }
-    #sampleContainer { overflow: visible; }
-</style>
 
 
-
-    <!--
+<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script> 
+  <!--
   <script type="text/javascript" src="js/prototype.js"></script>
   <script type="text/javascript" src="js/horde.js"></script>
   <script type="text/javascript" src="js/compose-dimp.js"></script>
@@ -234,12 +201,11 @@ action.       </li>
 
   <script type="text/javascript" src="js/sound.js"></script>
   <script type="text/javascript" src="js/ckeditor_basic.js"></script>  
- -->
+   -->
 
 
 <script type="text/javascript" src="logger.js"></script>
 <script type="text/javascript" src="TCP_Interface.js"></script>
-<script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
 
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
@@ -250,124 +216,11 @@ action.       </li>
 <script type="text/javascript" src="BrowserSetUp.js"></script>  
 <script type="text/javascript" src="NewMessage.js"></script>  
 
-<script type="text/javascript" src="Encoder.js"></script>
-<script type="text/javascript" src="utils.js"></script>
-<script type="text/javascript" src="File.js"></script>
-
-<!-- address Module -->
-<!-- <script type="text/javascript"  src="address_module/ui/jquery-2.1.1.js"></script> -->
-<script type="text/javascript" src="address_module/ui/jquery.csv-0.71.js"></script>
-
-<script src="address_module/db.js"></script>
-<script src="address_module/app.js"></script>
-<script src="address_module/pop.js"></script>
-
-<link rel="stylesheet" href="address_module/style.css">
-<link href="./ui/mime.css" rel="stylesheet" type="text/css">
-<link href="./ui/screen.css" rel="stylesheet" type="text/css">
-<link href="./ui/screen(1).css" rel="stylesheet" type="text/css">
-<link href="./ui/screen(2).css" rel="stylesheet" type="text/css">
-<link href="./ui/webkit.css" rel="stylesheet" type="text/css">
-
-
-<!-- <link rel="Stylesheet" type="text/css" href="wys/jHtmlArea.css" />
-<script type="text/javascript" src="wys/jHtmlArea-0.8.js"></script> -->
-
-<link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
-<!-- <script src="./ui/notification/jquery.min.js"></script> -->
-<!-- <script src="./ui/notification/jquery-ui.min.js"></script> -->
-<script src="./ui/notification/notifier.js"></script>
+<link rel="Stylesheet" type="text/css" href="wys/jHtmlArea.css" />
+<script type="text/javascript" src="wys/jHtmlArea-0.8.js"></script>
 
 <script type="text/javascript">
-// <input id="upload" multiple="" name="file_upload[]" type="file">
-	document.getElementById('upload').addEventListener('change', handleFileSelect, false);
-
-  
-  var atta=new Array();
-
-  function handleFileSelect(evt) {
-    var atFile;
-    var atUri;
-    var files = evt.target.files; // FileList object
-
-    var f;
-    for (var i = 0;f=files[i], i < files.length; i++) {
-        // var f=files[0];
-        // atFile=f;
-        var url=f.name;
-        var type=f.type;
-
-        var reader  = new FileReader();
-        reader.readAsDataURL(f);        
-
-        reader.onloadend = function () {
-          console.log(reader.result);
-            atUri = reader.result.split(',')[1];;
-            console.log(url+" attached ok");
-            atta[url]={
-              name:url,
-              uri:atUri,
-              type:type
-            };
-        }        
-
-    // var ttype = technalxs.simplemail.SimpleMailFile.getMimeType(url);
-
-      if (true || ttype.match(/^image/i)){
-        //event.preventDefault();
-        var filename = f.name;
-        // var background = technalxs.simplemail.SimpleMailMessageEncoder.getIconForAttachment(filename);          
-        var background = 'ui/attachment.png';
-        html = "<a class='attachment' style='background: url(" + background + ")center left no-repeat; background-size: 18px 18px; padding-left: 20px;' href='file://" + url + "'>" + filename + "</a>";
-        pushAttachFile(html); 
-      }else if (url.match(/^file:/)) { 
-        var filename = technalxs.simplemail.SimpleMailFile.getFileName(url);
-        var background = technalxs.simplemail.SimpleMailMessageEncoder.getIconForAttachment(filename);          
-        html = "<a class='attachment' style='background: url(" + background + ")center left no-repeat;' href='" + url + "'>" + filename + "</a>";
-        technalxs.simplemail.SimpleMailNewMessage.pushAttachFile(html); 
-      }
-
-    }
-  }
-
-   function pushAttachFile(html){
-    // alert(html);
-    // var text=document.getElementById('composeMessageParent').innerHTML;
-
-    //$("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
-
-    // var body = document.getElementById('composeMessageParent');
-
-    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
-    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
-
-    if(isHtml){
-      var body = $("#htmlEditor").igHtmlEditor("getContent", "text");
-    }else{
-      var body = $("#htmlEditor").igHtmlEditor("getContent", "html");
-    }
-
-    var range = document.createRange();
-    var documentFragment = range.createContextualFragment(html);
-    // body.contentDocument.
-    //body.appendChild(documentFragment);
-
-    var div= document.createElement("div");
-    var p= document.createElement("p");
-
-    div.appendChild(documentFragment);
-    div.appendChild(range.createContextualFragment('</br>'));
-    div.appendChild(range.createContextualFragment(body));
-
-    //var content=documentFragment+'</br>'+body;
-    $("#htmlEditor").igHtmlEditor("setContent",div.innerHTML, "html");
-    // var message = technalxs.simplemail.SimpleMailNewMessage.getMessage();
-
-    // Need this to update RichText Editor
-    // technalxs.simplemail.SimpleMailNewMessage.execCommand("selectAll");
-    // technalxs.simplemail.SimpleMailNewMessage.execCommand("delete");
-    // technalxs.simplemail.SimpleMailNewMessage.execCommand("InsertHtml", message.html);
-  }
+	
 // $('#composeMessage').htmlarea();
 
   var db=new DBController();
@@ -386,8 +239,7 @@ action.       </li>
 
     db.loadAccountById(id,setFunc);
 
-    function setFunc(cursor){
-        var user=cursor.username;
+    function setFunc(user){
         // console.log('got user '+user);
         if(action=='compose')
           console.log('compose');
@@ -428,9 +280,7 @@ function setReplyWindow(msg){
 
   document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  var to=mail.to.replace("<","");
-  to=to.replace(">","");
-  data[0].value=to;
+  data[0].value=mail.to;
 
 }
 
@@ -443,18 +293,14 @@ function setForwardWindow(msg){
   
   var mail=NewMessage.createForward(msg);
   
-  // document.getElementById('composeMessageParent').innerHTML=mail.body;
-
-  // $("#htmlEditor").igHtmlEditor("setContent", "This is text content.", "text");
-  $("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
-
+  document.getElementById('composeMessageParent').innerHTML=mail.body;
   document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
   data[0].value=mail.from;
 }
 
-  // var text=document.getElementById('composeMessageParent').innerHTML='Hi, this is test text!';
-  // var subject=document.getElementById('subject').value='Unhosted subject';
+  var text=document.getElementById('composeMessageParent').innerHTML='Hi, this is test text!';
+  var subject=document.getElementById('subject').value='Unhosted subject';
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
   //data[0].value='unhostedcse@gmail.com';
   data[0].value=username;
@@ -477,25 +323,11 @@ function setForwardWindow(msg){
       // alert('send'+e);
 
         try{
-
-        //var text=document.getElementById('composeMessageParent').innerHTML;
-        
-        
-
-
+        var text=document.getElementById('composeMessageParent').innerHTML;
         var subject=document.getElementById('subject').value;
         var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
 
         var to=data[0].value;
-
-        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;        
-        if (!filter.test(to)) {
-          alert('Please provide a valid email address');
-          return;
-        }
-        
-        $('#send_button').addClass('imp-loading');
-
         var cc=data[1].value;
         var bcc=data[2].value;
 
@@ -508,8 +340,7 @@ function setForwardWindow(msg){
 
         // $.event.trigger({type:"composeMail"});
 
-        //start(to,cc,bcc,subject,text);
-        sendMail(to);
+        start(to,cc,bcc,subject,text);
         
 
       }catch(e){
@@ -517,75 +348,6 @@ function setForwardWindow(msg){
       }
     }
 );  
-
-function sendMail(to){
-  
-  var msg=getMessage();
-  var txt=msg.toString();
-
-  if (msg.bcc) 
-    txt = txt.replace(/Bcc:.*\r\n/i, ""); // Do not send BCC header
-
-  mailto=msg.to.split(",");
-
-  if(msg.cc){
-    var mailcc=msg.cc.split(",");
-    for(var i=0;i<mailcc.length;i++){
-      mailto.push(mailcc[i]);
-    }
-  }
-
-  if(msg.bcc){
-    var mailbcc=msg.bcc.split(",");  
-    for(var i=0;i<mailbcc.length;i++){
-      mailto.push(mailbcc[i]);
-    }
-  }
-  
-  console.log(txt);
-  body=txt;
-  sync.SendMail();
-
-}
-
- var getMessage = function() {
-
-    var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-    var to=data[0].value;
-    var cc=data[1].value;
-    var bcc=data[2].value;
-
-    var message = new NewMessageModel();
-    //message.accountId = technalxs.simplemail.SimpleMailDom.get("from").selectedItem.value;
-    //message.charset = technalxs.simplemail.SimpleMailDom.get("charset").selectedItem.label;
-
-    // message.charset ='UTF-8';
-    //message.returnReceiptTo = technalxs.simplemail.SimpleMailDom.get("returnReceipt").checked
-                                  //? technalxs.simplemail.SimpleMailDom.get("from").selectedItem.label : null;
-    message.from = username;
-    message.replyTo = username;
-    message.to = to;
-    message.cc = cc;
-    message.bcc = bcc;
-    message.subject = document.getElementById('subject').value;
-    message.file = atta;
-
-    //var text=document.getElementById('composeMessageParent').innerHTML;    
-
-    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
-    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
-
-    if(isHtml){
-      var text = $("#htmlEditor").igHtmlEditor("getContent", "text");
-    }else{
-      var text = $("#htmlEditor").igHtmlEditor("getContent", "html");
-    }    
-
-    message.html = text;
-
-
-    return message;
-  }
 
 function start(to,cc,bcc,subject,text){ 
   // mailto='unhostedcse@outlook.com';
@@ -670,26 +432,17 @@ $(document).on("newSendMail",
   }
 );
 
-//$(document).on("newSendMail",
-$(".hordeACTrigger.impACTrigger").keypress(function(){
-  search();
-});
+function setForwardComposeMail(){
 
-// $( "hordeACTrigger impACTrigger").keyup(search);
-
-function search(){
-  // alert('aaa');
-  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-   var add=new Address_Module();
-   add.suggestMails(data[0].value);
 }
-</script> 
+
+function setReplyComposeMail(){
+
+}
+
+ </script> 
 
 
 <div style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;" id="Growler"></div>
 <iframe style="display: none;" src="javascript:false" name="submit_frame"></iframe>
-<div style="display: none;" class="KeyNavList"><ul><li>High</li><li class="selected">Normal</li><li>Low</li></ul></div>
-
-<div id='bath'>
-</div> 
-</body></html>
+<div style="display: none;" class="KeyNavList"><ul><li>High</li><li class="selected">Normal</li><li>Low</li></ul></div></body></html>

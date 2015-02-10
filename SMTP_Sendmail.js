@@ -106,9 +106,6 @@ SMTP_Sendmail.prototype.send = function(fun){
   }else{
     //alert('plan');
     //SMTP_Sendmail.cmds.push(this.authPlain);
-    SMTP_Sendmail.cmds.push(this.authLogin);
-    SMTP_Sendmail.cmds.push(this.authLoginLogin);
-    SMTP_Sendmail.cmds.push(this.authLoginPassword);
   }
 
 

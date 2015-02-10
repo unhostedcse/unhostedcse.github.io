@@ -258,7 +258,6 @@ var DimpCompose = {
         case 'saveDraft':
         case 'saveTemplate':
             // Don't send/save until uploading is completed.
-
             if ($('upload_wait').visible()) {
                 (function() { if (this.disabled) { this.uniqueSubmit(action); } }).bind(this).delay(0.25);
                 return;
@@ -985,7 +984,8 @@ var DimpCompose = {
                 : f[0].name.escapeHTML();
         }
 
-        // $('upload_wait').update(DimpCore.text.uploading + ' (' + t + ')').show();
+        $('upload_wait').update(DimpCore.text.uploading + ' (' + t + ')')
+            .show();
     },
 
     uploadAttachmentAjax: function(data, params, callback)

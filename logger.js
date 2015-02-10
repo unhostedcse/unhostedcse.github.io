@@ -1,4 +1,4 @@
-responseLog=false;
+responseLog=true;
 commandLog=true;	
 requestLog=true;
 var i=0;
