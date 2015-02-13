@@ -906,7 +906,7 @@ span.logoutIcon {
     background-image: url("../graphics/seen.png");
 }
 #ctx_mbox_poll span.iconImg, #ctx_mbox_nopoll span.iconImg, #ctx_mbox_flag_unseen span.iconImg {
-    background-image: url("../graphics/unseen.png");
+    background-image: url("../ui/graphics/copied/unseen.png");
 }
 #ctx_message_setflag span.iconImg, #ctx_oa_setflag span.iconImg, #ctx_mbox_setflag span.iconImg, span.iconImg.flagFlagged {
     background-image: url("../graphics/flagged.png");

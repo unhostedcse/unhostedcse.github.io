@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0051)http://unhosted.projects.uom.lk/horde/turba/add.php -->
+<html lang="en-GB">
+<head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <link href="./ui/style.css" rel="stylesheet" type="text/css">
+  <link href="./js/mime.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen_002.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen_003.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen.css" rel="stylesheet" type="text/css">
+  <link href="./js/mozilla.css" rel="stylesheet" type="text/css">
+      <link type="image/x-icon" href="http://unhosted.projects.uom.lk/horde/turba/themes/default/graphics/favicon.ico" rel="shortcut icon">    <title>Address Book :: New Contact</title>
+	  <script type="text/javascript"  src="address_module/ui/jquery-2.1.1.js"></script>
+	  <script src="address_module/db.js" type="text/javascript"></script>
+<script src="address_module/addbrowsecontacts.js" type="text/javascript"></script>
+<script src="address_module/add_con.js" type="text/javascript"></script>
+ </head>
+
+ <body>
+<div id="horde-head">
+  <div id="horde-logo"><a class="icon" href="http://unhosted.projects.uom.lk/horde/services/portal/"></a></div>
+  <div id="horde-version">Groupware 5.2.0</div>
+  
+  <div id="horde-navigation">
+	<div class="horde-navipoint">
+		<div class="horde-point-left-active">
+		</div>
+			<ul class="horde-dropdown">
+				<li>
+					<div class="horde-point-center-active">
+						<a class="horde-mainnavi-active" href="index.html">
+							<span class="horde-point-arrow-active">▾</span>
+								Mail
+						</a>
+					</div>
+					<ul>
+						<li>
+							<div class="horde-drowdown-str">
+								<a class="horde-mainnavi" href="index.html" >
+									Inbox
+								</a>
+							</div>
+						</li>
+						<li>
+							<div class="horde-drowdown-str">
+								<a class="horde-mainnavi" href="write.html">
+									New Message
+								</a>
+							</div>
+						</li>	
+					</ul>
+				</li>
+			</ul>
+			<div class="horde-point-right-active">
+			</div>
+	</div>
+	<div class="horde-navipoint">
+		<div class="horde-point-left">
+		</div>
+		<ul class="horde-dropdown">
+			<li>
+				<div class="horde-point-center">
+					<a class="horde-mainnavi" href="NewContact.html">
+						<span class="horde-point-arrow">▾</span>
+							Address Book
+					</a>
+				</div>
+				<ul>
+					<li>
+						<div class="horde-drowdown-str">
+							<a class="horde-mainnavi" href="NewContact.html">
+								New Contact
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="horde-drowdown-str">
+							<a class="horde-mainnavi" href="BrowseContact.html">
+								Browse Contact
+							</a>
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<div class="horde-point-right">
+	</div>
+   </div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Tasks</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Notes</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Others</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint">
+		<div class="horde-point-left"></div>
+		<ul class="horde-dropdown">
+			<li>
+				<div class="horde-settings horde-icon-settings">
+					<a class="horde-mainnavi" href="#"></a>
+				</div>
+			</li>
+		</ul>
+		<div class="horde-point-right">
+		</div>
+	</div>
+</div>
+  
+  <div id="horde-logout"><a class="icon" title="Log out" href="http://unhosted.projects.uom.lk/horde/login.php?horde_logout_token=eSLhRkOR3SVSNzibURzmQw1&logout_reason=4"></a></div>
+</div>
+<div id="horde-sub">
+  <div id="horde-date">08/02/15</div>
+  <div id="horde-info"></div>
+</div>
+<div id="horde-body">
+<div id="horde-contentwrapper">
+<div id="horde-content" style="margin-left:210px">
+<form action="#" method="post" name="turba_form_addcontact" id="turba_form_addcontact" enctype="multipart/form-data">
+<div class="horde-form" id="turba_form_addcontact_active">
+<br class="clear">
+<div id="turba_form_addcontact_section_0" style="display:block;">
+<table>
+	<tbody>
+	<tr valign="top">
+		<td class="horde-form-label" width="15%">Name</td>
+		<td><input type="text" name="object[firstname]" id="object_firstname_" size="40" value="" maxlength="255" ></td>
+	</tr>
+	<tr valign="top">
+		<td class="horde-form-label" width="15%">Email</td>
+		<td><input type="text" name="object[lastname]" id="object_lastname_" size="40" value="" maxlength="255" ></td>
+	</tr>
+</tbody>
+</table>
+</div>
+<div class="horde-form-buttons">
+    <input class="horde-default" name="submitbutton" type="submit" value="Add">
+</div>
+</div>
+</form>
+</div>
+</div>
+
+<div id="horde-sidebar" style="width:210px">
+<div class="horde-new">
+    <span class="horde-new-link"><a href="#" title="New Contact (Accesskey N)" accesskey="N"><span class="accessKey">N</span>ew Contact</a></span>
+  </div>
+<div>
+<div class="horde-subnavi">
+ <div class="horde-subnavi-icon turba-search">
+  <a class="icon"></a>
+ </div><div class="horde-subnavi-point"><a href="BrowseContact.html" accesskey="S"><span class="accessKey">S</span>earch</a> </div>
+</div>
+</div>
+</div>
+
+<div id="horde-slideleft" class="horde-splitbar-vert" style="left:210px">
+  <div id="horde-slideleftcursor" class="horde-splitbar-vert-handle"></div>
+</div>
+</div>
+
+</body>
+</html>

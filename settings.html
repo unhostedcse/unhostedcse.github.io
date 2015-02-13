@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+</head>
+
+<body style="background-color:#EEF0F7">
+
+<div class="col-md-6">Refresh interval (ms):</div>
+<input type="text" id="refresh_interval" value="" class="cover_parent">
+
+<div class="col-md-6">Enable auto Sync:</div>
+<input type="checkbox" id="autoSync" class="cover_parent">
+
+<div class="col-md-6">Number of Messages per page:</div>
+<input type="text" id="msgPP" value="" class="cover_parent">
+
+<div class="col-md-6">Maximum Message Count:</div>
+<input type="text" id="maxMsg" value="" class="cover_parent">
+          
+<input type="button" id="save" value="Save" class="cover_parent" onclick="save()">
+<input type="button" id="clear" value="Clear" class="cover_parent" onclick="clearData()">
+
+</body>
+
+<script>
+
+load();
+
+
+function save(){
+	localStorage.setItem("refresh_interval",document.getElementById("refresh_interval").value);	
+	localStorage.setItem("autoSync",document.getElementById("autoSync").checked);	
+	localStorage.setItem("msgPP",document.getElementById("msgPP").value);	
+	localStorage.setItem("maxMsg",document.getElementById("maxMsg").value);	
+	alert("Settings saved");
+}
+
+function load(){
+	document.getElementById("refresh_interval").value=getRefresh_interval();	
+	document.getElementById("autoSync").checked=getAutoSync();	
+	document.getElementById("msgPP").value=getMsgPP();	
+	document.getElementById("maxMsg").value=getMaxMsg();	
+	console.log("Settings loaded");
+}
+	
+function getRefresh_interval(){
+	var val=localStorage.getItem("refresh_interval");
+	return parseInt(val) ? parseInt(val) :100000;
+}
+
+function getAutoSync(){
+	var val=localStorage.getItem("autoSync");
+	return val=="true" ? true :false;
+}
+
+function getMsgPP(){
+	var val=localStorage.getItem("msgPP");
+	return parseInt(val) ? parseInt(val) :10;
+}
+
+function getMaxMsg(){
+	var val=localStorage.getItem("maxMsg");
+	return parseInt(val) ? parseInt(val) :30;
+}
+
+function clearData(){
+	localStorage.removeItem("refresh_interval");
+	localStorage.removeItem("autoSync");
+	localStorage.removeItem("msgPP");
+	localStorage.removeItem("maxMsg");
+}
+
+</script>
+
+</html>

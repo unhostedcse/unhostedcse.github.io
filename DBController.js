@@ -57,8 +57,11 @@ DBController.prototype.viewAccounts=function(){
       var val=cursor.value.username;
       var id=cursor.key;
 
-      console.log("username "+val);
+      // console.log("username "+val);
       // console.log("userID "+id);
+
+      if(username=="")
+      	return;
 
       if(val==username && $("#setting") ){
       	$("#setting").append('<option value="'+val+'" selected>'+val+'</option>');
@@ -68,6 +71,64 @@ DBController.prototype.viewAccounts=function(){
       cursor.continue();
     } 
   }
+}
+
+DBController.prototype.getAccounts=function(fun){
+  var objectStore = this.account_database.transaction(this.accountTableName).objectStore(this.accountTableName);
+  self=this;
+  var acc=new Array();
+  objectStore.openCursor().onsuccess = function(event) {
+    var cursor = event.target.result;       
+    if (cursor && cursor.value) {
+      var obj={
+      	id:cursor.key,
+      	username:cursor.value.username,
+      	password:cursor.value.password
+      };
+      acc.push(obj);
+      cursor.continue();
+    }else{
+    	if(fun)
+    		fun(acc);
+    }
+  }
+}
+
+DBController.prototype.updateAccounts=function(id,newData){  
+
+  var objectStore = this.account_database.transaction([this.accountTableName], "readwrite").objectStore(this.accountTableName);
+	var request = objectStore.get(id);
+
+	request.onerror = function(event) {
+	  // Handle errors!
+	};
+
+	request.onsuccess = function(event) {
+	  // Get the old value that we want to update
+	  var data = request.result;
+	  // update the value(s) in the object that you want to change
+		data.username=newData.username;
+		data.password=newData.password;
+		data.smtphost=newData.smtphost;
+		data.smtpport=newData.smtpport;
+		data.imaphost=newData.imaphost;
+		data.imapport=newData.imapport;  
+		data.imapsecurity=newData.imapsecurity; 
+		data.smtpsecurity=newData.smtpsecurity;
+
+	  // Put this updated object back into the database.
+	  var requestUpdate = objectStore.put(data);
+	   requestUpdate.onerror = function(event) {
+	     console.log(event);
+	   };
+	   requestUpdate.onsuccess = function(event) {
+	   	console.log("id " +id +" update "+event.type);
+	   	alert('Updated');
+        location.reload();
+
+	   };
+	};
+
 }
 
 DBController.prototype.addAccount=function(){
@@ -92,7 +153,9 @@ DBController.prototype.addAccount=function(){
       }else{
           var request=objectStore.add(record);
           request.onsuccess = function(event) {
-              console.log(userName+' added to database' );
+              console.log(userName+' added to database');
+              alert(userName+' added to database');
+              location.reload();
           };
           request.onerror = function (event) {
               console.log(event);
@@ -120,28 +183,60 @@ DBController.prototype.loadAccount=function(userName){
     }
 }
 
+DBController.prototype.deleteAccount=function(id,func){
+  var objectStore = this.account_database.transaction([this.accountTableName],'readwrite').objectStore(this.accountTableName);
+  var req=objectStore.openCursor();
+
+   req.onsuccess = function(e) { 
+   		var cursor = e.target.result;
+ 		if(cursor){
+ 			if(cursor.key==id){
+	 			var request = cursor.delete();
+		        request.onsuccess = function() {
+		          	if(func){
+	 					func();
+	 				}
+		        }; 			
+		        return;
+ 			} 
+ 			cursor.continue();			
+ 		}
+   }
+
+   req.onerror = function(event) {
+    	console.log(event.target.errorCode);    	
+    };
+}
+
 DBController.prototype.loadAccountById=function(id,func){
   var objectStore = this.account_database.transaction(this.accountTableName).objectStore(this.accountTableName);
   var req=objectStore.get(id);
 
   req.onsuccess = function(e) {   
   	  var cursor = e.target.result;
-      username=cursor.username;
-      password=cursor.password;
-      imaphost=cursor.imaphost;
-      imapport=cursor.imapport;
-      imapsecurity=cursor.imapsecurity;
-      smtphost=cursor.smtphost;
-      smtpport=cursor.smtpport;
-      smtpsecurity=cursor.smtpsecurity;   
-      userID=cursor.id;
+  	  // console.log(e.target);
+
+  	  if(cursor){
+	      username=cursor.username;
+	      password=cursor.password;
+	      imaphost=cursor.imaphost;
+	      imapport=cursor.imapport;
+	      imapsecurity=cursor.imapsecurity;
+	      smtphost=cursor.smtphost;
+	      smtpport=cursor.smtpport;
+	      smtpsecurity=cursor.smtpsecurity;   
+	      userID=cursor.id;
+	    }else{
+	     	console.log('non Existing userAccount');
+	    }
 
       if(func){
-      	func(username);
+      	func(cursor);
       }
     }
    req.onerror = function(event) {
     	console.log(event.target.errorCode);
+    	func(cursor);
     };
 
 }
@@ -195,7 +290,7 @@ DBController.prototype.create_openDB=function(indexedDBName,folder,DBReady){
         // for offline sendmail
         var objectStore = db.createObjectStore(self.offlineMboxName, {keyPath: "id",autoIncrement:true});
 
-        var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
+        // var objectStore = db.createObjectStore(self.accountTableName, {keyPath: "id",autoIncrement:true});
     };   	
 
 }
@@ -205,23 +300,36 @@ DBController.prototype.add=function(record,id,folder){
 }
 
 // save msg for offline send
-DBController.prototype.saveSendMail=function(text,to,cc,bcc){	
+DBController.prototype.saveSendMail=function(mailto,text){	
     // this.addContain(record,id,folder);	
 
     var transaction = this.database.transaction([this.offlineMboxName], "readwrite");    
     var objectStore = transaction.objectStore(this.offlineMboxName);		
-
+    var self=this;
 	var record={
+		// id:1,
 		text: text,
-		to: to,
-		cc: cc,
-		bcc: bcc,
+		mailto: mailto,
 		status: 'tosend'
 	};
 
 	var request=objectStore.add(record);
-    request.onsuccess = function(event) {
-    	console.log('Msg added to database' );
+    request.onsuccess = function(event) {    	
+    	console.log('Msg added to database');
+
+    setTimeout(function(){
+		window.close();
+	},100);
+	
+	$.notifier({"type": 'success',
+	    "title": 'Mail Saved',
+	    "text": 'Mail Queued Succesfully',
+	    "positionY": "bottom",
+	    "positionX": "left",
+	    "animationIn" : 'bounce',
+		"animationOut" : 'drop'
+	});	
+
     	// $.event.trigger({type:"newSendMail"});
    	};
    	request.onerror = function (event) {
@@ -229,27 +337,34 @@ DBController.prototype.saveSendMail=function(text,to,cc,bcc){
    	}	
 }
 
-DBController.prototype.getSaveSendMail=function(){	
+DBController.prototype.getSaveSendMail=function(callback){	
 	self=this;
 	console.log('getSaveSendMail');
+	// console.log(this.database);
+
 	var objectStore = this.database.transaction(this.offlineMboxName).objectStore(this.offlineMboxName);
 	    objectStore.openCursor().onsuccess = function(event) {
-	    	var cursor = event.target.result;    	
+	    	var cursor = event.target.result;	    	    	
 	    	if (cursor) {	    	
 	    		if(cursor.value){
 	    			var status=cursor.value.status;
 	    			// console.log('send mail: '+status);
 	    			if(status=='tosend'){
-		    			var body=cursor.value.text;
-						var to=cursor.value.to;
-						var cc=cursor.value.cc;
-						var bcc=cursor.value.bcc;
+	    				var msg={};
+		    			msg.body=cursor.value.text;
+						msg.mailto=cursor.value.mailto;
+						msg.key=cursor.key;
 
 						//send
-						console.log('send mail: '+body+' id: '+cursor.key);
+						console.log('send mail: '+msg.body+' id: '+cursor.key);
 						self.updateSaveSendMail(cursor.key);
-			    	}
-			    }	
+						if(callback){
+			    			callback(msg)
+			    		}
+			    	}else	
+			    	cursor.continue();
+			    	
+			    }else	
 			    cursor.continue();
 		    }	
 	    }
@@ -271,7 +386,7 @@ DBController.prototype.updateSaveSendMail=function(id){
 	  data.status = 'sent';
 
 	  // Put this updated object back into the database.
-	  var requestUpdate = objectStore.put(data,id);
+	  var requestUpdate = objectStore.put(data);
 	   requestUpdate.onerror = function(event) {
 	     console.log(event);
 	   };
@@ -327,35 +442,120 @@ DBController.prototype.getMessages=function(cllBack,folder){
 		return;
 	}
 
-    objectStore.openCursor(null, "prev").onsuccess = function(event) {
-    	var obj=function(id,from,sub,date,body,seen,size){
-			this.id=id;
-			this.from=from;
-			this.subject=sub;
-			this.date=date;
-			this.body=body;
-			this.seen=seen;
-			this.size=size;
+    // var os=objectStore.openCursor();
+    objectStore.count().onsuccess = function(event) {
+    	var total = event.target.result;
+		var needRandom = true;
+		console.log("ok, total is "+total);
+
+		//show mbox size in main page
+		document.getElementById('mailboxName').innerHTML=folder+' ('+total+' messages)';
+		
+
+		// var pid=0; 
+		var msgs=msgPP; 
+		var skip=pid*msgs;
+		if(skip==0)
+			needRandom=false;
+
+	    var os=objectStore.openCursor(null, "prev");
+	    os.onsuccess = function(event) {	
+	    	var obj=function(id,from,sub,date,body,seen,size,attachments){
+				this.id=id;
+				this.from=from;
+				this.subject=sub;
+				this.date=date;
+				this.body=body;
+				this.seen=seen;
+				this.size=size;
+				this.attachments=attachments;
+			}
+
+	    	var cursor = event.target.result; 	
+
+	    	if(cursor==null || msgs<1 || skip<0 || skip>total){
+	    		cllBack(UIresult);
+	    		return;
+	    	}		
+	    	if (cursor) {	    	
+	    			
+			    if(needRandom){
+			    	cursor.advance(skip);
+			    	needRandom=false;
+			    }else{
+			    	cursor.continue();
+
+				    if(cursor.value){	
+				    	if(!cursor.value.deleted ){	    		//&& cursor.value.body!='deleted'
+							var msg=new obj(cursor.key,cursor.value.From,cursor.value.Subject,cursor.value.Date,
+								cursor.value.body,cursor.value.seen,cursor.value.size,cursor.value.attachments);
+							UIresult.push(msg);
+							msgs--;
+						}
+				    }
+
+				}
+		    }
+			
+	    }
+	}
+}
+
+DBController.prototype.deleteMessages=function(ids,folder,completeDelete,cllBack){
+	var self=this;
+	// var objectStore = this.database.transaction(folder).objectStore(folder);
+	// var tagIndex = objectStore.index("id");
+	// var toDelete = tagIndex.openKeyCursor(IDBKeyRange.only(tagno));
+	// toDelete.onsuccess = function() {
+	// 	var cursor = toDelete.result;
+	// 	if (cursor) {
+	// 		console.log(cursor);
+	// 	    // pstore.delete(cursor.primaryKey);
+	// 	    cursor.continue;
+	// 	}
+	// }
+
+	var id=ids[0];
+	var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
+	var request = objectStore.get(id);
+
+	request.onerror = function(event) {
+	  // Handle errors!
+	};
+
+	request.onsuccess = function(event) {
+	  // Get the old value that we want to update
+	  var data = request.result;
+	  var newData={};
+
+	  // update the value(s) in the object that you want to change
+	  	if(completeDelete){
+		  newData.id=data.id;
+		  newData.deleted=true;
+		  data=newData;
+		}else{
+			newData.id=data.id;
+			newData.From=data.From;
+			newData.Subject=data.Subject;
+			newData.Date=data.Date;
+			newData.seen=data.seen;
+			newData.size='-';
+		  	data=newData;
+			data.body='deleted';
 		}
 
-    	var cursor = event.target.result;    	
-    	if(cursor==null){
-    		// console.log(UIresult.length);
-    		cllBack(UIresult);
-    	}		
-		
-    	if (cursor) {	    	
-    		if(cursor.value){		    		
-				var msg=new obj(cursor.key,cursor.value.From,cursor.value.Subject,cursor.value.Date,cursor.value.body,cursor.value.seen,cursor.value.size);
-				UIresult.push(msg);
-				// console.log(msg);
-				// console.log("DB "+cursor.source.transaction.db.name);
-		    }	
-
-		    cursor.continue();
-	    }
-		
-    }
+	  // Put this updated object back into the database.
+	  var requestUpdate = objectStore.put(data,id);
+	   requestUpdate.onerror = function(event) {
+	     console.log(event);
+	   };
+	   requestUpdate.onsuccess = function(event) {
+	   	console.log("id " +id +" deleted ");
+	   		if(cllBack){
+	   			cllBack();
+	   		}
+	   };
+	};
 }
 
 DBController.prototype.addContain=function(record,id,folder){
@@ -373,6 +573,9 @@ DBController.prototype.addContain=function(record,id,folder){
 		    request.onsuccess = function(event) {
 		    	//console.log(id+' '+event);
 		    	console.log('id '+id + ' added to database' );
+		    	//self.create_openDB(username,dbSelectFolder,Sync_Module.prototype.DBReady);		    	
+		    	// self.getMessages(Sync_Module.addMsg,selectFolder);
+		    	//initUnhosted();
 		   	};
 		   	request.onerror = function (event) {
 		   		console.log(id+' '+event);
@@ -395,7 +598,7 @@ DBController.prototype.addMailBoxes=function(name,path){
 			};
 			var request=objectStore.add(record);
 		    request.onsuccess = function(event) {
-		    	console.log(path+' added to database' );
+		    	console.log(path+' added to database' );		    	
 		    	createMailBox(path);
 		   	};
 		   	request.onerror = function (event) {
@@ -432,9 +635,9 @@ DBController.prototype.addMailBoxes=function(name,path){
 	    };
 
 	    request.onblocked=function(event){
-	    	console.log('open onblocked '+event);    	
-	    	self.database.close();
-	    }
+	    	console.log('open onblocked '+event);    		    	
+	    	self.database.close();	    	
+	    };
 
 	    request.onupgradeneeded = function(event) {
 	    	console.log('created mailBox '+folder);    
@@ -448,12 +651,19 @@ DBController.prototype.addMailBoxes=function(name,path){
 
 }
 
+DBController.prototype.closeDB=function(func){
+	if(this.database)
+		this.database.close();
+}
+
 DBController.prototype.getMailBoxes=function(func){
 	var boxes=new Array();
 	result.ListFolder=new Array();
 	self=this;
 
 	if(!this.database){
+		if(func)
+	    	func(new Array());
 		return;
 	}
 
@@ -495,7 +705,7 @@ DBController.prototype.getKeys=function(func,folder){
     objectStore.openCursor().onsuccess = function(event) {
     	var cursor = event.target.result;    	
     	if (cursor) {	    	
-    		if(cursor.value){
+    		if(cursor.value && cursor.value.body!='deleted' && !cursor.value.deleted){
 		    	// console.log(cursor.key);
 		    	result.keys.push(cursor.key);
 		    }	
@@ -507,7 +717,7 @@ DBController.prototype.getKeys=function(func,folder){
     }	
 }
 
-DBController.prototype.update=function(id,val,folder){
+DBController.prototype.update=function(id,val,att,folder,cllback){
 
     var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
 	var request = objectStore.get(id);
@@ -520,8 +730,16 @@ DBController.prototype.update=function(id,val,folder){
 	  // Get the old value that we want to update
 	  var data = request.result;
 
+	  if(data.body=="deleted"){
+	  	console.log('deleted msg will not save body');
+	  	return;
+	  }else{
 	  // update the value(s) in the object that you want to change
 	  data.body = val;
+	  }
+	  
+
+	  data.attachments=att;
 
 	  // Put this updated object back into the database.
 	  var requestUpdate = objectStore.put(data,id);
@@ -530,6 +748,9 @@ DBController.prototype.update=function(id,val,folder){
 	   };
 	   requestUpdate.onsuccess = function(event) {
 	   	console.log("id " +id +" update "+event.type);
+		   	if(cllback){
+		   		cllback();
+		   	}
 	   };
 	};
 
@@ -540,7 +761,7 @@ DBController.prototype.getMailById=function(id,folder,func){
 	var request = objectStore.get(id);
 	request.onerror = function(event) {
 	  // Handle errors!
-	  // console.log(event);
+	  console.log(event);
 	};
 	request.onsuccess = function(event) {
 	  var data = request.result;
@@ -548,5 +769,34 @@ DBController.prototype.getMailById=function(id,folder,func){
 	  if(func){
 	  	func(data);
 	  }	  	
+	};
+}
+
+DBController.prototype.setMailFlagById=function(id,folder,func){
+    var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
+	var request = objectStore.get(id);
+	request.onerror = function(event) {
+	  // Handle errors!
+	  console.log(event);
+	};
+	request.onsuccess = function(event) {
+	  // Get the old value that we want to update
+	  var data = request.result;
+	  
+	  // update the value(s) in the object that you want to change
+	  data.seen =data.seen+"\\Seen";
+
+	  // Put this updated object back into the database.
+	  var requestUpdate = objectStore.put(data,id);
+	   requestUpdate.onerror = function(event) {
+	     console.log(event);
+	   };
+	   requestUpdate.onsuccess = function(event) {
+	   	console.log("id " +id +" update "+event.type);
+		   	if(func){
+			  	func(data);
+		    }
+	   };	  
+	  	  	
 	};
 }

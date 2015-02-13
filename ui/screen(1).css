@@ -108,7 +108,7 @@ div.partsTreeDiv {
     background-image: url("../ui/graphics/copied/drafts.png");
 }
 .inboxImg {
-    background-image: url("graphics/folders/inbox.png");
+    background-image: url("../ui/graphics/copied/inbox.png");
 }
 .sentImg {
     background-image: url("graphics/folders/sent.png");
@@ -209,7 +209,7 @@ div.partsTreeDiv {
     background-image: url("graphics/flags/innocent.png");
 }
 .msgflags.flagUnseen, span.iconImg.flagUnseen {
-    background-image: url("graphics/flags/unseen.png");
+    background-image: url("ui/graphics/copied/unseen.png");
 }
 .msgflags.flagAnswered, span.iconImg.flagAnswered {
     background-image: url("graphics/flags/answered.png");
@@ -242,7 +242,7 @@ div.partsTreeDiv {
     background-image: url("graphics/flags/encrypted-inv.png");
 }
 .selectedRow .msgflags.flagAttachmsg {
-    background-image: url("graphics/flags/attachment-inv.png");
+    background-image: url("ui/graphics/copied/attachment-inv.png");
 }
 .selectedRow .msgflags.flagList {
     background-image: url("graphics/flags/group-inv.png");

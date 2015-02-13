@@ -15,6 +15,11 @@
 <script type="text/javascript" src="Sync_Module.js"></script>
 <script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="DBController.js"></script>
+<script type="text/javascript" src="Encoder.js"></script>
+<script type="text/javascript" src="File.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+
+<script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
 
 </head>
 
@@ -35,6 +40,7 @@
   <button type="button" onclick="test();">Test</button>
   <button type="button" onclick="viewDB();">viewDB</button>
   <button type="button" onclick="deleteDB;">delete current DB</button>
+  <button onclick="notifyMe()">Notify me!</button>
   <br/>
   <input type="text" id="" value="indexedDB.deleteDatabase(username);">
   
@@ -120,6 +126,35 @@ BYE.
   onclick="return install(event);">Install Extension!</a>
   
 <script type="application/javascript">
+
+function notifyMe() {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check if the user is okay to get some notification
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification("Hi there!");
+  }
+
+  // Otherwise, we need to ask the user for permission
+  // Note, Chrome does not implement the permission static property
+  // So we have to check for NOT 'denied' instead of 'default'
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user is okay, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification("Hi there!");
+      }
+    });
+  }
+
+  // At last, if the user already denied any notification, and you 
+  // want to be respectful there is no need to bother them any more.
+}
+
 <!--
 function install (aEvent)
 {
@@ -143,6 +178,60 @@ var d=document.getElementById('click');
 
 
 <script>
+
+
+var SimpleMailAddress = function(id, name, email, group, favorite, postaladdress, phone) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.group = group;
+    this.favorite = favorite;
+    this.postaladdress = postaladdress;
+    this.phone = phone;
+  
+    this.getLogin = function() {
+      return /(.*)@/.exec(this.email)[1];
+    }
+    this.getHost = function() {
+      return /@(.*)/.exec(this.email)[1];
+    }
+    this.toString = function() {
+      return this.name + (this.name && this.email ? " " : "") +
+             (this.email ? "<" + this.email + ">" : "");
+    }
+    this.toHtml = function() {
+      return this.name + (this.name && this.email ? " " : "") +
+             (this.email ? "&lt;<a href='mailto:" + this.email + "'>" +
+                           this.email + "</a>&gt;" : "");
+    }
+  }
+
+SimpleMailAddress.parse = function(text) {
+  if (!text) return;
+
+  var name, email;
+  text = text.replace(/[^'"\s<>]+@[^'"\s<>]+/, function($0) {
+    email = $0;
+    return "";
+  });
+  name = text.replace(/^['"\s<>]*|['"\s<>]*$/g, "");
+  if (name || email) {
+    return new SimpleMailAddress(null, name, email);
+  }
+}
+
+SimpleMailAddress.parseList = function(text) {
+  var addresses = new Array();
+  if (text) {
+    var list = ("" + text).split(/[,;]/);
+    for(var i in list) {
+      var address = SimpleMailAddress.parse(list[i]);
+      if (address) addresses.push(address);
+    }
+  }
+  return addresses;
+}
+
 username=document.getElementById('user').value;
 var sync=new Sync_Module(); 
 sync.init();
@@ -155,7 +244,189 @@ obj.prototype.b=function(c){
 }
 
 var res=new Array();
-function test(){  
+var vv;
+
+function test(){
+
+var mail='* LIST (\\NoInferiors \\UnMarked \\Trash) "/" "Trash"'+'\r\n'+
+'* LIST (\NoInferiors \UnMarked) "/" INBOX.Sent'+'\r\n'+
+'* LIST (\NoInferiors \UnMarked) "/" INBOX.Drafts'+'\r\n'+
+'* LIST (\NoInferiors \Marked \Sent) "/" Sent'+'\r\n'+
+'* LIST (\NoInferiors \Marked \Drafts) "/" Drafts'+'\r\n'+
+'* LIST (\NoInferiors \UnMarked) "/" INBOX.Trash'+'\r\n'+
+'* LIST (\HasNoChildren) "/" INBOX'+'\r\n'+
+'2 OK List completed.'+'\r\n'+'';
+
+mail='* LIST (\\HasNoChildren \\Trash) "." Trash'+'\r\n'+
+'* LIST (\HasNoChildren \Sent) "." Sent'+'\r\n'+
+'* LIST (\HasNoChildren) "." INBOX'+'\r\n'+
+'2 OK List completed.'+'\r\n'+'';
+
+mail=''+
+'* LIST (\HasChildren) "." INBOX'+'\r\n'+
+'* LIST (\HasNoChildren) "." INBOX.Trash'+'\r\n'+
+'* LIST (\HasNoChildren) "." INBOX.Sent'+'\r\n'+
+'* LIST (\HasNoChildren) "." INBOX.Junk'+'\r\n'+
+'* LIST (\HasNoChildren) "." INBOX.Drafts'+'\r\n'+
+'2 OK List completed.'+'\r\n';
+
+var att='Date: Sat, 27 Dec 2014 20:24:58 +0530 (IST)'+'\r\n'+
+'From: unhostedcse@gmail.com'+'\r\n'+
+'User-Agent: Unhosted V0.1'+'\r\n'+
+'MIME-Version: 1.0'+'\r\n'+
+'Reply-To: unhostedcse@gmail.com'+'\r\n'+
+'To: unhostedcse@gmail.com'+'\r\n'+
+'Subject: Unhosted subject'+'\r\n'+
+'Content-Type: multipart/related;'+'\r\n'+
+' boundary=----------simplemail1419751558289'+'\r\n'+
+'\r\n'+
+'------------simplemail1419751558289'+'\r\n'+
+'Content-Type: text/html; charset=undefined'+'\r\n'+
+'Content-Transfer-Encoding: 7bit'+'\r\n'+
+'\r\n'+
+'<html>'+'\r\n'+
+'   <head>'+'\r\n'+
+'      <meta http-equiv="content-type" content: text/html;'+'\r\n'+
+'charset=undefined>'+'\r\n'+
+'  </head>'+'\r\n'+
+'<body>'+'\r\n'+
+'Hi, this is test text!'+'\r\n'+
+'</body>'+'\r\n'+
+'</html>'+'\r\n'+
+
+'------------simplemail1419751558289'+'\r\n'+
+'Content-Type: application/zip;'+'\r\n'+
+' name="fff.zip"'+'\r\n'+
+'Content-Transfer-Encoding: base64'+'\r\n'+
+'Content-ID: <1419751558294@simplemail>'+'\r\n'+
+'Content-Disposition: attachment;'+'\r\n'+
+' filename="fff.zip"'+'\r\n'+
+'\r\n'+
+'UEsDBBQDAAAIADplBEUmqegsVQAAAF0AAAAHAAAAZmZmLnR4dB3HQQqAIBBA0du0dDSxsSC6QldQsYyQGVKQbp+0+v+lWrksAK01cbgQPdEtAmVQma9QgBNV6gleoEZpZolaGkQ1wm85qW5rjIWtvhxXNXB88u7Ovh9QSwECPwMUAwAACAA6ZQRFJqnoLFUAAABdAAAABwAAAAAAAAAAACCAgIEAAAAAZmZmLnR4dFBLBQYAAAAAAQABADUAAAB6AAAAAAA='+
+'------------simplemail1419751558289'+'\r\n'+
+'Content-Type: text/plain;'+'\r\n'+
+' name="done.txt"'+'\r\n'+
+'Content-Transfer-Encoding: base64'+'\r\n'+
+'Content-ID: <1419751558295@simplemail>'+'\r\n'+
+'Content-Disposition: attachment;'+'\r\n'+
+' filename="done.txt"'+'\r\n'+
+'\r\n'+
+'V2tkR01GbFRRbmRaV0U1NllWYzFia3hJU214alIzZzFTVWRhZG1OdVpHaGpiVkZuWWxkR2NHSkRRbWhhUjFKd1ltMWpjMGxHVGxWUlZrcFZWa1Y0VkVsSVRqRmpTRUoyWTI1UlMxWkhiSFJhVTBKdFlqTktkRmxZVWpCaFZ6VnVRMmM5UFE9PS0tLS0tLS0tLS0tLXVuaG9zdGVkLW1haWwxNDE5NTg1NjM0Njc4LS0NCg0K'+'\r\n'+
+'------------simplemail1419751558289--'+'\r\n'+
+'';
+
+// '------------simplemail1419692098053'+'\r\n'+
+// 'Content-Type: application/zip;'+'\r\n'+
+// ' name="file.zip"'+'\r\n'+
+// 'Content-Transfer-Encoding: base64'+'\r\n'+
+// 'Content-ID: <1419692098064@simplemail>'+'\r\n'+
+// 'Content-Disposition: attachment;'+'\r\n'+
+// ' filename="file.zip"'+'\r\n'+
+// '\r\n'+
+// // 'ZGF0YSBwYXNzaW5nLHJlcGx5IGZvcndhcmQgbWFpbCBhZGRpbmcsIFNUQVJUVExTIHN1cHBvcnQKVGltZSBmb3JtYXR0aW5nCg=='+'\r\n'+
+// // '------------simplemail1419692098053--'+'\r\n'+
+// // '';
+
+// 'UEsDBBQDAAAIADplBEUmqegsVQAAAF0AAAAHAAAAZmZmLnR4dB3HQQqAIBBA0du0dDSxsSC6QldQsYyQGVKQbp+0+v+lWrksAK01cbgQPdEtAmVQma9QgBNV6gleoEZpZolaGkQ1wm85qW5rjIWtvhxXNXB88u7Ovh9QSwECPwMUAwAACAA6ZQRFJqnoLFUAAABdAAAABwAAAAAAAAAAACCAgIEAAAAAZmZmLnR4dFBLBQYAAAAAAQABADUAAAB6AAAAAAA='+'\r\n'+
+// '------------simplemail1419692098053--'+'\r\n'+
+// '';
+
+
+
+  var mail=
+        "Content-Type: text/plain; charset=UTF-8 \r\n"+
+        "MIME-Version: 1.0 \r\n"+
+        "x-no-auto-attachment: 1 \r\n"+
+        "Received: by 10.60.41.195; Wed, 10 Sep 2014 00:24:10 -0700 (PDT) \r\n"+
+        "Date: Wed, 10 Sep 2014 00:24:10 -0700 \r\n"+
+        "Message-ID: <CAEbMfJLbWOV2OohyRZ2ibvXEBhJjryt1XsDa=xC-C6wRnTu9pw@mail.gmail.com> \r\n"+
+        "Subject: Three tips to get the most out of Gmail \r\n"+
+        "From: Gmail Team <mail-noreply@google.com> \r\n"+
+        "To: unhosted cse <unhostedcse@gmail.com>, unhosted MS <unhostedcse@outlook.com> \r\n"+        
+        "Content-Transfer-Encoding: quoted-printable \r\n"+
+        "\r\n"+
+        "Hi,\r\n"+ 
+        "This is mail from HTML5.\r\n"+ 
+        "MAIL will accept by extension.\r\n"+ 
+        "BYE.";
+
+    var header=function(){
+        this.To="";
+        this.From="";
+        this.Subject="";
+        this.Date="";
+        this.Received="";
+        this.body="";
+        this.seen="";
+      };
+
+      head=new header();     
+
+      var attachments=[];
+
+      var part = new Part(att,attachments);            
+
+      head.To=part.getAddressHeader('To');
+      head.From=part.getAddressHeader('From');      
+      head.Subject=part.getHeader('Subject');
+      // head.Date=DateParse(part.getHeader('Date'));           
+      head.body=part.toHtml();
+      // head.size=val.length;
+      // var type=part.getHeader('Content-Type');
+      // var type=part.getHeader('Subject');
+
+      console.log(head);
+      console.log(head.body);
+
+      return;
+
+      head.body = SimpleMailText.replaceURLs(head.body,
+      function(text, url) {
+        return SimpleMailFile.isLocalURL(url) ? "" : text;
+      });
+
+      try{
+      head.body = head.body.replace(/cid:([^'"]*)/gi,
+      function(text, cid) {
+        console.log(Part.cidNames[cid]);
+        var name = Part.cidNames[cid];
+        console.log(name);
+        if (!name) 
+          return text;
+        name = name.toString().replace(/[\'\[\]\(\)] */gi, "_");
+        // technalxs.simplemail.SimpleMailMessageEncoder.linked[name] = true;
+        return SimpleMailFile.getAttachmentURL('file_dir', 'file.type');
+      });
+      }catch(e){console.log(e);}
+
+      // console.log(head.body);
+
+      for(var name in Part.attachments) {
+        var uri=Part.attachments[name];
+        
+          name = name.toString().replace(/[\'\[\]\(\)] */gi, "_");
+          console.log(name);
+          console.log(uri);
+
+          // var a = document.createElement('a');
+          // var linkText = document.createTextNode("Download attachment");
+          // a.appendChild(linkText);
+          // a.title = "Download attachment";
+          // a.download = name;
+          // a.href = uri;
+          // document.body.appendChild(a);          
+      }
+}
+
+function test1(){  
+
+  //var val=SimpleMailAddress.parseList('"Gmail Team" <mail-noreply@google.com>');
+  var val=SimpleMailAddress.parseList('unhosted cse <unhostedcse@gmail.com>,rrrrrrrrr <unhostedcse@outlook.com>');  
+  vv=val;
+  console.log(val.join(", "));
+  console.log(val[0].name);
+  console.log(val[0].email);
+  return;
 
 var mail=
         "Content-Type: text/plain; charset=UTF-8 \r\n"+
@@ -166,7 +437,7 @@ var mail=
         "Message-ID: <CAEbMfJLbWOV2OohyRZ2ibvXEBhJjryt1XsDa=xC-C6wRnTu9pw@mail.gmail.com> \r\n"+
         "Subject: Three tips to get the most out of Gmail \r\n"+
         "From: Gmail Team <mail-noreply@google.com> \r\n"+
-        "To: unhosted cse <unhostedcse@gmail.com> \r\n"+        
+        "To: unhosted cse <unhostedcse@gmail.com>, unhosted MS <unhostedcse@outlook.com> \r\n"+        
         "Content-Transfer-Encoding: quoted-printable \r\n"+
         "\r\n"+
         "Hi,\r\n"+ 

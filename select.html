@@ -1,0 +1,109 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html lang="en-US">
+ <head>
+      <meta charset="utf-8">
+    <!-- Set the viewport so this responsive site displays correctly on mobile devices -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="ui/screen.css" rel="stylesheet" type="text/css" />
+      <link href="ui/webkit.css" rel="stylesheet" type="text/css" />  
+      <link type="image/x-icon" href="graphics/favicon.ico" rel="shortcut icon" /> 
+
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/custom.css" rel="stylesheet">    
+      <script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
+      <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+      <script type="text/javascript"  src="TCP_Interface.js"></script>
+      <script type="text/javascript"  src="logger.js"></script>
+
+      <title>Unhosted :: Log in</title>
+ </head>
+
+<body style="background-color:#EEF0F7">
+
+<!-- Banner of the site -->
+<div class="banner">
+    <div class="container-fluid top_welcome_bar">
+        <h1 class="text-center" style="color:#ffffff">Welcome to Unhosted Email Client!</h1>
+    </div>
+</div>
+
+<div class="container-fluid">
+  <div class ="row">
+  <div class="col-md-12 col-sm-6 col-xs-6">
+  <div class="modal-form">
+    <div class="panel panel-default">
+      <div class="panel-heading text-center">
+            Sign in to continue
+      </div>
+    <div class="panel-body">
+
+
+    <form>
+        <div><label for="mail_accounts">Select Account</label></div>
+            <select id="mail_accounts" class="form-control" style="display:block; width:100%; margin-bottom:20px;">
+            </select>
+
+
+            <div>
+                <button type="button" id="login-button" name="login_button" class="btn btn-primary btn-lg btn-block">
+                    Sign in
+                </button>
+                <button type="button" id="manage-button" name="manage_button" class="btn btn-default btn-lg btn-block">Manage Accounts</button>
+            </div>
+    </form>
+    </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+  
+</body>
+
+   <script type="text/javascript" src="DBController.js"></script>
+   <script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>
+   
+</html>
+
+<script>
+var username="";
+var db=new DBController();
+db.create_open_account_DB(load);
+
+function load(){    
+  db.getAccounts(show);
+}
+
+function show(msgs){
+  var msg;
+  for (var i = 0; msg=msgs[i],i < msgs.length; i++) {
+    $("#mail_accounts").append('<option value="'+msg.id+'">'+msg.username+'</option>');
+  };  
+}
+
+$(document).on("click",'#login-button',redirect);
+$(document).on("click",'#manage-button',manageAccounts);
+
+function manageAccounts(){
+  location.href="./account.html";
+}
+
+function redirect() {
+    var id=document.getElementById('mail_accounts').value;
+    var url='./index.html?uid='+parseInt(id)+'&pid='+0;
+    location.href=url;
+    console.log(url);
+    // var uid=getParameterByName('uid');
+    // console.log(uid);
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),results = regex.exec(location.href);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+</script>

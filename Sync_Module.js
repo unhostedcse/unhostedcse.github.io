@@ -1,17 +1,19 @@
-var imaps=0;
+var imaps=1;
+var offNo=0;
+
 var mboxCount=0;
 function Sync_Module(clearBody){
 	clearBody();
 }
 
-Sync_Module.prototype.init = function(addMsg,folder,setMailBoxBar){
+Sync_Module.prototype.init = function(addMsg,folder,setMailBoxBar,loadaccCllback){
 	Sync_Module.setMailBoxBar=setMailBoxBar;
 	Sync_Module.addMsg=addMsg;
 	Sync_Module.folder=folder;
 
 	Sync_Module.db=new DBController();
 	Sync_Module.db.create_openDB(username,folder,Sync_Module.prototype.DBReady);
-	Sync_Module.db.create_open_account_DB();
+	Sync_Module.db.create_open_account_DB(loadaccCllback);
 
 	console.log('username '+username);
 
@@ -20,6 +22,16 @@ Sync_Module.prototype.init = function(addMsg,folder,setMailBoxBar){
 		console.log("refreshing.....");
 		// Sync_Module.prototype.getMailBoxesScenario();  // uncomment
 	}, refresh_interval);
+
+	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
+	// Sync_Module.connect();
+	setInterval(function () {
+		console.log("ping.....");
+		// Sync_Module.ping();
+	}, 10000);
+	// setInterval(function () {		
+	// 	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
+	// }, 90000);
 }
 
 Sync_Module.prototype.initSMTP = function(){
@@ -54,9 +66,11 @@ Sync_Module.prototype.getMailBoxesScenario = function(){
 	var imap=new IMAP_Fetch(++imaps);
 	imap.getMailBoxesScenario(this.getMailBoxesReady);
 	console.log('created imap mailboxs service');
+	$("#foldersLoading").show();
 }
 
 Sync_Module.prototype.getMailBoxesReady = function(mailBoxes){
+
 	console.log('getMailBoxesReady');
 	console.log("id= "+this.imaps+" result ListFolder= ");
 	var val=result.ListFolder;
@@ -70,10 +84,17 @@ Sync_Module.prototype.getMailBoxesReady = function(mailBoxes){
 	}
 
   	$(document).on("mailBoxesCreated", 
-	function(e){
-		console.log('mailBoxesCreated '+e.folder);
+		function(e){
+			console.log('mailBoxesCreated '+e.folder);
+			
 			if(i==val.length){
-				$.event.trigger({type:"mailBoxesDownloaded"});
+				$("#foldersLoading").hide();
+				if(autoSync){
+					$.event.trigger({type:"mailBoxesDownloaded"});				
+				}else{
+					$.event.trigger({type:"mailBoxesDownloaded-false"});				
+					return;
+				}				
 			}else{
 				Sync_Module.db.addMailBoxes(val[i].type,val[i].folder);
 				i++;
@@ -139,7 +160,7 @@ Sync_Module.prototype.getHeadersReady = function(){
 
 			var record=result.fetchMIME[i];
 			if(record){
-				Sync_Module.db.addContain(record,i,dbSelectFolder);
+				// Sync_Module.db.addContain(record,i,dbSelectFolder);
 			}
 		};
 
@@ -156,32 +177,68 @@ Sync_Module.prototype.getHeadersReady = function(){
 	result.fetchMIME=new Array();
 	console.log("finished adding DB");
 
-	
+	$('#checkmaillink').removeClass('imp-loading');
 	
 }
 
+//Directly save downloaded Mail
+$(document).on("mailheaderDownloaded", 
+	function(e){
+			Sync_Module.db.addContain(e.record,e.id,dbSelectFolder);
+			// Sync_Module.db.create_openDB(username,folder,Sync_Module.prototype.DBReady);
+			// console.log(e.id);
+			//initUnhosted();
+	}
+);
+
+//save and show downloaded body
+$(document).on("mailbodyDownloaded", 
+	function(e){
+		var msg=e.record;
+		var body=msg.body;
+		// document.getElementById('bodyDisplay').innerHTML=e.record.body;
+		var file;
+		var links='';
+		if(msg.attachments && msg.attachments.length>0){
+			for(var j=0;file=msg.attachments[j],j<msg.attachments.length;j++){
+				links+=createAttachmentLink(file);
+			}
+			links+='</br></br>';
+		}
+
+		body=links+body;
+		document.getElementById('bodyDisplay').innerHTML=body;
+
+		Sync_Module.db.update(e.id,e.record.body,e.record.attachments,dbSelectFolder);
+			
+	}
+);
+
 //start to fetch Mail body
-Sync_Module.prototype.getBody = function(){
+Sync_Module.prototype.getBody = function(id){
+	$("#bodyloading").show();
+	// alert('came');
 	var imap=new IMAP_Fetch(++imaps);
-	imap.getBodyScenario(Sync_Module.prototype.getBodyFinished);
-	console.log('crated imap body service');
+	imap.getBodyScenario(Sync_Module.prototype.getBodyFinished,id);
+	console.log('crated imap body only service');
 }
 
 Sync_Module.prototype.getBodyFinished = function(){
-	if(result.fetchOnlyBody){
-		for (var i = 0; result.fetchOnlyBody && i < result.fetchOnlyBody.length; i++) {
-			var record=result.fetchOnlyBody[i];
-			if(record){
-				Sync_Module.db.update(i,record,dbSelectFolder);
-			}
-		}
-	}else{
-		console.log("DB is upto date");
-	}
+	$("#bodyloading").hide();
+	// if(result.fetchOnlyBody){
+	// 	for (var i = 0; result.fetchOnlyBody && i < result.fetchOnlyBody.length; i++) {
+	// 		var record=result.fetchOnlyBody[i];
+	// 		if(record){
+	// 			Sync_Module.db.update(i,record,dbSelectFolder);
+	// 		}
+	// 	}
+	// }else{
+	// 	console.log("DB is upto date");
+	// }
 
-	result.fetchOnlyBody=new Array();
+	// result.fetchOnlyBody=new Array();
 	console.log('finished imap body service');
-	initUnhosted();
+	// initUnhosted();
 	// if(mboxCount< result.ListFolder.length){
 	// 	selectFolder=result.ListFolder[++mboxCount];
 	// 	dbSelectFolder=selectFolder;
@@ -189,12 +246,27 @@ Sync_Module.prototype.getBodyFinished = function(){
 	// 	Sync_Module.prototype.getUids();
 	// }
 
-	$.event.trigger({type:"mailBoxesReadNext"});
+	// $.event.trigger({type:"mailBoxesReadNext"});
 }
 
 Sync_Module.prototype.SendMailReady = function(){
-	alert('Mail Sent!');
-	console.log('finished SendMailReady');
+	// alert('Mail Sent!');
+	console.log('finished SendMailReady');	
+
+	setTimeout(function(){
+		window.close();
+	},500);
+	
+  	$.notifier({"type": 'success',
+	                "title": 'Mail Sent',
+	                "text": 'Mail Sent Succesfully',
+	                "positionY": "bottom",
+	                "positionX": "left",
+	                "animationIn" : 'bounce',
+                	"animationOut" : 'drop'
+	});	
+
+	
 }
 
 Sync_Module.prototype.SendMail = function(){
@@ -222,3 +294,117 @@ Sync_Module.prototype.viewDB = function(){
 Sync_Module.prototype.test = function(){
  	Sync_Module.db.getKeys();
  }
+
+Sync_Module.prototype.delete = function(ids,folder,completeDelete,cllBack){
+ 	Sync_Module.db.deleteMessages(ids,folder,completeDelete,cllBack);
+}
+
+Sync_Module.CheckNewMail = function(fetchList,keys){
+	var re=new Array();
+ 	var currentCnt=keys.length;
+ 	var newMailCnt=0;
+ 	var id;
+ 	for(var i=fetchList.length-1;i>=0;i--){ // iterate over backword     
+ 	  id=parseInt(fetchList[i]);
+      if(keys.indexOf(id)<0){
+      	re.push(id);
+      	newMailCnt++;
+      }else{
+      	console.log('no more new mail');
+      	break;      	
+      }
+      if(newMailCnt==maxMsg){
+      	break;
+      }
+  	}
+
+  	console.log('new mail '+newMailCnt);
+  	var obj={
+  		"type": 'info',
+		"title": 'New Mail',
+		"text": newMailCnt+' New Mails'
+  	};
+
+  	$.event.trigger({type:"notifier",obj:obj});
+
+  	if(maxMsg<currentCnt+newMailCnt){
+  		var mailDelete=(currentCnt+newMailCnt)-maxMsg;
+  		for (var i = 0; i < mailDelete; i++) {
+  			var id=keys[0];
+  			console.log(id);
+  			Sync_Module.db.deleteMessages([id],selectFolder,false);
+  			console.log('deleteing mail '+id+' of '+selectFolder);
+  		};
+  		
+  	}
+  	return re;
+}
+
+
+Sync_Module.connect = function(){
+	Sync_Module.offline.connect();
+}
+
+Sync_Module.initPing= function(){
+	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
+}
+
+Sync_Module.ping = function(){	
+	setStatus();
+	Sync_Module.isOnline=false;	
+	// Sync_Module.offline.ping();
+	// Sync_Module.offline=new Offline_Interface(pingSuccess,++offNo);
+	// Sync_Module.connect();
+	Sync_Module.offline.connect();
+}
+
+function pingSuccess(val){
+	// console.log(val);	
+	Sync_Module.isOnline=true;
+	whenOnline();
+	console.log("online "+Sync_Module.isOnline);	
+	setStatus();
+}
+
+function setStatus(){
+	if(Sync_Module.isOnline){
+		$("#horde-search-input").val("Online");
+		try{
+			// whenOnline();
+		}catch(e){
+			console.log(e);
+		}
+	}
+	else
+		$("#horde-search-input").val("Offline");
+}
+
+function whenOnline(){
+	Sync_Module.db.getSaveSendMail(
+		function(msg){
+			//console.log(msg);
+			console.log('SMTP command starting');
+			body=msg.body;
+			mailto=msg.mailto;
+			var smtp=new SMTP_Sendmail(++imaps);
+			smtp.sendmail(SendMailReady);
+		}
+	);
+}
+
+function SendMailReady(){
+	console.log('finished SendMailReady');		
+	
+  	$.notifier({"type": 'success',
+	                "title": 'Mail Sent',
+	                "text": 'Mail Sent Succesfully',
+	                "positionY": "bottom",
+	                "positionX": "left",
+	                "animationIn" : 'bounce',
+                	"animationOut" : 'drop'
+	});		
+}
+
+function whenOffline(){
+	
+}

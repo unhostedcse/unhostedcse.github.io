@@ -1,0 +1,667 @@
+<html lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+  <!-- <meta content="IE=EmulateIE10" http-equiv="X-UA-Compatible"> -->
+
+  <link href="./ui/style.css" rel="stylesheet" type="text/css">
+  <link href="./js/mime.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen_002.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen_003.css" rel="stylesheet" type="text/css">
+  <link href="./js/screen.css" rel="stylesheet" type="text/css">
+  <link href="./js/mozilla.css" rel="stylesheet" type="text/css">
+  <link type="image/x-icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico" rel="shortcut icon">    
+  <title>Mail :: New Message</title>
+ </head>
+
+ <body class="horde-ajax">
+<div style="display:none">
+ <span id="largeaddrspan">
+  <span class="largeaddrtoggle">
+   <span class="largeaddrlist">Show Addresses (%d)</span>
+   <span class="largeaddrlist" style="display:none">Hide Addresses</span>
+  </span>
+  <span class="dispaddrlist" style="display:none">
+   <span class="largeaddrlistlimit" style="display:none">Load All Addresses</span>
+  </span>
+ </span>
+</div>
+
+<div style="display: none;" id="dimpLoading">
+ Loading...</div>
+
+<div id="composeContainer" style="">
+ <form target="submit_frame" id="compose" name="compose" enctype="multipart/form-data" action="/horde/services/ajax.php/imp/addAttachment" method="post" style="">
+ <input id="html" name="html" value="0" type="hidden"> <input value="tjtSfgoa2Po-OJijX7lyvQ5" id="composeCache" name="composeCache" type="hidden"> <input value="28a8a1cf" id="composeHmac" name="composeHmac" type="hidden"> <input id="request_read_receipt" name="request_read_receipt" value="0" type="hidden"> <input id="user" name="user" value="rukshan" type="hidden"> <input id="save_attachments_select" name="save_attachments_select" value="0" type="hidden"> <input id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="2097152" type="hidden"> <input id="vcard_attach" name="vcard_attach" type="hidden">
+ <div class="horde-buttonbar">
+  <div class="iconImg headercloseimg closeImg" id="compose_close" title="Accesskey Esc"></div>
+  <ul>
+   <li class="horde-icon">
+    <a id="send_button" class="dimpactionForward" title="Accesskey Ctrl-Enter">Send</a>   </li>
+   <li class="horde-icon">
+    <a id="draft_button" class="dimpactionDrafts" title="Save as Draft">Save as Draft</a>   </li>
+  </ul>
+ </div>
+
+ <div id="writemsg">
+  <div class="msgwrite">
+   <div class="dimpOptions">
+    <div>
+     <label>
+     <input class="checkbox" id="htmlcheckbox" name="htmlcheckbox" value="1" type="checkbox">HTML composition     </label>
+    </div>
+    <div style="">
+     <label>
+      <input checked="checked" class="checkbox" id="save_sent_mail" name="save_sent_mail" value="1" type="checkbox">Save in      <span title="Sent" id="sent_mail_label">Sent</span>
+     </label>
+     <span class="iconImg horde-popdown" id="save_sent_mail_load"></span>
+     <input value="U2VudA" id="save_sent_mail_mbox" name="save_sent_mail_mbox" type="hidden">    </div>
+    <div>
+     Priority:<span title="Normal" id="priority_label">Normal</span><span class="iconImg horde-popdown"></span>
+     <input id="priority" name="priority" value="normal" type="hidden">    </div>
+    <div>
+     <span id="other_options">
+      <a id="anonymous_element_2">Other Options</a><span id="anonymous_element_3" class="horde-popdown"></span>
+     </span>
+    </div>
+   </div>
+
+   <table>
+    <input id="identity" name="identity" value="0" type="hidden">
+        <tbody>
+
+  <tr id="sendto">
+     <td class="label">
+      <span class="composeAddrbook">To:</span>
+     </td>
+      <td>
+        <!-- <span id="to_loading_img" class="loadingImg" style="display:none"></span> -->
+        <div class="hordeACBox impACBox "> <!-- impACBoxFocus -->
+          <ul class="hordeACList impACList">
+            <li>
+              <input style="width: 80px;" class="hordeACTrigger impACTrigger" autocomplete="off">
+            </li>
+          </ul>
+          <textarea style="display: none;" cols="75" id="to" name="to" rows="1"></textarea>
+        </div>
+      </td>
+    </tr>
+
+
+    <!-- style="display:none" -->
+    <tr id="sendcc" style="display: none;" >
+     <td class="label">
+      <span class="composeAddrbook">Cc:</span>
+     </td>
+     <td>
+      <div class="hordeACBox impACBox" id="fgf">
+		<ul class="hordeACList impACList">
+			<li>
+				<input style="width: 80px;" class="hordeACTrigger impACTrigger" autocomplete="off">
+			</li>
+		</ul>
+        <textarea style="display: none;" cols="75" id="cc" name="cc" rows="1"></textarea>
+	   </div>    
+	  </td>
+    </tr>
+
+    <!-- style="display:none" -->
+    <tr id="sendbcc" style="display: none;">
+     <td class="label">
+      <span class="composeAddrbook">Bcc:</span>
+     </td>
+     <td>
+      <div class="hordeACBox impACBox"><ul class="hordeACList impACList"><li>
+        <input style="width: 80px;" class="hordeACTrigger impACTrigger" autocomplete="off"></li></ul>
+        <textarea style="display: none;" cols="75" id="bcc" name="bcc" rows="1"></textarea></div>     </td>
+    </tr>
+    <tr>
+     <td></td>
+     <td>
+      <span id="togglecc">Add Cc</span>
+      <span id="togglebcc">Add Bcc</span>
+     </td>
+    </tr>
+    <tr>
+     <td class="label">Subject:</td>
+     <td class="subject">
+      <input id="subject" name="subject" type="text">     </td>
+    </tr>
+    <tr class="atcrow">
+     <td class="label">
+      <span class="iconImg attachmentImg"></span>:
+     </td>
+     <td>
+      <div id="atcdrop" style="display:none">
+       Drop file here to attach.      </div>
+      <div id="atcdiv">
+       <span id="upload_limit" style="display:none">The attachment limit has been reached.</span>
+       <span id="upload_wait" style="display:none"></span>
+       <span>
+        <label id="compose_upload_add" for="upload">Add Attachment</label>
+        <input id="upload" multiple="" name="file_upload[]" type="file">
+        <span id="anonymous_element_1" class="horde-popdown">
+        </span>       </span>
+       <ul id="attach_list" style="display:none"></ul>
+      </div>
+     </td>
+    </tr>
+    <tr id="noticerow" style="display:none">
+     <td colspan="2">
+      <ul class="notices">
+       <li id="replyallnotice" style="display:none">
+        You are <span class="replyAllNoticeUnderline">replying to ALL</span> (<span class="replyAllNoticeCount"></span>).
+        <input id="replyall_revert" class="button" value="Reply To Sender instead" type="button">
+       </li>
+       <li id="replylistnotice" style="display:none">
+        You are replying to a mailing list<span class="replyListNoticeId"></span>.
+        <input id="replylist_revert" class="button" value="Reply To Sender instead" type="button">
+       </li>
+       <li id="fwdattachnotice" style="display:none">
+        Click this box to add the original message text to the body.       </li>
+       <li id="fwdbodynotice" style="display:none">
+        Click this box to add the original message as an attachment.       </li>
+       <li id="identitychecknotice" style="display:none">
+        Your identity has been switched to the identity associated with 
+the current recipient address. Click this box to revert to the original 
+identity. The identity will not be checked again during this compose 
+action.       </li>
+       <li id="langnotice" style="display:none">
+        The recipient has indicated that they prefer replies in these languages: <span class="langNoticeList"></span>.
+       </li>
+      </ul>
+     </td>
+    </tr>
+   </tbody></table>
+  </div>
+
+  <!-- <div contentEditable="true" id="composeMessageParent" style="height:  50%;"> -->
+  
+   <!-- <textarea style="height:  50%;" name="message" id="composeMessage" class="fixed"> -->
+<!-- </textarea> -->
+<div id="htmlEditor">
+</div>
+
+ </div>
+</form>
+</div>
+
+<!-- <script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>  -->
+<!-- Ignite UI Required Combined CSS Files -->
+<link href="htmlEditor/infragistics.theme.css" rel="stylesheet" />
+<link href="htmlEditor/infragistics.css" rel="stylesheet" />
+
+<script src="htmlEditor/modernizr-latest.js"></script>
+<script src="htmlEditor/jquery-1.9.1.min.js"></script>
+<script src="htmlEditor/jquery-ui.min.js"></script>
+
+<!-- Ignite UI Required Combined JavaScript Files -->
+<script src="htmlEditor/infragistics.core.js"></script>
+<script src="htmlEditor/infragistics.lob.js"></script>
+
+<script>
+        $(function () {
+            var height = $('html').hasClass('touch') ? 500 : 350;
+
+            $("#htmlEditor").igHtmlEditor({ height: height, width:750}); //
+        });
+</script>
+<style type="text/css">
+    /* Override sample's browser styles */
+      #htmlEditor h1, #htmlEditor h2, #htmlEditor h3, #htmlEditor h4, #htmlEditor h5, #htmlEditor h6 { margin: 0px; }
+      #htmlEditor h1 { font-size: 1.9em; }
+    #sampleContainer { overflow: visible; }
+</style>
+
+
+
+    <!--
+  <script type="text/javascript" src="js/prototype.js"></script>
+  <script type="text/javascript" src="js/horde.js"></script>
+  <script type="text/javascript" src="js/compose-dimp.js"></script>
+  <script type="text/javascript" src="js/hordecore.js"></script>
+  <script type="text/javascript" src="js/dimpcore.js"></script>
+
+  <script type="text/javascript" src="js/viewport_utils.js"></script> 
+  <script type="text/javascript" src="js/contextsensitive.js"></script> 
+  <script type="text/javascript" src="js/imple.js"></script>
+  <script type="text/javascript" src="js/keynavlist.js"></script>
+  <script type="text/javascript" src="js/effects.js"></script>
+  <script type="text/javascript" src="js/compose-base.js"></script>
+  <script type="text/javascript" src="js/imageupload.js"></script>
+  <script type="text/javascript" src="js/imagepoll.js"></script>
+  
+  <script type="text/javascript" src="js/draghandler.js"></script>
+  <script type="text/javascript" src="js/editor.js"></script>
+  <script type="text/javascript" src="js/imp.js"></script>
+  <script type="text/javascript" src="js/autocomplete.js"></script>
+  <script type="text/javascript" src="js/liquidmetal.js"></script>
+  <script type="text/javascript" src="js/prettyautocomplete.js"></script>
+  <script type="text/javascript" src="js/base64.js"></script>
+  <script type="text/javascript" src="js/accesskeys.js"></script>
+  <script type="text/javascript" src="js/popup.js"></script>
+  <script type="text/javascript" src="js/growler.js"></script> 
+
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/ckeditor_basic.js"></script>  
+ -->
+
+
+<script type="text/javascript" src="address_module/add_con.js"></script>
+
+<script type="text/javascript" src="logger.js"></script>
+<script type="text/javascript" src="TCP_Interface.js"></script>
+<script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
+
+<script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
+<script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
+
+<script type="text/javascript" src="Sync_Module.js"></script>
+<script type="text/javascript" src="Mail_Settings.js"></script>
+<script type="text/javascript" src="DBController.js"></script>
+<script type="text/javascript" src="BrowserSetUp.js"></script>  
+<script type="text/javascript" src="NewMessage.js"></script>  
+
+<script type="text/javascript" src="Encoder.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="File.js"></script>
+<script type="text/javascript" src="toggleccbc.js"></script>
+
+<!-- address Module -->
+<!-- <script type="text/javascript"  src="address_module/ui/jquery-2.1.1.js"></script> -->
+<script type="text/javascript" src="address_module/ui/jquery.csv-0.71.js"></script>
+
+<script src="address_module/db.js"></script>
+<script src="address_module/app.js"></script>
+<script src="address_module/pop.js"></script>
+
+<link rel="stylesheet" href="address_module/style.css">
+<link href="./ui/mime.css" rel="stylesheet" type="text/css">
+<link href="./ui/screen.css" rel="stylesheet" type="text/css">
+<link href="./ui/screen(1).css" rel="stylesheet" type="text/css">
+<link href="./ui/screen(2).css" rel="stylesheet" type="text/css">
+<link href="./ui/webkit.css" rel="stylesheet" type="text/css">
+
+
+<!-- <link rel="Stylesheet" type="text/css" href="wys/jHtmlArea.css" />
+<script type="text/javascript" src="wys/jHtmlArea-0.8.js"></script> -->
+
+<link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
+<!-- <script src="./ui/notification/jquery.min.js"></script> -->
+<!-- <script src="./ui/notification/jquery-ui.min.js"></script> -->
+<script src="./ui/notification/notifier.js"></script>
+
+<script type="text/javascript">
+// <input id="upload" multiple="" name="file_upload[]" type="file">
+	document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+
+  
+  var atta=new Array();
+
+  function handleFileSelect(evt) {
+    var atFile;
+    var atUri;
+    var files = evt.target.files; // FileList object
+
+    var f;
+    for (var i = 0;f=files[i], i < files.length; i++) {
+        // var f=files[0];
+        // atFile=f;
+        var url=f.name;
+        var type=f.type;
+
+        var reader  = new FileReader();
+        reader.readAsDataURL(f);        
+
+        reader.onloadend = function () {
+          console.log(reader.result);
+            atUri = reader.result.split(',')[1];;
+            console.log(url+" attached ok");
+            atta[url]={
+              name:url,
+              uri:atUri,
+              type:type
+            };
+        }        
+
+    // var ttype = technalxs.simplemail.SimpleMailFile.getMimeType(url);
+
+      if (true || ttype.match(/^image/i)){
+        //event.preventDefault();
+        var filename = f.name;
+        // var background = technalxs.simplemail.SimpleMailMessageEncoder.getIconForAttachment(filename);          
+        var background = 'ui/attachment.png';
+        html = "<a class='attachment' style='background: url(" + background + ")center left no-repeat; background-size: 18px 18px; padding-left: 20px;' href='file://" + url + "'>" + filename + "</a>";
+        pushAttachFile(html); 
+      }else if (url.match(/^file:/)) { 
+        var filename = technalxs.simplemail.SimpleMailFile.getFileName(url);
+        var background = technalxs.simplemail.SimpleMailMessageEncoder.getIconForAttachment(filename);          
+        html = "<a class='attachment' style='background: url(" + background + ")center left no-repeat;' href='" + url + "'>" + filename + "</a>";
+        technalxs.simplemail.SimpleMailNewMessage.pushAttachFile(html); 
+      }
+
+    }
+  }
+
+   function pushAttachFile(html){
+    // alert(html);
+    // var text=document.getElementById('composeMessageParent').innerHTML;
+
+    //$("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
+
+    // var body = document.getElementById('composeMessageParent');
+
+    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
+    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
+
+    if(isHtml){
+      var body = $("#htmlEditor").igHtmlEditor("getContent", "text");
+    }else{
+      var body = $("#htmlEditor").igHtmlEditor("getContent", "html");
+    }
+
+    var range = document.createRange();
+    var documentFragment = range.createContextualFragment(html);
+    // body.contentDocument.
+    //body.appendChild(documentFragment);
+
+    var div= document.createElement("div");
+    var p= document.createElement("p");
+
+    div.appendChild(documentFragment);
+    div.appendChild(range.createContextualFragment('</br>'));
+    div.appendChild(range.createContextualFragment(body));
+
+    //var content=documentFragment+'</br>'+body;
+    $("#htmlEditor").igHtmlEditor("setContent",div.innerHTML, "html");
+    // var message = technalxs.simplemail.SimpleMailNewMessage.getMessage();
+
+    // Need this to update RichText Editor
+    // technalxs.simplemail.SimpleMailNewMessage.execCommand("selectAll");
+    // technalxs.simplemail.SimpleMailNewMessage.execCommand("delete");
+    // technalxs.simplemail.SimpleMailNewMessage.execCommand("InsertHtml", message.html);
+  }
+// $('#composeMessage').htmlarea();
+
+  var db=new DBController();
+  db.create_open_account_DB(load);
+
+  window.sync;  
+
+  function load(){
+    var id= parseInt(getParameterByName('id'));
+    var mid= parseInt(getParameterByName('mid'));
+    var mbox= getParameterByName('mbox');
+    var action= getParameterByName('action');
+
+    db.loadAccountById(id,setFunc);        
+
+    function setFunc(cursor){
+          // window.sync=new Sync_Module(startSmtp);
+          var user=cursor.username;
+          // console.log('got user '+user);
+          if(action=='compose'){
+            console.log('compose');
+            db.create_openDB(user,"");
+          }
+          else if(action=='reply'){
+            console.log('reply');
+
+            db.create_openDB(user,"",
+              function(){
+                db.getMailById(mid,mbox,setReplyWindow);
+              }
+            );
+
+          }else if(action=='forward'){
+            console.log('forward');
+            db.create_openDB(user,"",
+              function(){
+                db.getMailById(mid,mbox,setForwardWindow);
+              }
+            );
+          }
+    }
+
+  }
+
+  function startSmtp(){
+    console.log('Starting SMTP...');
+    // window.sync.initSMTP();
+  }
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.href);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function setReplyWindow(msg){     
+
+  var mail=NewMessage.createReply(msg);
+  // document.getElementById('subject').value="RE: "+msg.Subject;
+  // var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+  // data[0].value=msg.From;
+
+  document.getElementById('subject').value=mail.subject;
+  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+  var to=mail.to.replace("<","");
+  to=to.replace(">","");
+  data[0].value=to;
+
+}
+
+function setForwardWindow(msg){   
+  // document.getElementById('composeMessage').value=msg.body;
+  // document.getElementById('subject').value="FW: "+msg.Subject;
+  // var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+  // data[0].value=msg.From;
+
+  
+  var mail=NewMessage.createForward(msg);
+  
+  // document.getElementById('composeMessageParent').innerHTML=mail.body;
+
+  // $("#htmlEditor").igHtmlEditor("setContent", "This is text content.", "text");
+  $("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
+
+  document.getElementById('subject').value=mail.subject;
+  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+  data[0].value=mail.from;
+}
+
+  // var text=document.getElementById('composeMessageParent').innerHTML='Hi, this is test text!';
+  // var subject=document.getElementById('subject').value='Unhosted subject';
+  var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+  //data[0].value='unhostedcse@gmail.com';
+  data[0].value=username;
+
+  // data[1].value='unhostedcse@gmail.com,unhostedcse@outlook.com';
+  // data[2].value='unhostedcse,unhostedcse';
+
+  // username='unhostedcse@gmail.com';
+  // password='rusasuergi@150';
+  // // alert('password');
+  // smtphost="smtp.gmail.com";
+  // smtpport=465;
+  // smtpsecurity='ssl';
+  
+
+  
+
+  $(document).on("click",'#send_button',
+    function(e) {
+      // alert('send'+e);
+
+        try{
+
+        //var text=document.getElementById('composeMessageParent').innerHTML;
+        
+        
+
+
+        var subject=document.getElementById('subject').value;
+        var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+
+        var to=data[0].value;
+
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;        
+        if (!filter.test(to)) {
+          //alert('Please provide a valid email address');
+          //return;
+        }
+        
+        $('#send_button').addClass('imp-loading');
+
+        var cc=data[1].value;
+        var bcc=data[2].value;
+
+        // console.log(text);
+        console.log(to);
+        console.log(cc);
+        console.log(bcc);
+        console.log(subject);
+
+
+        // $.event.trigger({type:"composeMail"});
+
+        //start(to,cc,bcc,subject,text);
+        sendMail(to);
+        
+
+      }catch(e){
+        console.log(e);
+      }
+    }
+);  
+
+function sendMail(to){
+  
+  var msg=getMessage();
+  var txt=msg.toString();
+
+  if (msg.bcc) 
+    txt = txt.replace(/Bcc:.*\r\n/i, ""); // Do not send BCC header
+
+  var se=new SMTP_Sendmail();
+  var ll=se.parseList(msg.to);
+
+  mailto=new Array();
+  for(var i=0;i<ll.length;i++){
+      var add=ll[i];
+      mailto.push(add.email);
+      // console.log(add.email);
+  }
+
+  //mailto=msg.to.split(",");
+
+
+  if(msg.cc){
+    var ccl=se.parseList(msg.cc);    
+    for(var i=0;i<ccl.length;i++){
+      mailto.push(ccl[i].email);
+    }
+  }
+
+  if(msg.bcc){
+    var bccl=se.parseList(msg.bcc);    
+    for(var i=0;i<bccl.length;i++){
+      mailto.push(bccl[i].email);
+    }
+  }
+  
+  console.log(txt);
+  body=txt;
+  // sync.SendMail();
+  saveSendMail(mailto,body);
+
+}
+
+ var getMessage = function() {
+
+    var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+    var to=$("#to").val();//data[0].value;
+
+    // var to=data[0].value;
+    // var to=     "Unhosted project < unhostedcse@gmail.com > ";
+
+    var cc=$("#cc").val();//data[1].value;
+    var bcc=$("#bcc").val();//data[2].value;
+
+    var message = new NewMessageModel();
+    //message.accountId = technalxs.simplemail.SimpleMailDom.get("from").selectedItem.value;
+    //message.charset = technalxs.simplemail.SimpleMailDom.get("charset").selectedItem.label;
+
+    // message.charset ='UTF-8';
+    //message.returnReceiptTo = technalxs.simplemail.SimpleMailDom.get("returnReceipt").checked
+                                  //? technalxs.simplemail.SimpleMailDom.get("from").selectedItem.label : null;
+    message.from = username;
+    message.replyTo = username;
+    message.to = to;
+    message.cc = cc;
+    message.bcc = bcc;
+    message.subject = document.getElementById('subject').value;
+    message.file = atta;
+
+    //var text=document.getElementById('composeMessageParent').innerHTML;    
+
+    var isHtmlType= document.getElementById("htmlEditor_domPathToolbar");
+    var isHtml=isHtmlType.classList.contains("ui-state-disabled");
+
+    if(isHtml){
+      var text = $("#htmlEditor").igHtmlEditor("getContent", "text");
+    }else{
+      var text = $("#htmlEditor").igHtmlEditor("getContent", "html");
+    }    
+
+    message.html = text;
+
+
+    return message;
+  }
+
+
+
+// call when send button click
+function saveSendMail(mailto,text){
+
+  //text='Subject: '+subject+'\r\n'+text;
+  db.saveSendMail(mailto,text);
+}
+
+//send mail when new mail is waiting
+$(document).on("newSendMail", 
+  function(e){
+    console.log(e.type);
+    try{
+      Sync_Module.db.getSaveSendMail();
+    }catch(e){
+      console.log(e);
+    }
+  }
+);
+
+$(".hordeACTrigger.impACTrigger").keyup(function(){
+	search($(this));
+});
+
+function search($str){
+	var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
+	var add=new Address_Module();
+	$( ".KeyNavList" ).remove()	
+	if($str.val().length>2){	
+		var currentparent_id=$str.parent().parent().parent().parent().parent().attr('id');
+		var current_id=$('#'+currentparent_id+' textarea').attr('id');
+		add.suggestMails($str.val(),currentparent_id);
+	}
+}
+</script> 
+
+
+<div style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;" id="Growler"></div>
+<iframe style="display: none;" src="javascript:false" name="submit_frame"></iframe>
+<div style="display: none;" class="KeyNavList"><ul><li>High</li><li class="selected">Normal</li><li>Low</li></ul></div>
+
+<div id='bath'>
+</div> 
+</body></html>

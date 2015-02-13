@@ -1,23 +1,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0072)http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#msg:SU5CT1g;13 -->
 <html lang="en-GB" manifest="./cache.manifest">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta content="off" http-equiv="x-dns-prefetch-control">
-	<script type="text/javascript"  src="ui/jquery-2.1.1.js"></script>
-	
-  <link href="ui/mime.css" rel="stylesheet" type="text/css">
-  <link href="ui/screen.css" rel="stylesheet" type="text/css">
-  <link href="ui/screen(1).css" rel="stylesheet" type="text/css">
-  <link href="ui/screen(2).css" rel="stylesheet" type="text/css">
-  <link href="ui/webkit.css" rel="stylesheet" type="text/css">      
-  <title>Mail :: Inbox</title>
- <link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico"></head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="off" http-equiv="x-dns-prefetch-control">
 
- <body class="horde-ajax">
+<!-- <script src="//fast.eager.io/5eg7bM1fWq.js"></script> -->
+
+<link href="ui/style.css" rel="stylesheet" type="text/css">
+<link href="ui/mime.css" rel="stylesheet" type="text/css">
+<link href="ui/screen.css" rel="stylesheet" type="text/css">
+<link href="ui/screen(1).css" rel="stylesheet" type="text/css">
+<link href="ui/screen(2).css" rel="stylesheet" type="text/css">
+<link href="ui/webkit.css" rel="stylesheet" type="text/css">      
+<title>Unhosted Inbox</title>
+<link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico"></head>
+
+<script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
+<link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
+<!-- <script src="./ui/notification/jquery.min.js"></script> -->
+<script src="./ui/notification/jquery-ui.min.js"></script>
+<script src="./ui/notification/notifier.js"></script>
+
+<!-- <link rel="stylesheet" href="js/jquery.mobile/jquery.mobile-1.4.5.min.css">
+<script src="js/jquery.mobile/jquery.mobile-1.4.5.min.js"></script> -->
+
+<!-- <script src="htmlEditor/jquery-1.9.1.min.js"></script>
+<script src="htmlEditor/jquery-ui.min.js"></script> -->
+
+<style>
+  /*h1, h2, h3, h4, h5, h6, p, blockquote, pre{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+h1 { font-size:32px; margin:20px auto}*/
+</style>
+
+<body class="horde-ajax">
 
  <!-- <button class='addi'>CLICK</button>
  <button class='addo'>CLICK ME</button>
  <button type="button" onclick="view();">View DB</button>
+ 
 <button type="button" onclick="startMe1();">Start IMAP</button>
 <button type="button" onclick="startSMTP();">Start SMTP</button>
 <button type="button" onclick="startMailBoxesScenario();">Start MailBoxesScenario</button>
@@ -30,8 +59,111 @@
 <div id="horde-head">
   <div id="horde-logo"><a class="icon" href="http://cse.rukspot.com/horde/services/portal/"></a></div>
   <div id="horde-version">Mail v0.1</div>
-  <div id="horde-navigation"><div class="horde-navipoint"><div class="horde-point-left-active"></div><ul class="horde-dropdown"><li><div class="horde-point-center-active"><a class="horde-mainnavi-active" href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox"><span class="horde-point-arrow-active">▾</span>Mail</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/ingo/basic.php?page=filters">Filters</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="javascript:void(window.open('/horde/imp/dynamic.php?page=compose&popup=1','','width=820,height=610,status=1,scrollbars=yes,resizable=yes'))">New Message</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#search" onclick="if (window.DimpBase) { DimpBase.go(&#39;search&#39;) }">Search</a></div></li></ul></li></ul><div class="horde-point-right-active"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/"><span class="horde-point-arrow">▾</span>Calendar</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/new.php">New Event</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/day.php">Day</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/workweek.php">Work Week</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/week.php">Week</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/month.php">Month</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/kronolith/year.php">Year</a></div></li></ul></li></ul><div class="horde-point-right"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/"><span class="horde-point-arrow">▾</span>Address Book</a></div><ul><li class="arrow"><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/add.php">New Contact</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/add.php?source=urPXelBH8gkKEBJJnHSMPA1">in Address book of rukshan</a></div></li></ul></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/browse.php?source=urPXelBH8gkKEBJJnHSMPA1">Address book of rukshan</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/browse.php?source=favourites">Favourite Recipients</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/turba/search.php">Search</a></div></li></ul></li></ul><div class="horde-point-right"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/nag/"><span class="horde-point-arrow">▾</span>Tasks</a></div><ul><li class="arrow"><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/nag/task.php?actionID=add_task">New Task</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/nag/task.php?actionID=add_task&tasklist_id=NtgsI2CndoIeOouzT8nwCA1">in Task list of rukshan</a></div></li></ul></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/nag/search.php">Search</a></div></li></ul></li></ul><div class="horde-point-right"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/mnemo/"><span class="horde-point-arrow">▾</span>Notes</a></div><ul><li class="arrow"><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/mnemo/memo.php?actionID=add_memo">New Note</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/mnemo/memo.php?actionID=add_memo&memolist=1Gus8IL2yXKtGTM-fZh2fg1">in Notepad of rukshan</a></div></li></ul></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/mnemo/search.php">Search</a></div></li></ul></li></ul><div class="horde-point-right"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#"><span class="horde-point-arrow">▾</span>Others</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/trean/">Bookmarks</a></div></li><li class="arrow"><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/gollem/">File Manager</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/gollem/manager.php?backend_key=sqlhome">Home</a></div></li></ul></li></ul></li></ul><div class="horde-point-right"></div></div><div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-settings horde-icon-settings"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#"></a></div><ul><li class="arrow"><div class="horde-drowdown-str">Administration</div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/config/">Configuration</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/user.php">Users</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/groups.php">Groups</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/perms/">Permissions</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/locks.php">Locks</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/alarms.php">Alarms</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/sessions.php">Sessions</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/phpshell.php">PHP Shell</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/sqlshell.php">SQL Shell</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/admin/cmdshell.php">CLI</a></div></li></ul></li><li class="arrow"><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=imp">Preferences</a></div><ul><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=horde">Global Preferences</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=turba">Address Book</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=trean">Bookmarks</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=kronolith">Calendar</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=gollem">File Manager</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=ingo">Filters</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=imp">Mail</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=mnemo">Notes</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/prefs.php?app=nag">Tasks</a></div></li></ul></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="javascript:void(HordeCore.Growler.toggleLog());">Toggle Alerts Log</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/problem.php?return_url=http%3A%2F%2Fcse.rukspot.com%2Fhorde%2Fservices%2Fajax.php%2Fhorde%2FtopbarUpdate">Problem</a></div></li><li><div class="horde-drowdown-str"><a class="horde-mainnavi" href="http://cse.rukspot.com/horde/services/help/?module=imp" onclick="void(HordePopup.popup(&#39;%7B%22url%22%3A%22%5C%2Fhorde%5C%2Fservices%5C%2Fhelp%5C%2F%22%2C%22params%22%3A%7B%22module%22%3A%22imp%22%7D%7D&#39;));return false;">Help</a></div></li></ul></li></ul><div class="horde-point-right"></div></div></div>
-  <div id="horde-logout"><a class="icon" title="Log out" href="http://cse.rukspot.com/horde/login.php?horde_logout_token=z5svV3gy6wDfa-S3tNp3AQ3&logout_reason=4"></a></div>
+  <div id="horde-navigation">
+	<div class="horde-navipoint">
+		<div class="horde-point-left-active">
+		</div>
+			<ul class="horde-dropdown">
+				<li>
+					<div class="horde-point-center-active">
+						<a class="horde-mainnavi-active" href="index.html">
+							<span class="horde-point-arrow-active">▾</span>
+								Mail
+						</a>
+					</div>
+					<ul>
+						<li>
+							<div class="horde-drowdown-str">
+								<a class="horde-mainnavi" href="index.html" >
+									Inbox
+								</a>
+							</div>
+						</li>
+						<li>
+							<div class="horde-drowdown-str">
+								<a class="horde-mainnavi" href="write.html">
+									New Message
+								</a>
+							</div>
+						</li>	
+					</ul>
+				</li>
+			</ul>
+			<div class="horde-point-right-active">
+			</div>
+	</div>
+	<div class="horde-navipoint">
+		<div class="horde-point-left">
+		</div>
+		<ul class="horde-dropdown">
+			<li>
+				<div class="horde-point-center">
+					<a class="horde-mainnavi" href="NewContact.html">
+						<span class="horde-point-arrow">▾</span>
+							Address Book
+					</a>
+				</div>
+				<ul>
+					<li>
+						<div class="horde-drowdown-str">
+							<a class="horde-mainnavi" href="NewContact.html">
+								New Contact
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="horde-drowdown-str">
+							<a class="horde-mainnavi" href="BrowseContact.html">
+								Browse Contact
+							</a>
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<div class="horde-point-right">
+		</div>
+	</div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Tasks</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Notes</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Others</a></div>
+		<div class="horde-point-right"></div></div>
+	<div class="horde-navipoint">
+		<div class="horde-point-left"></div>
+		<ul class="horde-dropdown">
+			<li>
+				<div class="horde-settings horde-icon-settings">
+					<a class="horde-mainnavi" href="./settings.html"></a>
+				</div>
+			</li>
+		</ul>
+		<div class="horde-point-right">
+		</div>
+	</div>
+</div>
+
+  <div id="horde-logout">
+    <a class="icon" title="Log out" href="./select.html">
+
+<!-- <a href="#popupMenu" data-rel="popup" data-transition="slideup" 
+class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a icon">Actions...</a>
+
+<div data-role="popup" id="popupMenu" data-theme="b">
+        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+            <li data-role="list-divider">Choose an action</li>
+            <li><a href="#">View details</a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">Disable</a></li>
+            <li><a href="./select.html">log out</a></li>
+        </ul>
+</div> -->
+
+
+
+    </a>
+  </div>
   <div id="horde-search">
     <form action="" method="get">
       <div class="horde-fake-input">
@@ -40,7 +172,7 @@
         </span>
         <input autocomplete="off" id="horde-search-input" type="text" title="Search (Entire Message)" class="formGhost">
       </div>
-      <input type="image" id="horde-search-icon" src="ui/graphics/copied/search-topbar.png">
+      <input type="image" id="horde-search-icon" src="ui/graphics/search-topbar.png">
     </form>
   </div>
 </div> 
@@ -50,9 +182,11 @@
  --> 
 
 <div id="horde-sub">
-  <div id="horde-date">12/11/14</div>
+  <div id="horde-date"></div>
   <div id="horde-info"><span id="mailboxLabel">
- <span id="mailboxName">Inbox (12 messages)</span>
+  <span id="accountName"></span>
+  <span id=""> | </span>
+  <span id="mailboxName"></span>
  <span class="iconImg readonlyImg" style="display: none;" title="Read-Only"></span>
 </span>
 </div>
@@ -90,13 +224,20 @@
       <a id="button_filter" title="Filter">Filter</a><span class="horde-popdown" id="anonymous_element_1"></span>     </li>
     </ul>
     <ul>
-     <li class="horde-icon">
-      <a id="checkmaillink" class="dimpactionRefresh" title="Refresh">Refresh</a>     </li>
+    <li class="horde-icon">
+      <a id="checkmaillink" class="dimpactionRefresh" title="Refresh">Refresh</a>
+    </li>
 
-     <li class="horde-icon" style="display: none;">
+    <li class="horde-icon">
+      <a id="button_previous" class="dimpactionPreviousPage noselectDisable" title="previousPage" onclick="previousPage()">Prevoius Page</a>
+    </li>
+    
+    <li class="horde-icon">
+      <a id="button_next" class="dimpactionNextPage noselectDisable" title="nextpage" onclick="nextPage()">Next Page</a>
+    </li>    
 
+    <li class="horde-icon" style="display: none;">
       <a id="button_reply" class="dimpactionReply noselectDisable" title="Reply" onclick="openReplyWindow()">Reply</a>
-
       <span class="horde-popdown" id="anonymous_element_13"></span>     
     </li>
 
@@ -104,14 +245,25 @@
       <a id="button_forward" class="dimpactionForward noselectDisable" title="Forward" onclick="openForwardWindow()">Forward</a>
       <span class="horde-popdown" id="anonymous_element_14"></span>     
     </li>
-     <li class="horde-icon" style="display: none;">
-      <a id="button_resume" class="dimpactionResume noselectDisable" title="Resume">Resume</a>     </li>
-     <li class="horde-icon" style="display: none;">
-      <a id="button_template" class="dimpactionResume" title="Use Template">Use Template</a><span class="horde-popdown" id="anonymous_element_3"></span>     </li>
-     <li class="horde-icon" style="display: none;">
-      <a id="button_delete" class="dimpactionDelete noselectDisable" title="Delete">Delete</a>     </li>
-     <li class="horde-icon" id="button_compose">
-      <a class="dimpactionCompose" title="New Message">New Message</a>     </li>
+
+   <!--  <li class="horde-icon" style="display: none;">
+      <a id="button_resume" class="dimpactionResume noselectDisable" title="Resume">Resume</a>
+    </li>
+
+    <li class="horde-icon" style="display: none;">
+      <a id="button_template" class="dimpactionResume" title="Use Template">Use Template</a>
+      <span class="horde-popdown" id="anonymous_element_3"></span>
+    </li> -->
+
+    <li class="horde-icon" style="display: none;">
+      <a id="button_delete" class="dimpactionDelete noselectDisable" title="Delete" onclick="DeleteMessages()">Delete</a>
+    </li>
+
+    
+
+    <li class="horde-icon" id="button_compose">
+      <a class="dimpactionCompose" title="New Message">New Message</a>
+    </li>
     </ul>
     </div>
 
@@ -197,7 +349,8 @@
         <div id="msgHeadersColl">
          <ul class="rightFloat">
           <li>
-           <div class="date">10/11/14 (15:07:56 UTC)</div>
+            <!-- 10/11/14 (15:07:56 UTC) -->
+           <div class="date"></div>
           </li>
           <li>
            <a id="preview_other">
@@ -208,10 +361,12 @@
          <ul>
           <li>
            <div class="iconImg" id="th_expand" title="Expand Headers"></div>
-           <span class="subject allowTextSelection">[No Subject]</span>
+           <!-- [Subject] -->
+           <span class="subject allowTextSelection"></span>
            <span class="from_allowTextSelection">from</span>           
            <span class="from">
-            <a class="horde-button address" id="anonymous_element_15">rukshan@mail.rukshan.net</a></span>
+            <!-- mail-->
+            <a class="horde-button address" id="anonymous_element_15"></a></span>
           </li>
          </ul>
         </div>
@@ -296,8 +451,8 @@
        </table>
       </div>
      </div>
-     <div id="messageBody" class="messageBody allowTextSelection">
-		<div class="mimePartBase">
+    <div id="messageBody" class="messageBody allowTextSelection">
+		  <div class="mimePartBase">
 			<div class="mimePartData">
         <!-- display -->
 				<div class="fixed leftAlign editable" id='bodyDisplay'>					
@@ -306,6 +461,10 @@
 				</div>
 			</div>
 		</div>
+
+      <div id="bodyloading" style="display: none; height:50px; width:50px; background: url('graphics/loading.gif') no-repeat scroll center"> 
+        loading......
+      <div>
     </div>
    </div>
   </div>
@@ -343,7 +502,8 @@
 </div>
 <div class="horde-sidebar-split"></div>
 
-<table>
+
+<!-- <table>
 
  <tr>
   <td>Account</td>      
@@ -351,9 +511,7 @@
 
 <tr>
   <td>
-    <select id="setting" onchange="setSetting()">
-    
-    </select>
+    <select id="setting" onchange="setSetting()"></select>
   </td>
 </tr> 
     
@@ -363,7 +521,7 @@
         </td>
     </tr>
 
-</table>  
+</table>   -->
 
 
 <div id="horde-slideleft" class="horde-splitbar-vert DragElt" style="left: 210px; height: 624px;">
@@ -398,23 +556,43 @@
 <script type="text/javascript" src="ui/do2.js"></script>
 
 
-
+<script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="logger.js"></script>
 <script type="text/javascript" src="TCP_Interface.js"></script>
 <script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
 <script type="text/javascript" src="IMAP_Interface.js"></script>
 <script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
-
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
-
 <script type="text/javascript" src="Sync_Module.js"></script>
-<script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="DBController.js"></script>
 <script type="text/javascript" src="UIController.js"></script>
 <script type="text/javascript" src="BrowserSetUp.js"></script>  
 <script type="text/javascript" src="Encoder.js"></script>  
 <script type="text/javascript" src="utils.js"></script>  
+<script type="text/javascript" src="File.js"></script>  
+<script type="text/javascript" src="Offline_Interface.js"></script>  
+
    
 
-<div id="GrowlerLog"><div style="display: none;"><ul><li class="GrowlerInfo">This is the notification log.<span class="GrowlerLogClear">[<a>Clear All</a>]</span></li><li class="GrowlerNoAlerts">No Alerts</li></ul></div></div><div id="Growler" style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;"></div><div class="drag" style="position: absolute; display: none;"></div></body></html>
+<div id="GrowlerLog">
+  <div style="display: none;">
+    <ul>
+      <li class="GrowlerInfo">This is the notification log.
+        <span class="GrowlerLogClear">[
+          <a>Clear All</a>
+          ]</span>
+        </li>
+        <li class="GrowlerNoAlerts">No Alerts</li>
+      </ul>
+    </div>
+  </div>
+  <div id="Growler" style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;"></div>
+  <div class="drag" style="position: absolute; display: none;">
+  <span style="left: 218px; top: 334px; display: false;" id="msgLoading" class="loadingImg"></span>  
+</div>
+</body>
+
+
+
+</html>

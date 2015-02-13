@@ -27,8 +27,8 @@ IMAP_Interface.prototype.result=function(value,id){
 }
 
 IMAP_Interface.prototype.start = function(obj){
-	var cmd=new Command(null, null, /\* OK/, /\r\n/);   
-
+	//var cmd=new Command(null, null, /\* OK/, /\r\n/);   
+  var cmd=new Command(null, null, "\\* OK", "\r\n");   
 	this.tcp.connect('connect',JSON.stringify(cmd),JSON.stringify(obj));
 }
 
@@ -62,30 +62,63 @@ IMAP_Interface.prototype.ListFolder = function() {
        var regexp = /\((.+?)\)/g;
       var regflag1 = /(\\(HasNoChildren|Noselect)( )*(\\(\w+))*)/g;
       //var regflag1 = /(\\(\w+)( )*(\\(\w+))*)/g;
-      var regflag2 = /\"\/\" \"(.*?)\"/g;  
-      var regflag3 = /\"\/\" \"(.*?)\"/g;  
+
+      // var regflag2 = /\"\/\" \"(.*?)\"/g;  
+      // var regflag3 = /\"\/\" \"(.*?)\"/g;  
+
+      var regflag2 = /\"(\/|\.)\" (.*?)\r\n/g;  
+      var regflag3 = /\"(\/|\.)\" (.*?)\r\n/g;  
+
       var out=new Array();
       var type,folder,i=0,tmp;
+
   while((getres = regflag3.exec(res))){      
     type=regflag1.exec(res);
     folder=regflag2.exec(res);
+
     tmp=regexp.exec(res);
+
+    folder=folder[2].replace(/"/g,"");
+    console.log(folder);
 
     // true || crome not support contain
     //if(tmp[1].contains('HasNoChildren')){ 
+      try{
     if(tmp[1].indexOf('HasNoChildren') >= 0){   
         var ruk={
-         type:  type[5],
-         folder: folder[1]
+         type:  (type ? type[5] || null : null),
+         folder: folder
         };
         out[i]=ruk;
         i++;
+        console.log(ruk);
     }
-    
+      }catch(e){
+        console.log(e);     
+      }
+    // console.log(folder+' '+ruk  );    
   }
-        
+     
+  console.log(out);   
+  // var isInbox=/inbox/i;
+
+  //Move Inbox mbox at first
+    if(false && out.length>0){
+      for (var i = 0; i < out.length; i++) {
+        if(out[i].folder.match(isInbox)){
+          if(i!=0){
+            var tm=out[0];
+            out[0]=out[i];
+            out[i]=tm;
+          }
+        }
+      };      
+    }
+
+    //console.log(out);
     return out;
   }
+
   this.tag++;
   var cmd=new IMAPCommand(this.tag,"LIST \"\" \"*\"",f);
   this.tcp.connect('ListFolder',JSON.stringify(cmd));
@@ -113,7 +146,13 @@ IMAP_Interface.prototype.fetchList = function() {
             //ids[i++]=[getid[2],getflag[2]];
           }
         }
-        return ids;
+
+        var obj={};
+        obj.ids=ids;
+        obj.sizes=sizes;
+        return obj;
+        // return ids;
+
       }
 
     this.tag++;
