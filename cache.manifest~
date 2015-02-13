@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 306
+# rev 558
 CACHE:
 ./FileCount.class
 ./Mail_Settings.js
@@ -236,7 +236,6 @@ CACHE:
 ./account.html
 ./SMTP_Sendmail.js
 ./Sync_Module.js
-./write.html~
 ./Encoder.js
 ./utils.js
 ./toggleccbc.js
@@ -269,5 +268,4 @@ CACHE:
 ./htmlEditor/jquery-ui.min.js
 ./htmlEditor/infragistics.lob.js
 ./htmlEditor/jquery-1.9.1.min.js
-./cache.manifest~
 ./BrowserSetUp.js
