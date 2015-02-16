@@ -24,7 +24,7 @@ Sync_Module.prototype.init = function(addMsg,folder,setMailBoxBar,loadaccCllback
 	}, refresh_interval);
 
 	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
-	// Sync_Module.connect();
+	// Sync_Module.ping();
 	setInterval(function () {
 		console.log("ping.....");
 		// Sync_Module.ping();
@@ -177,7 +177,7 @@ Sync_Module.prototype.getHeadersReady = function(){
 	result.fetchMIME=new Array();
 	console.log("finished adding DB");
 
-	$('#checkmaillink').removeClass('imp-loading');
+	$('#div_checkmaillink').removeClass('imp-loading');
 	
 }
 
@@ -352,10 +352,8 @@ Sync_Module.initPing= function(){
 Sync_Module.ping = function(){	
 	setStatus();
 	Sync_Module.isOnline=false;	
-	// Sync_Module.offline.ping();
-	// Sync_Module.offline=new Offline_Interface(pingSuccess,++offNo);
-	// Sync_Module.connect();
-	Sync_Module.offline.connect();
+	Sync_Module.offline.ping();
+
 }
 
 function pingSuccess(val){
@@ -367,8 +365,8 @@ function pingSuccess(val){
 }
 
 function setStatus(){
-	if(Sync_Module.isOnline){
-		$("#horde-search-input").val("Online");
+	/*if(Sync_Module.isOnline){
+		$(".con_status").val("Online");
 		try{
 			// whenOnline();
 		}catch(e){
@@ -376,7 +374,19 @@ function setStatus(){
 		}
 	}
 	else
-		$("#horde-search-input").val("Offline");
+		$(".con_status").val("Offline");*/
+	var str;
+	if(Sync_Module.isOnline){
+		str = 'Online';		
+		try{
+			whenOnline();
+		}catch(e){
+			console.log(e);
+		}
+	}else{
+		str = 'Offline';	
+	}
+	$( ".con_status" ).html( str );
 }
 
 function whenOnline(){

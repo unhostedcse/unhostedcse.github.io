@@ -57,7 +57,7 @@
 }
 
 .downloadU {
-	background-image: url('download.png');
+	background-image: url('./graphics/download.png');
 	background-size: 18px 18px;
 	background-repeat: no-repeat;
 	/* [disabled]background-position: right; */

@@ -11,7 +11,7 @@ var smtpsecurity="";
 var result={};
 var selectFolder;
 var dbSelectFolder;
-var Unhosted_version=0.1;
+var Unhosted_version=2.0;
 var dbVersion=10;
 var pid=0;
 

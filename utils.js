@@ -136,7 +136,8 @@ var SimpleMailText = function (){
   var pub ={};
 
   pub.REGEXP_URL = /(https?:\/\/|ftp:\/\/|mailto:)[^\s<>\[\]\(\){}]*/gi,
-  pub.REGEXP_LINK = /<img[\s\S]*?src=['"](.*?)['"][\s\S]*?>|<a[\s\S]*?href=['"](.*?)['"][\s\S]*?<\/a>/gi,
+  // pub.REGEXP_LINK = /<img[\s\S]*?src=['"](.*?)['"][\s\S]*?>|<a[\s\S]*?href=['"](.*?)['"][\s\S]*?<\/a>/gi,
+  pub.REGEXP_LINK = /<a[\s\S]*?href=['"](.*?)['"][\s\S]*?<\/a>/gi,
 
   pub.getURL = function(text) {
     var match = ("" + text).match(technalxs.simplemail.SimpleMailText.REGEXP_URL);

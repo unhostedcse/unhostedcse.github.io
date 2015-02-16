@@ -1,8 +1,8 @@
-window.onload = function() {
+/*window.onload = function() {
   todoDB.open(refreshTodos);
 
-var newTodoForm = document.getElementById('new-todo-form');
-var newTodoInput = document.getElementById('new-todo');
+//var newTodoForm = document.getElementById('new-todo-form');
+//var newTodoInput = document.getElementById('new-todo');
 
 
 newTodoForm.onsubmit = function() {
@@ -132,7 +132,7 @@ function displayContents(contents) {
  // alert(data.length);
 }
 
-
+*/
 
 todoDB.open(function(){
   console.log('DB opened')

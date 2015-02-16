@@ -36,7 +36,7 @@ $(document).ready(function() {
 			SimpleMailAddressObject.name=SimpleMailAddressObject.email;
 		}
 		
-		$('<li class="hordeACListItem" title="'+content+'"> ' + SimpleMailAddressObject.name + ' <img class="hordeACItemRemove impACItemRemove" src="./graphics/delete-small.png"></li>').insertBefore("#"+currentparent_id+" ul li:last-child");		
+		$('<li class="hordeACListItem" title="'+content+'"> ' + SimpleMailAddressObject.name + ' <img class="hordeACItemRemove impACItemRemove" src="./ui/graphics/delete-small.png"></li>').insertBefore("#"+currentparent_id+" ul li:last-child");		
 		var x = document.getElementById(currentparent_id);
 		var y = x.getElementsByTagName("input")[0];
 		y.value='';
@@ -73,7 +73,7 @@ $(document).ready(function() {
 			var content=$(this).val(); 
 			content=content.replace(',','');
 			var currentparent_id=$(this).parent().parent().parent().parent().parent().attr('id');
-			$('<li class="hordeACListItem" title="'+content+'"> ' + content + ' <img class="hordeACItemRemove impACItemRemove" src="./graphics/delete-small.png"></li>').insertBefore("#"+currentparent_id+" ul li:last-child");		
+			$('<li class="hordeACListItem" title="'+content+'"> ' + content + ' <img class="hordeACItemRemove impACItemRemove" src="./ui/graphics/delete-small.png"></li>').insertBefore("#"+currentparent_id+" ul li:last-child");		
 			var x = document.getElementById(currentparent_id);
 			var y = x.getElementsByTagName("input")[0];
 			y.value='';

@@ -14,8 +14,17 @@
     border-bottom: 1px solid #ccc;
 }
 
+.top_border{
+    border-top: 2px solid #848484;
+}
+
 .right_border{
     border-right: 1px solid #ccc;
+}
+
+
+.left_border{
+    border-left: 2px solid #848484;
 }
 
 .cover_parent{
@@ -77,3 +86,56 @@
   z-index: 999;
 }
 
+.white
+{
+    color:#ffffff !important;
+}
+
+
+.grey
+{
+    color:#898D92 !important;
+}
+
+.green
+{
+    color:#23A65F !important;
+}
+
+.msglist_body{
+	background-color: #EEF0F7;
+}
+
+.light_blue{
+	background-color: #D2DBE2;
+}
+
+.lighter_blue{
+	background-color: #E8EDF0;
+}
+
+.font_white{
+	color: #ffffff;
+}
+
+.bottom_align_row{
+    position: absolute;
+    bottom: 0;
+    margin-right: 0;
+}
+
+.cover_height_parent{
+  height: 100%;
+}
+
+.con_status{
+  color: #ffffff;
+  text-align: right;
+  line-height: 40px;  
+}
+
+.theName{
+  color: #ffffff;
+  text-align: center;
+  line-height: 40px;  
+}

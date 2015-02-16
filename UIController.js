@@ -14,7 +14,7 @@ function loadAcc(){
 	selectFolder=mbox;
 
 	console.log('pid: '+pid);	
-
+	loadOtherAcc();
 	try{
 		uid=parseInt(uid);
 		pid=parseInt(pid);
@@ -23,6 +23,21 @@ function loadAcc(){
 		location.href='./select.html';
 		console.log('Bad account ID');
 	}	
+}
+
+function loadOtherAcc(){    
+  db.getAccounts(showOtherAcc);
+}
+
+function showOtherAcc(msgs){
+  var msg;
+  for (var i = 0; msg=msgs[i],i < msgs.length; i++) {
+    var refLink = "./index.html?uid="+msg.id+"&pid=0";
+    $("#otherAcc").append( '<li role="presentation"><a role="menuitem" tabindex="1" href="'+refLink+'">' + msg.username + '</a></li>' );
+  };
+  var logout="Sign out";
+  $("#otherAcc").append('<li role="presentation" class="divider"></li>');
+  $("#otherAcc").append( '<li role="presentation"><a role="menuitem" tabindex="1" href="./select.html">' + logout+ '</a></li>' ); 
 }
 
 var sync;
@@ -55,7 +70,7 @@ function setTime(){
 	date = date.replace(/(\w+, \d+ \w+) (\d{2}) /, "$1 20$2 ");
 	date=Date.parse(date)
 	date=DateUtil.toShortString(date);
-	$('#horde-date').text(date);
+	$('#horde-date').text("Today: "+date);
 }
 
 
@@ -96,7 +111,7 @@ function showAccountName(){
 $(document).on("click",'#checkmaillink',
 	function(e) {
 
-		$('#checkmaillink').addClass('imp-loading');
+		$('#div_checkmaillink').addClass('imp-loading');
 		console.log('refresh mail boxes');
 
 		if(autoSync){
@@ -221,7 +236,7 @@ function clearBody(){
 	$(".subject").html('');
 	$("#previewMsg .date").html('');
 	$(".from_allowTextSelection").html('');
-	document.getElementById('bodyDisplay').innerHTML='';
+	//document.getElementById('bodyDisplay').innerHTML='';
 
 	$("#setting").empty();
 	// $("#msgHeadersColl").css("display","none");
@@ -250,11 +265,12 @@ function addMsg(mails){
 		else
 			var size=msg.size;
 
-        $('.msglist').append('<div class="vpRowHoriz vpRow DragElt ' + (seen ? "" : 'flagUnseen') +'" id="'+msg.id+'" style="-moz-user-select: none;"></div>');
+        $('.msglist').append('<div class="row vpRowHoriz vpRow DragElt ' + (seen ? "" : 'flagUnseen') +'" id="'+msg.id+'" style="-moz-user-select: none; margin-left:5px;"></div>');
 		
 		var $good=$(".vpRowHoriz.vpRow.DragElt").last();
 		
-		$good.append(									'<div class="msgStatus">'+
+		$good.append(									
+														'<div class="col-md-1 msgStatus">'+
 														'<div class="iconImg msCheck "></div>'+
 										(seen ? ""	: 	'<div class="iconImg msgflags flagUnseen" title="Unseen"></div>')+
 		(msg.attachments && msg.attachments.length>0 ?	'<div class="iconImg msgflags flagAttachmsg" title="Attachments"></div>': "")+
@@ -272,10 +288,10 @@ function addMsg(mails){
 
 		
 
-		$good.append('<div class="msgFrom sep" title="' + email + '">' + name + '</div>');
-		$good.append('<div class="msgSubject sep" title="'+msg.subject+'">'+msg.subject+'</div>');
-		$good.append('<div class="msgDate sep">'+date+'</div>');
-		$good.append('<div class="msgSize sep">'+size+' KB</div>');
+		$good.append('<div class="col-md-2 msgFrom sep" title="' + email + '">' + name + '</div>');
+		$good.append('<div class="col-md-7 msgSubject sep" title="'+msg.subject+'">'+msg.subject+'</div>');
+		$good.append('<div class="col-md-1 msgDate sep">'+date+'</div>');
+		$good.append('<div class="col-md-1 msgSize sep">'+size+' KB</div>');
 		$good.append('<div class="mid sep" style="display: none;">'+msg.id+'</div>');// for keep mail id
 		//$good.append('<a id="body" class="body" href="'+msg.body+'" style="display: none;"></a>');
 
@@ -289,7 +305,7 @@ function createAttachmentLink(file){
 	var size=Math.ceil(file.uri.length/1024);
 	var msg=''+
 	'<div class="att">'+
-	'<img src="ui/attachment.png" alt="" width="18" height="18" class="iconU logo"/>'+
+	'<img src="ui/graphics/attachment.png" alt="" width="18" height="18" class="iconU logo"/>'+
 	'<span class="name">'+file.name+'</span>'+
 	'<span class="size"> ('+size+' KB)</span>'+
 	'<a mid="5" class="iconU downloadU" title="Download" download="'+file.name+'" href="'+file.uri+'"> </a>'+
@@ -329,25 +345,25 @@ $(document).on("click",'.vpRowHoriz.vpRow.DragElt',function() {
 	var sub=$(this).find(".msgSubject").text();
 	var date=$(this).find(".msgDate").text();
 	var mid=parseInt($(this).find(".mid").text());
-
+	console.log(""+sub);
 	
 
 	$(".from").html(text);
 	$(".subject").html(sub);
-	$("#previewMsg .date").html(date);
+	$(".date").html(date);
 	$(".from_allowTextSelection").html('from');
 	
 	var db=new DBController();
 	db.create_openDB(username ,"",
             function(){
-
-            	var row=$('.vpRowHoriz.vpRow.DragElt.flagUnseen.vpRowSelected');
-            	if(row.length>0){
-            		console.log("Unseen msg Selected");
-            		db.setMailFlagById(mid,selectFolder,function(){
-            			row.removeClass("flagUnseen");
-            		});
-            	}
+            	
+				var row=$('.vpRowHoriz.vpRow.DragElt.flagUnseen.vpRowSelected');
+					if(row.length>0){
+						console.log("Unseen msg Selected");
+						db.setMailFlagById(mid,selectFolder,function(){
+							row.removeClass("flagUnseen");
+						});
+					}
 
               	db.getMailById(mid,selectFolder,function(msg){
               	var body=msg.body;
@@ -428,7 +444,7 @@ function setMailBoxBar(mail){
 		'<div class="horde-subnavi imp-sidebar-mbox DropElt DragElt" title="'+name+'" id="'+name+'">'+
 	    	'<div class="horde-subnavi-icon inboxImg"></div>'+
 			'<div class="horde-subnavi-point">'+
-	  			'<a>'+name+'</a>'+
+	  			'<a><span class="green">'+name+'</span></a>'+
 			'</div>'+
 	  	'</div>';
 
@@ -549,6 +565,9 @@ function DeleteMessages(){
 	                "animationIn" : 'bounce',
                 	"animationOut" : 'drop'
 	    });
+		/*$('.bottom-left').notify({
+    			message: { text: ob.text }
+  		}).show(); */
 	});    
 })(jQuery);
 

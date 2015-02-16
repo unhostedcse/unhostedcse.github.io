@@ -1,17 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0072)http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#msg:SU5CT1g;13 -->
-<html lang="en-GB" manifest="./cache.manifest">
+<html lang="en-GB">  <!-- manifest="./cache.manifest" -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="off" http-equiv="x-dns-prefetch-control">
 
-<!-- <script src="//fast.eager.io/5eg7bM1fWq.js"></script> -->
-
+<link href="css/custom.css" rel="stylesheet"> 
 <link href="ui/style.css" rel="stylesheet" type="text/css">
 <link href="ui/mime.css" rel="stylesheet" type="text/css">
 <link href="ui/screen.css" rel="stylesheet" type="text/css">
 <link href="ui/screen(1).css" rel="stylesheet" type="text/css">
 <link href="ui/screen(2).css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-dialog.css" rel="stylesheet">
+<script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link href="ui/webkit.css" rel="stylesheet" type="text/css">      
 <title>Unhosted Inbox</title>
 <link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico"></head>
@@ -21,130 +24,51 @@
 <!-- <script src="./ui/notification/jquery.min.js"></script> -->
 <script src="./ui/notification/jquery-ui.min.js"></script>
 <script src="./ui/notification/notifier.js"></script>
-
-<!-- <link rel="stylesheet" href="js/jquery.mobile/jquery.mobile-1.4.5.min.css">
-<script src="js/jquery.mobile/jquery.mobile-1.4.5.min.js"></script> -->
-
-<!-- <script src="htmlEditor/jquery-1.9.1.min.js"></script>
-<script src="htmlEditor/jquery-ui.min.js"></script> -->
-
-<style>
-  /*h1, h2, h3, h4, h5, h6, p, blockquote, pre{
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-h1 { font-size:32px; margin:20px auto}*/
-</style>
-
-<body class="horde-ajax">
-
- <!-- <button class='addi'>CLICK</button>
- <button class='addo'>CLICK ME</button>
- <button type="button" onclick="view();">View DB</button>
- 
-<button type="button" onclick="startMe1();">Start IMAP</button>
-<button type="button" onclick="startSMTP();">Start SMTP</button>
-<button type="button" onclick="startMailBoxesScenario();">Start MailBoxesScenario</button>
-<button type="button" onclick="addMailBox();">Start addMailBox</button>
-<button type="button" onclick="setMailBoxBar();">Set MailBox</button>
-<button type="button" onclick="saveSendMail();">saveSendMail</button> -->
-  
+<script type="text/javascript" src="js/bootstrap-notify.js"></script>
+<script type="text/javascript" src="js/bootstrap-dialog.js"></script>
+<body>
 
 
-<div id="horde-head">
-  <div id="horde-logo"><a class="icon" href="http://cse.rukspot.com/horde/services/portal/"></a></div>
-  <div id="horde-version">Mail v0.1</div>
-  <div id="horde-navigation">
-	<div class="horde-navipoint">
-		<div class="horde-point-left-active">
-		</div>
-			<ul class="horde-dropdown">
-				<li>
-					<div class="horde-point-center-active">
-						<a class="horde-mainnavi-active" href="index.html">
-							<span class="horde-point-arrow-active">▾</span>
-								Mail
-						</a>
-					</div>
-					<ul>
-						<li>
-							<div class="horde-drowdown-str">
-								<a class="horde-mainnavi" href="index.html" >
-									Inbox
-								</a>
-							</div>
-						</li>
-						<li>
-							<div class="horde-drowdown-str">
-								<a class="horde-mainnavi" href="write.html">
-									New Message
-								</a>
-							</div>
-						</li>	
-					</ul>
-				</li>
-			</ul>
-			<div class="horde-point-right-active">
-			</div>
-	</div>
-	<div class="horde-navipoint">
-		<div class="horde-point-left">
-		</div>
-		<ul class="horde-dropdown">
-			<li>
-				<div class="horde-point-center">
-					<a class="horde-mainnavi" href="NewContact.html">
-						<span class="horde-point-arrow">▾</span>
-							Address Book
-					</a>
-				</div>
-				<ul>
-					<li>
-						<div class="horde-drowdown-str">
-							<a class="horde-mainnavi" href="NewContact.html">
-								New Contact
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="horde-drowdown-str">
-							<a class="horde-mainnavi" href="BrowseContact.html">
-								Browse Contact
-							</a>
-						</div>
-					</li>
-				</ul>
-			</li>
-		</ul>
-		<div class="horde-point-right">
-		</div>
-	</div>
-	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Tasks</a></div>
-		<div class="horde-point-right"></div></div>
-	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Notes</a></div>
-		<div class="horde-point-right"></div></div>
-	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Others</a></div>
-		<div class="horde-point-right"></div></div>
-	<div class="horde-navipoint">
-		<div class="horde-point-left"></div>
-		<ul class="horde-dropdown">
-			<li>
-				<div class="horde-settings horde-icon-settings">
-					<a class="horde-mainnavi" href="./settings.html"></a>
-				</div>
-			</li>
-		</ul>
-		<div class="horde-point-right">
-		</div>
-	</div>
+  <div class = "container-fluid">
+  <div class="row" style="height:40px; background-color:#5672B4;">
+
+  <div class="col-md-2 right_border">
+    <img src="img/logov2.png"/>
 </div>
 
-  <div id="horde-logout">
+<div id="mail_dropdown" class="col-md-3" style="margin-left:-15px;">
+<ul class="nav nav-pills">
+  
+  <li role="presentation" class="dropdown" style="background-color:#c5d5d5">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+      Mails <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Inbox</a></li>
+        <li role="presentation" onclick="openWriteWindow();"><a role="menuitem" tabindex="-1" href="#">New Message</a></li>
+    </ul>
+  </li>
+  <li role="presentation" class="dropdown" style="background-color:#c5d5d5; margin-left=-2px;">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+     Address Book <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li role="presentation"><a role="menuitem" tabindex="1" href="NewContact.html">Add Contact</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="1" href="BrowseContact.html">Browse Contact</a></li>
+    </ul>
+  </li>
+  
+</ul>
+</div>
+
+
+
+<div class="col-md-3">
+  <div><h2 class="con_status">Connection Status</h2></div>
+</div>
+
+  <div class="col-md-4" style="float:right;">
+  <!--<div id="horde-logout">
     <a class="icon" title="Log out" href="./select.html">
 
 <!-- <a href="#popupMenu" data-rel="popup" data-transition="slideup" 
@@ -161,402 +85,204 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
 </div> -->
 
 
-
+  <!-- Split button -->
+<ul class="nav nav-pills" style="float:right;">
+  <li role="presentation" class="dropdown" style="background-color:#c5d5d5;">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+      <span id="accountName"></span> <span class="caret"></span>
     </a>
-  </div>
-  <div id="horde-search">
-    <form action="" method="get">
-      <div class="horde-fake-input">
-        <span id="horde-search-dropdown">
-          <span class="iconImg horde-popdown"></span>
-        </span>
-        <input autocomplete="off" id="horde-search-input" type="text" title="Search (Entire Message)" class="formGhost">
-      </div>
-      <input type="image" id="horde-search-icon" src="ui/graphics/search-topbar.png">
-    </form>
-  </div>
-</div> 
+    <ul class="dropdown-menu" role="menu" id="otherAcc">
+    </ul>
+  </li>
+</ul>
+</div>
+
+</div>
+</div>
+
 
 <!-- 
   //// end comment
  --> 
 
-<div id="horde-sub">
+<div class = "container-fluid">
+<div class="row" style="height:30px; background-color:#35383B;">
+<div class="col-md-*">
   <div id="horde-date"></div>
   <div id="horde-info"><span id="mailboxLabel">
-  <span id="accountName"></span>
-  <span id=""> | </span>
+  <!--<span id="accountName"></span>
+  <span id=""> | </span> -->
   <span id="mailboxName"></span>
  <span class="iconImg readonlyImg" style="display: none;" title="Read-Only"></span>
 </span>
 </div>
 </div>
-<div id="horde-body" class="horde-no-sidebar">
-<div id="horde-contentwrapper">
-<div id="horde-content">
-<div style="display:none">
- <span id="largeaddrspan">
-  <span class="largeaddrtoggle">
-   <span class="largeaddrlist">Show Addresses (%d)</span>
-   <span class="largeaddrlist" style="display:none">Hide Addresses</span>
-  </span>
-  <span class="dispaddrlist" style="display:none">
-   <span class="largeaddrlistlimit" style="display:none">Load All Addresses</span>
-  </span>
- </span>
 </div>
-<div id="dimpLoading" style="display: none;">
- Loading... <noscript>
-  &lt;div class="nojserror"&gt;Error! This application requires javascript to be available and enabled in your browser.&lt;/div&gt;
- </noscript>
 </div>
 
-<div id="horde-page" style="left: 210px;">
- <div id="dimpmain">
-  <div id="dimpmain_iframe" style="display:none"></div>
-  <div id="dimpmain_folder" style="">
-   <div id="dimpmain_folder_top">
-    <div class="horde-buttonbar">
-    <ul class="rightFloat">
-     <li class="horde-nobutton">
-      <a id="button_other" title="Other">Other</a><span class="horde-popdown" id="anonymous_element_4"></span>     </li>
-     <li class="horde-nobutton" id="filter">
-      <a id="button_filter" title="Filter">Filter</a><span class="horde-popdown" id="anonymous_element_1"></span>     </li>
-    </ul>
-    <ul>
-    <li class="horde-icon">
-      <a id="checkmaillink" class="dimpactionRefresh" title="Refresh">Refresh</a>
-    </li>
 
-    <li class="horde-icon">
-      <a id="button_previous" class="dimpactionPreviousPage noselectDisable" title="previousPage" onclick="previousPage()">Prevoius Page</a>
-    </li>
-    
-    <li class="horde-icon">
-      <a id="button_next" class="dimpactionNextPage noselectDisable" title="nextpage" onclick="nextPage()">Next Page</a>
-    </li>    
-
-    <li class="horde-icon" style="display: none;">
-      <a id="button_reply" class="dimpactionReply noselectDisable" title="Reply" onclick="openReplyWindow()">Reply</a>
-      <span class="horde-popdown" id="anonymous_element_13"></span>     
-    </li>
-
-    <li class="horde-icon" style="display: none;">
-      <a id="button_forward" class="dimpactionForward noselectDisable" title="Forward" onclick="openForwardWindow()">Forward</a>
-      <span class="horde-popdown" id="anonymous_element_14"></span>     
-    </li>
-
-   <!--  <li class="horde-icon" style="display: none;">
-      <a id="button_resume" class="dimpactionResume noselectDisable" title="Resume">Resume</a>
-    </li>
-
-    <li class="horde-icon" style="display: none;">
-      <a id="button_template" class="dimpactionResume" title="Use Template">Use Template</a>
-      <span class="horde-popdown" id="anonymous_element_3"></span>
-    </li> -->
-
-    <li class="horde-icon" style="display: none;">
-      <a id="button_delete" class="dimpactionDelete noselectDisable" title="Delete" onclick="DeleteMessages()">Delete</a>
-    </li>
-
-    
-
-    <li class="horde-icon" id="button_compose">
-      <a class="dimpactionCompose" title="New Message">New Message</a>
-    </li>
-    </ul>
+<div class="container-fluid">
+<div class="row" style="background-color:#E9F6EF;">
+  <div class="col-md-2">
+    <div class="row">
+     <div class="col-md-*" style="background-color:#00B159; box-shadow: 2px 2px 2px #888888; margin-bottom:4px;">
+          <button id="composelink" type="button" class="btn btn-link btn-lg btn-block" onclick="openWriteWindow();"><span class="white">New Message</span></button>
+      </div>
     </div>
 
-    <div id="searchbar" style="display:none">
-     <span class="iconImg closeImg" id="search_close" title="Clear Search"></span>
-     <span class="iconImg dimpactionRefresh" id="search_refresh" title="Refresh Search Results"></span>
-     <span class="iconImg dimpactionEditsearch" id="search_edit" style="display:none" title="Edit Search Query"></span>
-     <span id="search_time_elapsed" style="display:none"></span>
-     <div id="search_label"></div>
+<div class="row">
+<div class="col-md-*">
+<!-- Mail box showing area -->
+<div id="foldersLoading" style="display: none;">Loading...</div>
+<div id="imp-specialmboxes">
+
+</div>
+
+</div>
+</div>   
+<div class="row bottom_align_row">
+<div class='notifications bottom-left'></div>
+</div> 
+</div>
+
+
+  <div class="col-md-10 left_border">   
+    <div class="row light_blue">
+       
+        <div id="div_checkmaillink" class="col-md-2 horde-icon right_border dimpactionRefresh">
+            <button id="checkmaillink" type="button" class="btn btn-link btn-lg btn-block"><span class="grey">Refresh</span></button>
+        </div>
+        <div id="div_button_previous" class="col-md-2 horde-icon right_border">
+            <button id="button_previous" type="button" class="btn btn-link btn-lg btn-block" onclick="previousPage()"><span class="grey">Previous Page</span></button>
+        </div>
+        <div id="div_button_next" class="col-md-2 horde-icon right_border">
+          <button id="button_next" type="button" class="btn btn-link btn-lg btn-block" onclick="nextPage()"><span class="grey">Next Page</span></button>
+        </div>
+        <div id="div_button_reply" class="col-md-2 horde-icon right_border">
+          <button id="button_reply" type="button" class="btn btn-link btn-lg btn-block" onclick="openReplyWindow()"><span class="grey">Reply</span></button>
+        </div>
+        <div id="div_button_forward" class="col-md-2 horde-icon right_border">
+          <button id="button_forward" type="button" class="btn btn-link btn-lg btn-block" onclick="openForwardWindow()"><span class="grey">Forward</span></button>
+        </div>
+        <div id="div_button_delete" class="col-md-2 horde-icon">
+          <button id="button_delete" type="button" class="btn btn-link btn-lg btn-block" onclick="DeleteMessages()"><span class="grey">Delete</span></button>
+        </div>
     </div>
-   </div>
+    <div class="row lighter_blue bottom_border" style="padding-top:4px; padding-bottom:4px;">
+        <div class="col-md-1 right_border">
+            
+        </div>
+        <div class="col-md-2 right_border">
+            <h3><span class="grey">From</span></h3>
+        </div>
+        <div class="col-md-7 right_border">
+          <h3><span class="grey">Subject</span></h3>
+        </div>
+        <div class="col-md-1 right_border">
+          <h3><span class="grey">Date</span></h3>
+        </div>
+        <div class="col-md-1">
+          <h3><span class="grey">Size</span></h3>
+        </div>
+    </div>
 
-   <div id="msgSplitPane">
-	<div style="float: none; height: 285px; width: auto;">
-		<div id="msglistHeaderContainer">
+    <!-- Msg List Start -->
+    <div class="row msglist_body">
+        <div class="col-md-*">
+            <div class="msglist" style="width: auto; height: 200px; overflow-y:scroll; width: auto; ;position: relative;"></div>
+        </div>
+    </div>
+    <!-- Msg List end -->
 
-			<div class="vpRowHoriz vpRow horde-table-header" id="msglistHeaderHoriz" style="">
-				<div class="msgStatus">
-					<div class="iconImg msCheckAll msCheck" id="horiz_opts" title="Select All">
-					</div>
-				</div>
-				<div class="msgFrom sep"><a class="msgFromTo" style="display: none;">To</a><a>From</a>
-					<div class="horde-split-left">
-					</div>
-				</div>
-				<div class="msgSubject sep sortdown" id="anonymous_element_7"><a>Subject</a>
-					<div class="horde-split-left">
-					</div>
-					<span class="horde-popdown" id="anonymous_element_8"></span>
-				</div>
-				<div class="msgDate sep" id="anonymous_element_9"><a>Date</a>
-					<div class="horde-split-left">
-					</div>
-					<span class="horde-popdown" id="anonymous_element_10"></span>
-				</div>
-				<div class="msgSize sep"><a>Size</a>
-					<div class="horde-split-left">
-					</div>
-				</div>
-			</div>
-			<div class="horde-table-header" id="msglistHeaderVert" style="display: none;">
-				<div class="msgSort">
-					<a class="widget" id="vertical_sort">Sort</a><span class="horde-popdown" id="anonymous_element_6"></span>
-				</div>
-				<div class="iconImg msgStatus">
-					<div class="iconImg msCheckAll msCheck" title="Select All">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="vpScroll" style="float: right; overflow: hidden; display: none;">
-			<div class="vpScrollUp">
-			</div>
-			<div class="vpScrollCursor" style="position: relative; top: 0px;">
-			</div>
-			<div class="vpScrollDown" style="position: relative;">
-			</div>
-		</div>
-		<div class="msglist" style="width: auto; height: 250px; width: auto;overflow: auto;position: relative;">
 
-			<!-- <div class="vpRowHoriz vpRow DragElt" id="VProw_1" style="">
-				<div class="msgStatus">
-					<div class="iconImg msCheck">
-					</div>
-				</div>
-				<div class="msgFrom sep" title="rukshan@mail.rukshan.net">rukshan@mail.rukshan.net
-				</div>
-				<div class="msgSubject sep" title="[No Subject]">[No Subject]
-				</div>
-				<div class="msgDate sep">03/09/14
-				</div>
-				<div class="msgSize sep">1 KB
-				</div>
-			</div> -->
-
-		</div>
-	</div>
-	<div class="horde-splitbar-horiz DragElt" id="anonymous_element_2" style=""><div class="horde-splitbar-horiz-handle"></div></div><div id="previewPane" style="height: 246px;">
-    <div id="previewInfo" style="display: none;">No messages selected.</div>
-    <div id="previewMsg">
-     <div class="msgHeaders">
-
-        <div id="msgHeadersColl">
+    <!-- Msg header start -->
+    <div class="row">
+      <div class="col-md-* top_border" style="margin-top:10px;">
+          <div class="msgHeaders">
+          <div id="msgHeadersColl">
          <ul class="rightFloat">
           <li>
-            <!-- 10/11/14 (15:07:56 UTC) -->
            <div class="date"></div>
-          </li>
-          <li>
-           <a id="preview_other">
-            <span class="iconImg" title="Other Options"></span>
-           </a>
           </li>
          </ul>
          <ul>
           <li>
-           <div class="iconImg" id="th_expand" title="Expand Headers"></div>
-           <!-- [Subject] -->
            <span class="subject allowTextSelection"></span>
-           <span class="from_allowTextSelection">from</span>           
+           <span class="from_allowTextSelection"></span>           
            <span class="from">
-            <!-- mail-->
             <a class="horde-button address" id="anonymous_element_15"></a></span>
           </li>
          </ul>
         </div>
-
-      <div id="msgHeaders" style="display:none">
-       <div class="dimpOptions">
-        <div>
-         <span id="msg_newwin_options">
-          <span class="iconImg"></span>
-          <a>Open in new window</a>
-         </span>
         </div>
-        <div style="display: none;">
-         <span id="msg_resume_draft">
-          <span class="iconImg"></span>
-          <a>Resume Draft</a>
-         </span>
-        </div>
-        <div style="display: none;">
-         <span id="msg_template">
-          <span class="iconImg"></span>
-          <a>Use Template</a>
-         </span>
-        </div>
-        <div>
-         <span id="preview_other_opts">
-          <span class="iconImg dimpactionOther"></span>
-          <a id="anonymous_element_11">Other Options</a><span class="horde-popdown" id="anonymous_element_12"></span>
-        </span>
-        </div>
-       </div>
-       <div>
-        <span class="iconImg" id="th_collapse" title="Collapse Headers"></span>
-        <span class="subject allowTextSelection">[No Subject]</span>
-       </div>
-       <table>
-        <thead>
-         <tr id="msgHeaderFrom">
-          <td class="label">From:</td>
-          <td class="from allowTextSelection"><a class="horde-button address" id="anonymous_element_16">rukshan@mail.rukshan.net</a></td>
-         </tr>
-         <tr id="msgHeaderDate">
-          <td class="label">Date:</td>
-          <!-- <td class="date allowTextSelection">10/11/14 (15:07:56 UTC)</td> -->
-         </tr>
-         <tr id="msgHeaderTo">
-          <td class="label">To:</td>
-          <td class="to allowTextSelection">Undisclosed Recipients</td>
-         </tr>
-         <tr id="msgHeaderCc" style="display: none;">
-          <td class="label">Cc:</td>
-          <td class="cc allowTextSelection"></td>
-         </tr>
-         <tr id="msgHeaderBcc" style="display: none;">
-          <td class="label">Bcc:</td>
-          <td class="bcc allowTextSelection"></td>
-         </tr>
-         <tr id="msgAtc" style="display: none;">
-          <td class="label" id="partlist_toggle">
-           <span class="iconImg attachmentImg attachmentImage"></span>
-           <span class="iconImg" id="partlist_col"></span>
-           <span class="iconImg" id="partlist_exp" style="display:none"></span>
-          </td>
-          <td>
-           <div></div>
-           <div id="partlist" style="display:none"></div>
-          </td>
-         </tr>
-         <tr id="msgLogInfo" style="display: none;">
-          <td class="label" id="msgloglist_toggle">
-           <span class="iconImg" id="msgloglist_col"></span>
-           <span class="iconImg" id="msgloglist_exp" style="display:none"></span>
-          </td>
-          <td>
-           <div>
-            <span class="msgLogLabel">Message Log</span>
-           </div>
-           <ul id="msgloglist" style="display:none"></ul>
-          </td>
-         </tr>
-        </thead>
-       </table>
       </div>
-     </div>
-    <div id="messageBody" class="messageBody allowTextSelection">
-		  <div class="mimePartBase">
-			<div class="mimePartData">
-        <!-- display -->
-				<div class="fixed leftAlign editable" id='bodyDisplay'>					
-          <!-- <iframe id="iframe"></iframe> -->
-				</div> 
-				</div>
-			</div>
-		</div>
 
-      <div id="bodyloading" style="display: none; height:50px; width:50px; background: url('graphics/loading.gif') no-repeat scroll center"> 
+    </div>
+<!-- Msg header end-->
+
+
+<!-- Msg body start-->
+    <div class="row" style="overflow-y:scroll; height:300px; background-color:#ffffff;">
+      <div class="col-md-12">
+        <div id="messageBody" class="messageBody allowTextSelection">
+          <div class="mimePartBase">
+              <div class="mimePartData">
+  <!-- display -->
+                 <div class="fixed leftAlign editable" id='bodyDisplay'>         
+                 </div> 
+              </div>
+          </div>
+        </div>
+
+        <div id="bodyloading" style="display: none; height:50px; width:50px; background: url('ui/graphics/loading.gif') no-repeat scroll center"> 
         loading......
-      <div>
-    </div>
-   </div>
-  </div>
+        <div>
 
-   
-  </div>
- </div>
-</div>
+      </div>      
+    </div>    
+<!-- Msg body end-->
 
+
+ 
 </div>
 </div>
 
-<div id="horde-sidebar" style="width: 210px;">
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body…</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-  <div class="horde-new">
-    <span class="horde-new-link">
-      <a onclick="openWriteWindow()" id="composelink" class="icon">New Message</a>
-    </span>
-  </div>
+<script>
+   $( document ).ready(function() {
+      document.getElementById("div_button_reply").style.visibility="hidden";
+      document.getElementById("div_button_forward").style.visibility="hidden";
+      document.getElementById("div_button_delete").style.visibility="hidden";
+   });
 
-<div id="foldersLoading" style="display: none;">Loading...</div>
-<div id="foldersSidebar" style="">
+   function showMsgUtils(){
+      document.getElementById("div_button_reply").style.visibility="visible";
+      document.getElementById("div_button_forward").style.visibility="visible";
+      document.getElementById("div_button_delete").style.visibility="visible";
+   }
 
-
-<div id="imp-specialmboxes">
-	<div class="horde-info">No items to display	</div>
-
-  <!-- <div class="horde-subnavi imp-sidebar-mbox DropElt DragElt horde-subnavi-active" title="Inbox" id="anonymous_element_15">
-    <div class="horde-subnavi-icon inboxImg"></div>
-    <div class="horde-subnavi-point">
-      <a>Inbox</a>
-    </div>
-  </div> -->
-
-</div>
-<div class="horde-sidebar-split"></div>
-
-
-<!-- <table>
-
- <tr>
-  <td>Account</td>      
-</tr>
-
-<tr>
-  <td>
-    <select id="setting" onchange="setSetting()"></select>
-  </td>
-</tr> 
-    
-    <tr>
-        <td>
-            <a href="./account.html" onclick="javascript:void window.open('./account.html','1417505292623','width=750,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;" id="composelink" class="icon">Add Account</a>
-        </td>
-    </tr>
-
-</table>   -->
-
-
-<div id="horde-slideleft" class="horde-splitbar-vert DragElt" style="left: 210px; height: 624px;">
-    <div id="horde-slideleftcursor" class="horde-splitbar-vert-handle"></div>
-</div>
-
-<div id="messageBodyError">
- <table class="mimeStatusMessageTable" style="display:none">
-  <tbody><tr>
-   <td>Unable to view message in preview pane.</td>
-  </tr>
-  <tr>
-   <td><a href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#" class="messageBodyErrorLink">Click HERE to view the message in a new window.</a></td>
-  </tr>
- </tbody></table>
-</div>
-
-
-
-<div id="flagnewContainer" style="display:none">
- <div>
-  <input name="flagname">
-  <input name="flagcolor" size="5">
-  <a class="flagcolorpicker" href="http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#">
-    <img alt="Color Picker" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAAB7klEQVR4AWOgPZBRUapU2q3YBWIrpykfU54sa6/AhKFMsURjp9+S7HVWh5VFGRhM9+dtjFpusEFxLYZC78WZa6OW+e20uWGWo65ued9jX+TytFXOR5CUiGgJCzAwLO+zvhO6OW910RaLXUHJ+duL1kSvc7mQvwauTClI+6DqIWXTn/YBR/JXRK1yP2r9cH+07cnQ9VnLQvZvb4AqU5HRO5+9PmyH9mX13JtLvTYmrS5bn77LNWPa6uRVfrstbv3XgSrUXJ+9JW6R6+GiLUYXdVa9nj1jkvc229M2W7qLopbnrc3YAbc4YFvICvdTRWujV0Tvjl+rcWN2wsG5Fetcj+3wDVhv9XB5H1zhl9keW0KOpi70OZa33G1b6k79gz4ltyvdjznFNc12ufTTHq7wP8f/BVOW5szcsHJxe9vCNRNnrYyamGLyY2tHXmJX2O7/TLBAnqSyTfm08V6bC1a7Tc/b7zM+Z7vX9JrmTbUb2jdD5k+fBTfP5ljWWo/jWWv9juet9TkFwvlr7Z9afQ7db/XV9PYvP7hC55PpC4KOQXDgSQj2eJqx//+SpIO2d8EWIxQGHksDYmSFJs81akxf2d5FijzPg95HXZ5D8SsIdvtm/d/ov/X/mD1ICv+v+7/n/1MofgHF3/5DwGzaJWgAoAX8KKCfYZ0AAAAASUVORK5CYII="></a>
- </div>
-</div>
-</div>
-
+</script>
+<script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="ui/do3.js"></script>
 <script type="text/javascript" src="ui/do.js"></script>
 <script type="text/javascript" src="ui/do2.js"></script>
-
-
-<script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="logger.js"></script>
 <script type="text/javascript" src="TCP_Interface.js"></script>
 <script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
@@ -564,35 +290,14 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
 <script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
+<script type="text/javascript" src="Offline_Interface.js"></script>    
+
 <script type="text/javascript" src="Sync_Module.js"></script>
 <script type="text/javascript" src="DBController.js"></script>
-<script type="text/javascript" src="UIController.js"></script>
 <script type="text/javascript" src="BrowserSetUp.js"></script>  
-<script type="text/javascript" src="Encoder.js"></script>  
-<script type="text/javascript" src="utils.js"></script>  
+<script type="text/javascript" src="Encoder.js"></script>
 <script type="text/javascript" src="File.js"></script>  
-<script type="text/javascript" src="Offline_Interface.js"></script>  
-
-   
-
-<div id="GrowlerLog">
-  <div style="display: none;">
-    <ul>
-      <li class="GrowlerInfo">This is the notification log.
-        <span class="GrowlerLogClear">[
-          <a>Clear All</a>
-          ]</span>
-        </li>
-        <li class="GrowlerNoAlerts">No Alerts</li>
-      </ul>
-    </div>
-  </div>
-  <div id="Growler" style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;"></div>
-  <div class="drag" style="position: absolute; display: none;">
-  <span style="left: 218px; top: 334px; display: false;" id="msgLoading" class="loadingImg"></span>  
-</div>
+<script type="text/javascript" src="UIController.js"></script>
+<script type="text/javascript" src="utils.js"></script>  
 </body>
-
-
-
 </html>

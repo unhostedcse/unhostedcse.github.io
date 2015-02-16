@@ -22,34 +22,16 @@ Offline_Interface.prototype.result=function(value,id){
   Offline_Interface.onResponse(value,id);  
 }
 
-Offline_Interface.prototype.connect = function(){
+Offline_Interface.prototype.ping = function(){
   //var cmd=new SMTPCommand(null, null, "\\* OK", "\r\n");
   var cmd=new SMTPCommand(null, null, null,null);
   var obj={
         host : 'smtp.gmail.com',
         port : 465,
         sec : 'ssl'
-  };
-  // var obj={
-  //       host : 'autoconfig.thunderbird.net',
-  //       port : 443,
-  //       sec : 'ssl'
-  // };
+  }; 
 
   this.tcp.connect('connect',JSON.stringify(cmd),JSON.stringify(obj));
-  return cmd;
-}
-
-Offline_Interface.prototype.ping = function(){
-  // var cmd=new SMTPCommand("EHLO unhosted",null,null, /2\d* .*\r\n$/);
-  // this.tcp.connect('ehlo',JSON.stringify(cmd));
-  // return cmd;
-  var domain="gmail.com";
-  var req='GET /v1.1/'+domain+' HTTP/1.1'+'\r\n'+
-      'Host: autoconfig.thunderbird.net:443'+'\r\n'+      
-      '\r\n';
-  var cmd=new SMTPCommand(req, null, /^HTTP/, /\r\n/);  
-  this.tcp.connect('HTTPGet',JSON.stringify(cmd));
   return cmd;
 }
 

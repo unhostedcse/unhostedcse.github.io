@@ -199,8 +199,9 @@ table.horde-table td {
     padding: 0 5px;
 }
 .horde-table-header, table.horde-table thead tr, table.horde-table th {
-    background-image: url("graphics/tablehead-bg.png");
-    background-repeat: repeat-x;
+    /*background-image: url("graphics/tablehead-bg.png");
+    background-repeat: repeat-x;*/
+    background-color: #aab9d9;
 }
 .horde-table-header a, table.horde-table th a {
     color: #000;
@@ -1606,7 +1607,7 @@ a.horde-mainnavi:link, a.horde-mainnavi:visited, a.horde-mainnavi:active {
 .horde-point-center:hover, a.horde-mainnavi:hover,
 a.horde-mainnavi-active:link, a.horde-mainnavi-active:visited,
 a.horde-mainnavi-active:active {
-    color: #7eaa42;
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -1677,26 +1678,26 @@ a.horde-mainnavi-active:active {
     width: 100%;
     height: 34px;
     background-color: #2e464f;
-    background-image: url("graphics/head-bg.png");
-    background-repeat: repeat-x;
+    /*background-image: url("graphics/head-bg.png");
+    background-repeat: repeat-x;*/
+    background-color: #5672B4;
     border-bottom: 2px solid #000;
 }
 #horde-logo {
     float: left;
     width: 88px;
     height: 34px;
-    background-image: url("graphics/logo.png");
-    background-repeat: no-repeat;
+    /*background-image: url("graphics/logo.png");
+    background-repeat: no-repeat;*/
 }
 #horde-version {
     float: left;
     height: 16px;
     padding: 18px 10px 0px 0px;
     font-size: 90%;
-    font-weight: bold;
-    font-style: italic;
+    font-weight: normal;
     color: #fff;
-    text-shadow: 1px 1px 0px #000;
+    text-shadow: 0px 0px 0px #000;
 }
 #horde-navigation {
     float: left;
@@ -1748,22 +1749,25 @@ left.horde-point-right {
     float: left;
     width: 10px;
     height: 34px;
-    background-image: url("graphics/navi-left-active.png");
-    background-repeat: no-repeat;
+    /*background-image: url("graphics/navi-left-active.png");
+    background-repeat: no-repeat;*/
+    background-color: ##1F4B71;
 }
 .horde-point-center-active {
     float: left;
     height: 26px;
     padding: 8px 0 0 0;
-    background-image: url("graphics/navi-center-active.png");
-    background-repeat: repeat-x;
+    /*background-image: url("graphics/navi-center-active.png");
+    background-repeat: repeat-x;*/
+    background-color: ##1F4B71;;
 }
 .horde-point-right-active {
     float: left;
     width: 10px;
     height: 34px;
-    background-image: url("graphics/navi-right-active.png");
-    background-repeat: no-repeat;
+    /*background-image: url("graphics/navi-right-active.png");
+    background-repeat: no-repeat;*/
+    background-color: ##1F4B71;
 }
 .horde-settings {
     float: left;
@@ -1772,15 +1776,14 @@ left.horde-point-right {
     margin: 7px 0 0 0;
 }
 #horde-search {
-    float: right;
-    width: 230px;
+    float: right;   
     padding: 0 20px 0 0;
 }
 #horde-search form {
     display: inline;
 }
 #horde-search #horde-search-input, #horde-search .horde-fake-input {
-    width: 200px;
+    width: auto;
     margin-top: 6px;
     background: #fff;
     height: 20px;
@@ -1888,14 +1891,14 @@ left.horde-point-right {
 
 .horde-new {
     height: 29px;
-    background-image: url("graphics/sidebar-new-bg.png");
-    background-repeat: repeat-x;
-    border-bottom: 1px solid #787878;
+    /*background-image: url("graphics/sidebar-new-bg.png");
+    background-repeat: repeat-x;*/
+    background-color: #00b159;
     overflow: hidden;
     font-size: 140%;
     font-weight: bold;
     color: #fff;
-    text-shadow: -1px -1px 0px #000;
+    text-shadow: 0px 0px 0px #000;
 }
 .horde-portal-new {
     float: left;
@@ -2027,17 +2030,17 @@ left.horde-point-right {
     margin: 10px 0 0;
 }
 .horde-subnavi {
-    height: 20px;
-    padding: 3px 0 1px;
+    height: 28px;
+    padding: 5px 3px 5px 3px;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 .horde-subnavi-active, .horde-subnavi:hover{
-    height: 20px;
-    background-image: url("graphics/sidebar-active-bg.png");
-    background-repeat: repeat-x;
+    background-color: #CCEFDD;   
+    /*background-image: url("graphics/sidebar-active-bg.png");
+    background-repeat: repeat-x;*/
 }
 .horde-subnavi-icon {
     background-color: transparent;

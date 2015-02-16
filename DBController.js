@@ -356,7 +356,7 @@ DBController.prototype.getSaveSendMail=function(callback){
 						msg.key=cursor.key;
 
 						//send
-						console.log('send mail: '+msg.body+' id: '+cursor.key);
+						//console.log('send mail: '+msg.body+' id: '+cursor.key);
 						self.updateSaveSendMail(cursor.key);
 						if(callback){
 			    			callback(msg)
@@ -772,31 +772,34 @@ DBController.prototype.getMailById=function(id,folder,func){
 	};
 }
 
-DBController.prototype.setMailFlagById=function(id,folder,func){
-    var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
-	var request = objectStore.get(id);
-	request.onerror = function(event) {
-	  // Handle errors!
-	  console.log(event);
-	};
-	request.onsuccess = function(event) {
-	  // Get the old value that we want to update
-	  var data = request.result;
-	  
-	  // update the value(s) in the object that you want to change
-	  data.seen =data.seen+"\\Seen";
 
-	  // Put this updated object back into the database.
-	  var requestUpdate = objectStore.put(data,id);
-	   requestUpdate.onerror = function(event) {
-	     console.log(event);
-	   };
-	   requestUpdate.onsuccess = function(event) {
-	   	console.log("id " +id +" update "+event.type);
-		   	if(func){
-			  	func(data);
-		    }
-	   };	  
-	  	  	
-	};
+
+DBController.prototype.setMailFlagById=function(id,folder,func){
+var objectStore = this.database.transaction([folder], "readwrite").objectStore(folder);
+var request = objectStore.get(id);
+request.onerror = function(event) {
+// Handle errors!
+console.log(event);
+};
+request.onsuccess = function(event) {
+// Get the old value that we want to update
+var data = request.result;
+
+// update the value(s) in the object that you want to change
+data.seen =data.seen+"\\Seen";
+
+// Put this updated object back into the database.
+var requestUpdate = objectStore.put(data,id);
+requestUpdate.onerror = function(event) {
+console.log(event);
+};
+requestUpdate.onsuccess = function(event) {
+console.log("id " +id +" update "+event.type);
+if(func){
+func(data);
+}
+};
+
+};
+
 }

@@ -70,7 +70,7 @@ var self = this;
                 });
                 try {
                 // string = technalxs.simplemail.SimpleMailText.toUnicode(string, technalxs.simplemail.SimpleMailMessageEncoder.charset);
-                toUnicode(string); // need to fix
+                //toUnicode(string); // need to fix
                 }
         catch (e) {
         }
@@ -139,17 +139,23 @@ var self = this;
                 return "";
                 var body = source.substr(start + 4);
                 var encoding = self.getHeader("Content-Transfer-Encoding");
-                if (encoding.match(/base64/i)) {
-        var end = body.lastIndexOf("=");
+        if (encoding.match(/base64/i)) {
+                var end = body.lastIndexOf("=");
                 if (end != - 1)
                 body = body.substr(0, end + 1);
-                //body = atob_fixed(stripCRLFs(body));
+                body = stripCRLFs(body);
+
                 var type = self.getHeader('Content-Type');
                 type = type.split(';')[0];
+		if(type!="text/html")
+	                return 'data:' + type + ';base64,' + stripCRLFs(body);
+		else
+			body = atob_fixed(stripCRLFs(body));
                 // console.log(type);
                 //data:application/zip;base64,
                 //return encoding+'*'+type+'*'+stripCRLFs(body);
-                return 'data:' + type + ';base64,' + stripCRLFs(body);
+
+                
         }
         else if (encoding.match(/quoted-printable/i)) {
         body = qp(body);
@@ -434,8 +440,8 @@ var pub = {};
                 function(text, url) {
                   // console.log(text);
                   // console.log(url);
-
-                if (!url.match(/^simplemail:/)) //!url || 
+                if (url.match(/^simplemail:/)==null) //!url || 
+                //if (!url.match(/^simplemail:/)) //!url || 
                   return text;
                         // var name = technalxs.simplemail.SimpleMailFile.getFileName(url);
                         var ind = url.replace('file://', "");

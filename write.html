@@ -1,4 +1,5 @@
-<html lang="en-US"><head>
+<html lang="en-US" manifest="./cache.manifest">
+<head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
   <!-- <meta content="IE=EmulateIE10" http-equiv="X-UA-Compatible"> -->
@@ -481,7 +482,7 @@ function setForwardWindow(msg){
 
   document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  data[0].value=mail.from;
+  // data[0].value=mail.from;
 }
 
   // var text=document.getElementById('composeMessageParent').innerHTML='Hi, this is test text!';

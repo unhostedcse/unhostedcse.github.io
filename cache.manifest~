@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 558
+# rev 306
 CACHE:
 ./FileCount.class
 ./Mail_Settings.js
@@ -28,7 +28,9 @@ CACHE:
 ./js/prettyautocomplete.js
 ./js/growler.js
 ./js/keynavlist.js
+./js/bootstrap-dialog.js
 ./js/prototype.js
+./js/bootstrap-notify.js
 ./js/ckeditor_basic.js
 ./js/imageupload.js
 ./js/screen_003.css
@@ -39,7 +41,6 @@ CACHE:
 ./js/mozilla.css
 ./NewMessage.js
 ./FileCount.java
-./cache.manifest
 ./signin.html
 ./fonts/bootstrap-theme.min.css
 ./fonts/bootstrap.css
@@ -47,16 +48,21 @@ CACHE:
 ./fonts/bootstrap.css.map
 ./fonts/bootstrap-theme.css.map
 ./fonts/bootstrap.min.css
+./less/bootstrap-dialog.less
 ./select.html
 ./TCP_Interface_Chrome.js
 ./jquery-2.1.1.min.js
 ./xpi/unhosted@unhosted.projects.uom.lk.xpi
 ./css/bootstrap-theme.min.css
+./css/styles/alert-bangtidy.css
+./css/styles/alert-blackgloss.css
 ./css/bootstrap.css
+./css/bootstrap-dialog.css
 ./css/bootstrap-theme.css
 ./css/custom.css
 ./css/bootstrap.css.map
 ./css/bootstrap-theme.css.map
+./css/bootstrap-notify.css
 ./css/bootstrap.min.css
 ./UIController.js
 ./ui/do3.js
@@ -71,6 +77,7 @@ CACHE:
 ./ui/mime.css
 ./ui/do2.js
 ./ui/do.js
+./ui/screen(2).css~
 ./ui/webkit.css
 ./ui/screen_003.css
 ./ui/style.css
@@ -152,6 +159,7 @@ CACHE:
 ./ui/graphics/copied/reply.png
 ./ui/graphics/tablehead-split.png
 ./ui/graphics/php.png
+./ui/graphics/attachment.png
 ./ui/graphics/required.png
 ./ui/graphics/block.png
 ./ui/graphics/unlocked.png
@@ -171,6 +179,7 @@ CACHE:
 ./ui/graphics/filter.png
 ./ui/graphics/slidehoriz-bg.png
 ./ui/graphics/checkbox_on.png
+./ui/graphics/reload.gif
 ./ui/graphics/tab.png
 ./ui/graphics/save.png
 ./ui/graphics/navi-subnavi-active.png
@@ -205,6 +214,7 @@ CACHE:
 ./ui/graphics/group.png
 ./ui/graphics/plus.png
 ./ui/graphics/map.png
+./ui/graphics/flags/attachment-inv.png
 ./ui/graphics/flags/unseen.png
 ./ui/graphics/za.png
 ./ui/graphics/hide_panel.png
@@ -218,6 +228,7 @@ CACHE:
 ./ui/graphics/edit.png
 ./ui/graphics/button-split.png
 ./ui/graphics/tags.png
+./ui/graphics/reply.png
 ./ui/graphics/problem.png
 ./ui/graphics/sidebar-new-bg.png
 ./ui/graphics/navi-center-active.png
@@ -256,6 +267,9 @@ CACHE:
 ./IMAP_Interface.js
 ./IMAP_Fetch.js
 ./BrowseContact.html
+./img/refresh.png
+./img/logo.png
+./img/logov2.png
 ./File.js
 ./htmlEditor/infragistics.theme.css
 ./htmlEditor/images/igHtmlEditor/html-editor-sprite.png
@@ -268,4 +282,5 @@ CACHE:
 ./htmlEditor/jquery-ui.min.js
 ./htmlEditor/infragistics.lob.js
 ./htmlEditor/jquery-1.9.1.min.js
+./cache.manifest~
 ./BrowserSetUp.js

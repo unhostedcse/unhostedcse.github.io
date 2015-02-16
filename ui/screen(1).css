@@ -209,7 +209,7 @@ div.partsTreeDiv {
     background-image: url("graphics/flags/innocent.png");
 }
 .msgflags.flagUnseen, span.iconImg.flagUnseen {
-    background-image: url("ui/graphics/copied/unseen.png");
+    background-image: url("./graphics/copied/unseen.png");
 }
 .msgflags.flagAnswered, span.iconImg.flagAnswered {
     background-image: url("graphics/flags/answered.png");
@@ -511,7 +511,7 @@ span.mimePartInfoSize {
     margin-left: 1px;
 }
 .downloadAtc, .saveAsImg {
-    background-image: url("graphics/download.png");
+    background-image: url("./graphics/download.png");
 }
 .downloadZipAtc {
     background-image: url("graphics/mime/compressed.png");
