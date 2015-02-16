@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 550
+# rev 551
 CACHE:
 ./FileCount.class
 ./Mail_Settings.js
@@ -77,7 +77,6 @@ CACHE:
 ./ui/mime.css
 ./ui/do2.js
 ./ui/do.js
-./ui/screen(2).css~
 ./ui/webkit.css
 ./ui/screen_003.css
 ./ui/style.css
@@ -282,5 +281,4 @@ CACHE:
 ./htmlEditor/jquery-ui.min.js
 ./htmlEditor/infragistics.lob.js
 ./htmlEditor/jquery-1.9.1.min.js
-./cache.manifest~
 ./BrowserSetUp.js
