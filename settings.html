@@ -18,7 +18,10 @@
 
 <div class="col-md-6">Maximum Message Count:</div>
 <input type="text" id="maxMsg" value="" class="cover_parent">
-          
+
+<div class="col-md-6">Chrome App Id:</div>
+<input type="text" id="chromeKey" value="" class="cover_parent">         
+
 <input type="button" id="save" value="Save" class="cover_parent" onclick="save()">
 <input type="button" id="clear" value="Clear" class="cover_parent" onclick="clearData()">
 
@@ -34,6 +37,7 @@ function save(){
 	localStorage.setItem("autoSync",document.getElementById("autoSync").checked);	
 	localStorage.setItem("msgPP",document.getElementById("msgPP").value);	
 	localStorage.setItem("maxMsg",document.getElementById("maxMsg").value);	
+	localStorage.setItem("chromeKey",document.getElementById("chromeKey").value);
 	alert("Settings saved");
 }
 
@@ -41,10 +45,16 @@ function load(){
 	document.getElementById("refresh_interval").value=getRefresh_interval();	
 	document.getElementById("autoSync").checked=getAutoSync();	
 	document.getElementById("msgPP").value=getMsgPP();	
-	document.getElementById("maxMsg").value=getMaxMsg();	
+	document.getElementById("maxMsg").value=getMaxMsg();
+	document.getElementById("chromeKey").value=getChromeKey();
 	console.log("Settings loaded");
 }
-	
+
+function getChromeKey(){
+	var val=localStorage.getItem("chromeKey");
+	return val ? val : "";
+}
+
 function getRefresh_interval(){
 	var val=localStorage.getItem("refresh_interval");
 	return parseInt(val) ? parseInt(val) :100000;
