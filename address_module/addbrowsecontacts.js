@@ -17,14 +17,16 @@ $( document ).ready(function() {
 		// Check to make sure the text is not blank (or just spaces).
 		if (searchEntry.replace(/ /g,'') != '') {
 			todoDB.fetchMy(searchEntry,function(result){
-				$( "#horde-content table" ).remove();
-				$( "#horde-content" ).append('<table cellspacing="0" width="100%" class="linedRow"><thead><tr><th class="turba-browse-icon item" width="1%" style="cursor:pointer" nowrap="nowrap"><label for="checkAll" class="hidden">Check All/None</label><input type="checkbox" id="checkAll" name="checkAll" title="Check All/None (Accesskey A)" accesskey="A"></th><th class="turba-browse-icon item" width="1%"><span class="iconImg editImg" title="Edit"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg vcardImg" title="Download vCard"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg groupImg" title="List"></span></th><th class="item leftAlign" width="90%" nowrap="nowrap">Name</th></tr></thead><tbody id="QuickFinderContacts"></tbody>');		
-				for(var i = 0; i < result.length; i++) {	
+				if(result.length != 0){
+					$( "#horde-content" ).append('<table cellspacing="0" width="100%" class="linedRow"><thead><tr><th class="turba-browse-icon item" width="1%" style="cursor:pointer" nowrap="nowrap"><label for="checkAll" class="hidden">Check All/None</label><input type="checkbox" id="checkAll" name="checkAll" title="Check All/None (Accesskey A)" accesskey="A"></th><th class="turba-browse-icon item" width="1%"><span class="iconImg editImg" title="Edit"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg vcardImg" title="Download vCard"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg groupImg" title="List"></span></th><th class="item leftAlign" width="90%" nowrap="nowrap">Name</th></tr></thead><tbody id="QuickFinderContacts"></tbody>');		
+					for(var i = 0; i < result.length; i++) {	
 					//var st=output[i].name.concat(' <').concat(' ' +output[i].email+ ' ').concat('>');
 					$( "#QuickFinderContacts" ).append('<tr class=""><td class="turba-browse-icon"><input type="checkbox" class="checkbox" id="_kiJ_tQo52vg599rPhIl6g2:tV8lyqUyZ2BOTIC0B24oZQ7"></td><td class="turba-browse-icon"><a><span class="iconImg editImg"></span></a></td><td class="turba-browse-icon"><a><span class="iconImg vcardImg"></span></a></td><td class="turba-browse-icon">&nbsp;</td><td><a>'+result[i].name+'</a></td></tr>');
 		
-				}
-				//alert(result[0].email)
+					}
+				}else{
+					$( "#horde-content" ).append('<div><span class="light_red">No matching contacts!</span></div>');
+				}				
 			});
 		}
 		// Reset the input field.

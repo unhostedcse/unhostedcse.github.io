@@ -151,7 +151,7 @@ console.log('fetch');
 };
 
 
-/// create from ui
+// create from ui
 tDB.createfromuiTodo = function(email, name,callback) {
   // Get a reference to the db.
   var db = datastore;
@@ -189,8 +189,9 @@ tDB.createfromuiTodo = function(email, name,callback) {
 ////
 
 //////// create from csv
-tDB.createFromCSV = function(data,x,y, callback) {
+tDB.createFromCSV = function(data,x,y,z, callback) {
   // Get a reference to the db.
+
   var db = datastore;
 
   // Initiate a new transaction.
@@ -206,33 +207,28 @@ tDB.createFromCSV = function(data,x,y, callback) {
   for(var a = 1; a < data.length; a++) {	
 	var d=String(data[a]);
 	var res = d.split(',');
+	
+	//alert(res[x]+res[y]+res[z]);
 	//set[a-1]=res[x]+"---"+res[y];
 	
 	var todo = {
-    'email': res[y],
+    
     'name': res[x],
+	'surname': res[y],
+	'email': res[z],
 	//'timestamp':timestamp
 	};
-
+	
 	// Create the datastore request.
 	var request = objStore.put(todo);
   }
   
   
-  var todo = {
-    'email': text,
-    'name': 'unnamed',
-	//'timestamp':timestamp
-  };
-
-  // Create the datastore request.
-  var request = objStore.put(todo);
-  
 
   // Handle a successful datastore put.
   request.onsuccess = function(e) {
     // Execute the callback function.
-    callback(todo);
+    callback();
   };
 
   // Handle errors.

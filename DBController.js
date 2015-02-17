@@ -666,8 +666,9 @@ DBController.prototype.getMailBoxes=function(func){
 	    	func(new Array());
 		return;
 	}
-
+	console.log(self.mailBoxTableName);
 	var objectStore = this.database.transaction(self.mailBoxTableName).objectStore(self.mailBoxTableName);
+	
     objectStore.openCursor().onsuccess = function(event) {
     	var cursor = event.target.result;    	
     	if (cursor) {	    	

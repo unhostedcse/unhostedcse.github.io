@@ -25,7 +25,7 @@
 <script src="./ui/notification/jquery-ui.min.js"></script>
 <script src="./ui/notification/notifier.js"></script>
 <script type="text/javascript" src="js/bootstrap-notify.js"></script>
-<script type="text/javascript" src="js/bootstrap-dialog.js"></script>
+<script type="text/javascript" src="navigation_utils.js"></script>  
 <body>
 
 
@@ -45,7 +45,7 @@
     </a>
     <ul class="dropdown-menu" role="menu">
         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Inbox</a></li>
-        <li role="presentation" onclick="openWriteWindow();"><a role="menuitem" tabindex="-1" href="#">New Message</a></li>
+        <li role="presentation" onclick="openWriteWindow();"><a role="menuitem" tabindex="-1" href="#">Compose Message</a></li>
     </ul>
   </li>
   <li role="presentation" class="dropdown" style="background-color:#c5d5d5; margin-left=-2px;">
@@ -53,8 +53,9 @@
      Address Book <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
-        <li role="presentation"><a role="menuitem" tabindex="1" href="NewContact.html">Add Contact</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="1" href="BrowseContact.html">Browse Contact</a></li>
+        <li role="presentation" onclick="redirectToAddContact();"><a role="menuitem" tabindex="1" href="#">Add Contact</a></li>
+		<li role="presentation" onclick="redirectToLoadCSV();"><a role="menuitem" tabindex="2" href="#">Add Contact Book</a></li>
+        <li role="presentation" onclick="redirectToBrowseContact();"><a role="menuitem" tabindex="3" href="#">Browse Contact</a></li>
     </ul>
   </li>
   
@@ -68,21 +69,6 @@
 </div>
 
   <div class="col-md-4" style="float:right;">
-  <!--<div id="horde-logout">
-    <a class="icon" title="Log out" href="./select.html">
-
-<!-- <a href="#popupMenu" data-rel="popup" data-transition="slideup" 
-class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a icon">Actions...</a>
-
-<div data-role="popup" id="popupMenu" data-theme="b">
-        <ul data-role="listview" data-inset="true" style="min-width:210px;">
-            <li data-role="list-divider">Choose an action</li>
-            <li><a href="#">View details</a></li>
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Disable</a></li>
-            <li><a href="./select.html">log out</a></li>
-        </ul>
-</div> -->
 
 
   <!-- Split button -->
@@ -92,20 +78,20 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
       <span id="accountName"></span> <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu" id="otherAcc">
+    <li role="presentation" class="dropdown-header">Other Accounts</li>
     </ul>
   </li>
 </ul>
 </div>
 
 </div>
-</div>
+
 
 
 <!-- 
   //// end comment
  --> 
 
-<div class = "container-fluid">
 <div class="row" style="height:30px; background-color:#35383B;">
 <div class="col-md-*">
   <div id="horde-date"></div>
@@ -118,15 +104,24 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
 </div>
 </div>
 </div>
-</div>
 
+<div id="progress_row" class="row" style="height:0px;">
+<div class="col-md-*">
+<div class="progress">
+  <div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; display:none;">
+    <span class="sr-only"></span>
+  </div>
+</div>
+</div>
+</div>
+</div>
 
 <div class="container-fluid">
 <div class="row" style="background-color:#E9F6EF;">
   <div class="col-md-2">
     <div class="row">
      <div class="col-md-*" style="background-color:#00B159; box-shadow: 2px 2px 2px #888888; margin-bottom:4px;">
-          <button id="composelink" type="button" class="btn btn-link btn-lg btn-block" onclick="openWriteWindow();"><span class="white">New Message</span></button>
+          <button id="composelink" type="button" class="btn btn-link btn-lg btn-block" onclick="openWriteWindow();"><span class="white">Compose Message</span></button>
       </div>
     </div>
 
@@ -146,10 +141,11 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
 </div>
 
 
-  <div class="col-md-10 left_border">   
+
+
+  <div class="col-md-10 left_border" >   
     <div class="row light_blue">
-       
-        <div id="div_checkmaillink" class="col-md-2 horde-icon right_border dimpactionRefresh">
+        <div id="div_checkmaillink" class="col-md-2 right_border horde-icon">
             <button id="checkmaillink" type="button" class="btn btn-link btn-lg btn-block"><span class="grey">Refresh</span></button>
         </div>
         <div id="div_button_previous" class="col-md-2 horde-icon right_border">
@@ -216,23 +212,26 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
         </div>
         </div>
       </div>
-
     </div>
 <!-- Msg header end-->
 
 
 <!-- Msg body start-->
-    <div class="row" style="overflow-y:scroll; height:300px; background-color:#ffffff;">
-      <div class="col-md-12">
-        <div id="messageBody" class="messageBody allowTextSelection">
+    <div class="row" style="height: 250px;background-color:#ffffff;">
+      
+        <div id="messageBody"  class="allowTextSelection">
           <div class="mimePartBase">
               <div class="mimePartData">
   <!-- display -->
-                 <div class="fixed leftAlign editable" id='bodyDisplay'>         
-                 </div> 
+                 <!-- <div class="fixed leftAlign editable" id='bodyDisplay'></div>  -->
+
+                 <iframe  id='bodyDisplay' frameBorder="0"  style="height: 250px;" width="100%"></iframe>
+
+
               </div>
           </div>
         </div>
+		
 
         <div id="bodyloading" style="display: none; height:50px; width:50px; background: url('ui/graphics/loading.gif') no-repeat scroll center"> 
         loading......
@@ -241,35 +240,19 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
       </div>      
     </div>    
 <!-- Msg body end-->
+</div>
 
-
- 
 </div>
 </div>
 
-<div class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>
 
 <script>
    $( document ).ready(function() {
       document.getElementById("div_button_reply").style.visibility="hidden";
       document.getElementById("div_button_forward").style.visibility="hidden";
       document.getElementById("div_button_delete").style.visibility="hidden";
+      document.getElementById("progress_bar").style.display="none";
    });
 
    function showMsgUtils(){
@@ -278,7 +261,10 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
       document.getElementById("div_button_delete").style.visibility="visible";
    }
 
+   
+
 </script>
+
 <script type="text/javascript" src="Mail_Settings.js"></script>
 <script type="text/javascript" src="ui/do3.js"></script>
 <script type="text/javascript" src="ui/do.js"></script>
@@ -290,14 +276,14 @@ class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-lef
 <script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
 <script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
-<script type="text/javascript" src="Offline_Interface.js"></script>    
-
+<script type="text/javascript" src="Offline_Interface.js"></script> 
 <script type="text/javascript" src="Sync_Module.js"></script>
 <script type="text/javascript" src="DBController.js"></script>
 <script type="text/javascript" src="BrowserSetUp.js"></script>  
 <script type="text/javascript" src="Encoder.js"></script>
 <script type="text/javascript" src="File.js"></script>  
 <script type="text/javascript" src="UIController.js"></script>
-<script type="text/javascript" src="utils.js"></script>  
+<script type="text/javascript" src="utils.js"></script> 
+
 </body>
 </html>

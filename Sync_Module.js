@@ -19,16 +19,17 @@ Sync_Module.prototype.init = function(addMsg,folder,setMailBoxBar,loadaccCllback
 
 	self=this;
 	setInterval(function () {
-		console.log("refreshing.....");
+		//console.log("refreshing.....");
 		// Sync_Module.prototype.getMailBoxesScenario();  // uncomment
 	}, refresh_interval);
 
-	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
+	Sync_Module.initPing();
 	Sync_Module.ping();
 	setInterval(function () {
-		console.log("ping.....");
+		//console.log("ping.....");
 		Sync_Module.ping();
 	}, 10000);
+
 	// setInterval(function () {		
 	// 	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
 	// }, 90000);
@@ -175,9 +176,9 @@ Sync_Module.prototype.getHeadersReady = function(){
 	}
 
 	result.fetchMIME=new Array();
+	$('#progress_row').css('height', '0px');
+	$('#progress_bar').css('display', 'none');
 	console.log("finished adding DB");
-
-	$('#div_checkmaillink').removeClass('imp-loading');
 	
 }
 
@@ -206,8 +207,12 @@ $(document).on("mailbodyDownloaded",
 			links+='</br></br>';
 		}
 
-		body=links+body;
-		document.getElementById('bodyDisplay').innerHTML=body;
+		var css='<link href="ui/style.css" rel="stylesheet">';
+		body=css+links+body;
+		// document.getElementById('bodyDisplay').innerHTML=body;
+		
+		var dis=document.getElementById('bodyDisplay');
+		dis.srcdoc=body;
 
 		Sync_Module.db.update(e.id,e.record.body,e.record.attachments,dbSelectFolder);
 			
@@ -340,81 +345,12 @@ Sync_Module.CheckNewMail = function(fetchList,keys){
   	return re;
 }
 
-
-Sync_Module.connect = function(){
-	Sync_Module.offline.connect();
-}
-
 Sync_Module.initPing= function(){
-	Sync_Module.offline=new Offline_Interface(pingSuccess,offNo);
+	Sync_Module.offline=new Offline_Interface();
 }
 
 Sync_Module.ping = function(){	
-	setStatus();
-	Sync_Module.isOnline=false;	
 	Sync_Module.offline.ping();
-
 }
 
-function pingSuccess(val){
-	// console.log(val);	
-	Sync_Module.isOnline=true;
-	whenOnline();
-	console.log("online "+Sync_Module.isOnline);	
-	setStatus();
-}
 
-function setStatus(){
-	/*if(Sync_Module.isOnline){
-		$(".con_status").val("Online");
-		try{
-			// whenOnline();
-		}catch(e){
-			console.log(e);
-		}
-	}
-	else
-		$(".con_status").val("Offline");*/
-	var str;
-	if(Sync_Module.isOnline){
-		str = 'Online';		
-		try{
-			whenOnline();
-		}catch(e){
-			console.log(e);
-		}
-	}else{
-		str = 'Offline';	
-	}
-	$( ".con_status" ).html( str );
-}
-
-function whenOnline(){
-	Sync_Module.db.getSaveSendMail(
-		function(msg){
-			//console.log(msg);
-			console.log('SMTP command starting');
-			body=msg.body;
-			mailto=msg.mailto;
-			var smtp=new SMTP_Sendmail(++imaps);
-			smtp.sendmail(SendMailReady);
-		}
-	);
-}
-
-function SendMailReady(){
-	console.log('finished SendMailReady');		
-	
-  	$.notifier({"type": 'success',
-	                "title": 'Mail Sent',
-	                "text": 'Mail Sent Succesfully',
-	                "positionY": "bottom",
-	                "positionX": "left",
-	                "animationIn" : 'bounce',
-                	"animationOut" : 'drop'
-	});		
-}
-
-function whenOffline(){
-	
-}

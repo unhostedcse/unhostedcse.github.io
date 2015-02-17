@@ -115,7 +115,7 @@ IMAP_Fetch.prototype.fetchBody=function(id){
 
   IMAP_Fetch.imap.onTheResponse=cmd.onResponse;
   IMAP_Fetch.imap.setVal=function(val,nextFunc,para){
-      
+       
       if(!result.fetchBody){
         result.fetchBody=new Array();
       }
@@ -203,13 +203,13 @@ IMAP_Fetch.prototype.fetchBody=function(id){
       nextFunc(para);      
   }
 }
-var gval;
+
 IMAP_Fetch.prototype.fetchBodyOnly=function(id){
    cmd=IMAP_Fetch.imap.fetchBody(id,false);
 
   IMAP_Fetch.imap.onTheResponse=cmd.onResponse;
   IMAP_Fetch.imap.setVal=function(val,nextFunc,para){
-      gval=val;
+      
       // if(!result.fetchBody){
       //   result.fetchBody=new Array();
       // }

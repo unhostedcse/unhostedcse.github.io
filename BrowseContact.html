@@ -10,142 +10,82 @@
 	<link href="./js/screen_003.css" rel="stylesheet" type="text/css">
 	<link href="./js/screen.css" rel="stylesheet" type="text/css">
 	<link href="./js/mozilla.css" rel="stylesheet" type="text/css">
-    <link type="image/x-icon" href="http://unhosted.projects.uom.lk/horde/turba/themes/default/graphics/favicon.ico" rel="shortcut icon">    
+    <link type="image/x-icon" href="http://unhosted.projects.uom.lk/horde/turba/themes/default/graphics/favicon.ico" rel="shortcut icon"> 
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">    
 	<script type="text/javascript"  src="address_module/ui/jquery-2.1.1.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script src="address_module/db.js" type="text/javascript"></script>
 	<script src="address_module/addbrowsecontacts.js" type="text/javascript"></script>
 	<script src="address_module/add_con.js" type="text/javascript"></script>
+	<script type="text/javascript" src="navigation_utils.js"></script> 
 </head>
 
  <body>
-<div id="horde-head">
-  <div id="horde-logo"><a class="icon" href="http://unhosted.projects.uom.lk/horde/services/portal/"></a></div>
-  <div id="horde-version">Groupware 5.2.0</div>
+  <div class = "container-fluid">
+  <div class="row" style="height:40px; background-color:#5672B4;">
+ <div class="col-md-2 right_border">
+    <img src="img/logov2.png"/>
+</div>
+
+<div id="mail_dropdown" class="col-md-3" style="margin-left:-15px;">
+<ul class="nav nav-pills">
   
-  <div id="horde-navigation">
-	<div class="horde-navipoint">
-		<div class="horde-point-left-active">
-		</div>
-			<ul class="horde-dropdown">
-				<li>
-					<div class="horde-point-center-active">
-						<a class="horde-mainnavi-active" href="index.html">
-							<span class="horde-point-arrow-active">▾</span>
-								Mail
-						</a>
-					</div>
-					<ul>
-						<li>
-							<div class="horde-drowdown-str">
-								<a class="horde-mainnavi" href="index.html" >
-									Inbox
-								</a>
-							</div>
-						</li>
-						<li>
-							<div class="horde-drowdown-str">
-								<a class="horde-mainnavi" href="write.html">
-									New Message
-								</a>
-							</div>
-						</li>	
-					</ul>
-				</li>
-			</ul>
-			<div class="horde-point-right-active">
-			</div>
-	</div>
-	<div class="horde-navipoint">
-		<div class="horde-point-left">
-		</div>
-		<ul class="horde-dropdown">
-			<li>
-				<div class="horde-point-center">
-					<a class="horde-mainnavi" href="NewContact.html">
-						<span class="horde-point-arrow">▾</span>
-							Address Book
-					</a>
-				</div>
-				<ul>
-					<li>
-						<div class="horde-drowdown-str">
-							<a class="horde-mainnavi" href="NewContact.html">
-								New Contact
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="horde-drowdown-str">
-							<a class="horde-mainnavi" href="BrowseContact.html">
-								Browse Contact
-							</a>
-						</div>
-					</li>
-				</ul>
-			</li>
-		</ul>
-		<div class="horde-point-right">
-	</div>
-  </div>
-  <div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Tasks</a></div>
-		<div class="horde-point-right"></div></div>
-	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Notes</a></div>
-		<div class="horde-point-right"></div></div>
-	<div class="horde-navipoint"><div class="horde-point-left"></div><ul class="horde-dropdown"><li><div class="horde-point-center"><a class="horde-mainnavi" href="#"><span class="horde-point-arrow">▾</span>Others</a></div>
-		<div class="horde-point-right"></div></div>
-		<div class="horde-navipoint">
-		<div class="horde-point-left"></div>
-		<ul class="horde-dropdown">
-			<li>
-				<div class="horde-settings horde-icon-settings">
-					<a class="horde-mainnavi" href="#"></a>
-				</div>
-			</li>
-		</ul>
-		<div class="horde-point-right">
-		</div>
-	</div>
-</div>
+  <li role="presentation" class="dropdown" style="background-color:#c5d5d5">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+      Mails <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li role="presentation" onclick="showInbox();"><a role="menuitem" tabindex="-1" href="#">Inbox</a></li>
+        <li role="presentation" onclick="openWriteWindow();" class="disabled"><a role="menuitem" tabindex="-1" href="#">Compose Messsage</a></li>
+    </ul>
+  </li>
+  <li role="presentation" class="dropdown" style="background-color:#c5d5d5; margin-left=-2px;">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+     Address Book <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li role="presentation" onclick="navigateThrghAddrMod(1)"><a role="menuitem" tabindex="1" href="#">Add Contact</a></li>
+        <li role="presentation" onclick="navigateThrghAddrMod(2)"><a role="menuitem" tabindex="2" href="#">Add Contact Book</a></li>
+        <li role="presentation" class="disabled"><a role="menuitem" tabindex="3" href="#">Browse Contact</a></li>
+    </ul>
+  </li>
   
-  <div id="horde-logout"><a class="icon" title="Log out" href="http://unhosted.projects.uom.lk/horde/login.php?horde_logout_token=eSLhRkOR3SVSNzibURzmQw1&logout_reason=4"></a></div>
-</div>
-<div id="horde-sub">
-  <div id="horde-date">08/02/15</div>
-  <div id="horde-info"></div>
-</div>
-<div id="horde-body">
-<div id="horde-contentwrapper">
-<div id="horde-content" style="margin-left:210px">
-<div class="text" style="padding:1em">
-<form action="#" method="post" name="turba_form_searchcontact-form" id="searach-contact-form">
-	<strong><label for="val">Matching</label></strong>
-	<input type="text" size="30" id="val-search-contacts" name="val" value="">
-	<input class="horde-default" id='broswe-submit-search' type="submit" name="search" value="Search">
-</form>
+</ul>
 </div>
 
-
-
-</div>
 </div>
 
-<div id="horde-sidebar" style="width:210px">
-<div class="horde-new">
-    <span class="horde-new-link"><a href="NewContact.html" title="New Contact (Accesskey N)" accesskey="N"><span class="accessKey">N</span>ew Contact</a></span>
+<div class="row padding-address-form">
+<div class="col-md-*">
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="grey">Browse Contact</span></h3>
   </div>
-<div>
-<div class="horde-subnavi">
- <div class="horde-subnavi-icon turba-search">
-  <a class="icon"></a>
- </div><div class="horde-subnavi-point"><a href="#" accesskey="S"><span class="accessKey">S</span>earch</a> </div>
+  <div class="panel-body">
+    <div class="container">
+    <div class="row" style="margin-bottom:20px;">
+      <div class="col-md-*">
+      <form role="form" id="searach-contact-form">
+        <div class="form-group">
+          <label for="val">Matching:</label>
+          <input type="text" size="30" class="form-control" id="val-search-contacts" name="val" placeholder="Enter name">
+        </div>
+        <button id="broswe-submit-search" type="submit" class="btn btn-default"><span class="text-lg-padding">Search</span></button>
+      </form>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-*">
+      <div id="horde-content">
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 </div>
-
-<div id="horde-slideleft" class="horde-splitbar-vert" style="left:210px">
-  <div id="horde-slideleftcursor" class="horde-splitbar-vert-handle"></div>
 </div>
-</div>
-
 </body>
 </html>

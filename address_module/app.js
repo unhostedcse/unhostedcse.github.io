@@ -133,7 +133,6 @@ function displayContents(contents) {
 }
 
 */
-
 todoDB.open(function(){
   console.log('DB opened')
   }
@@ -155,4 +154,56 @@ Address_Module.prototype.suggestMails=function(email,currentparent_id){
 		
 	}
   }); 
+}
+
+function readSingleFile(e) {
+// alert('ok');
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+ 
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+
+function displayContents(contents) {
+  //element.innerHTML = contents;
+  var data = $.csv.toArrays(contents);
+   
+  var name= document.getElementById('name').value;
+  var surname = document.getElementById('surname').value;
+  var email = document.getElementById('email').value;
+  var x,y,z;
+  var d=String(data[0]);
+  var res = d.split(',');
+  
+  for(var a = 0; a < res.length; a++) {	
+	if(name==res[a]){
+		x=a;
+	}
+	if(surname==res[a]){
+		y=a;
+	}
+	if(email==res[a]){
+		z=a;
+	}
+  }
+  var set=[];
+  for(var a = 1; a < data.length; a++) {	
+	var d=String(data[a]);
+	var res = d.split(',');
+	set[a-1]=res[x]+"---"+res[y]+"----"+res[z];
+  }
+  for(var a = 1; a < set.length; a++) {
+		console.log(set[a]);
+  }  
+  todoDB.createFromCSV(data,x,y,z, function(todo) {
+      alert('Contackts created');
+    });
+ // alert(data.length);
 }

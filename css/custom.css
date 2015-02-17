@@ -102,6 +102,10 @@
     color:#23A65F !important;
 }
 
+.light_red{
+  color:#ff4444 !important;
+}
+
 .msglist_body{
 	background-color: #EEF0F7;
 }
@@ -139,3 +143,27 @@
   text-align: center;
   line-height: 40px;  
 }
+
+.text-lg-padding{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.padding-address-form{
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.icon-refresh-animate {
+animation-name: rotateThis;
+animation-duration: .5s;
+animation-iteration-count: infinite;
+animation-timing-function: linear;
+}
+ 
+@keyframes "rotateThis" {
+from { transform: scale( 1 ) rotate( 0deg ); }
+to { transform: scale( 1 ) rotate( 360deg ); }
+} 
