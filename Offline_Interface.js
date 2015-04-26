@@ -2,39 +2,12 @@ function Offline_Interface(res,i){
 
 }
 
-Offline_Interface.prototype.createCORSRequest = function(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // Most browsers.
-    xhr.open(method, url, true);
-  } else if (typeof XDomainRequest != "undefined") {
-    // IE8 & IE9
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-  } else {
-    // CORS not supported.
-    xhr = null;
-  }
-  return xhr;
-};
-
 Offline_Interface.prototype.ping=function(){
-  var url = 'http://unhosted.projects.uom.lk/cors/index.php';
-  var method = 'GET';
-  var xhr = this.createCORSRequest(method, url);
-
-  xhr.onload = function(e) {
-    // Success code goes here.
-    console.log(xhr.responseText);
-    whenOnline();
-  };
-
-  xhr.onerror = function() {
-    // Error code goes here.
-    whenOffline();
-  };
-
-  xhr.send();
+	if(navigator.onLine){
+		whenOnline();
+      	}else{
+		whenOffline();
+	}
 }
 
 function whenOnline(){
