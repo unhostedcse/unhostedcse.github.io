@@ -341,7 +341,8 @@ DBController.prototype.getSaveSendMail=function(callback){
 	self=this;
 	console.log('getSaveSendMail');
 	// console.log(this.database);
-
+	
+if(!this.database) return;
 	var objectStore = this.database.transaction(this.offlineMboxName).objectStore(this.offlineMboxName);
 	    objectStore.openCursor().onsuccess = function(event) {
 	    	var cursor = event.target.result;	    	    	

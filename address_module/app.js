@@ -140,12 +140,12 @@ todoDB.open(function(){
 
 function Address_Module(){};
 
-Address_Module.prototype.suggestMails=function(email,currentparent_id){
+Address_Module.prototype.suggestMails=function(suggestKey,currentparent_id){
 	var d=$("#"+currentparent_id+" div.hordeACBox.impACBox");
 	var pos=d.position();
 
-	todoDB.fetchMy(email,function(output){
-	document.getElementById("bath").innerHTML= '';
+	todoDB.fetchMy(suggestKey,function(output){
+	
 	$('body').append('<div class="KeyNavList" data-belongs="'+currentparent_id+'" style="left:'+pos.left+' ; top: '+(pos.top+24)+';"><ul></ul></div>');	
 	for(var i = 0; i < output.length; i++) {	
 		var st=output[i].name.concat(' <').concat(' ' +output[i].email+ ' ').concat('>');
@@ -175,9 +175,9 @@ function displayContents(contents) {
   //element.innerHTML = contents;
   var data = $.csv.toArrays(contents);
    
-  var name= document.getElementById('name').value;
+  var name= document.getElementById('object_firstname_').value;
   var surname = document.getElementById('surname').value;
-  var email = document.getElementById('email').value;
+  var email = document.getElementById('object_email').value;
   var x,y,z;
   var d=String(data[0]);
   var res = d.split(',');

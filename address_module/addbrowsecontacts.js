@@ -11,6 +11,7 @@ $( document ).ready(function() {
 		var searchEntry = valsearchcontacts.value; 
 		if(searchEntry==''){
 			$( "#horde-content table" ).remove();
+			document.getElementById("horde-content").innerHTML = "";
 			event.preventDefault();
 			return false;
 		}
@@ -18,13 +19,17 @@ $( document ).ready(function() {
 		if (searchEntry.replace(/ /g,'') != '') {
 			todoDB.fetchMy(searchEntry,function(result){
 				if(result.length != 0){
-					$( "#horde-content" ).append('<table cellspacing="0" width="100%" class="linedRow"><thead><tr><th class="turba-browse-icon item" width="1%" style="cursor:pointer" nowrap="nowrap"><label for="checkAll" class="hidden">Check All/None</label><input type="checkbox" id="checkAll" name="checkAll" title="Check All/None (Accesskey A)" accesskey="A"></th><th class="turba-browse-icon item" width="1%"><span class="iconImg editImg" title="Edit"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg vcardImg" title="Download vCard"></span></th><th class="turba-browse-icon item" width="1%"><span class="iconImg groupImg" title="List"></span></th><th class="item leftAlign" width="90%" nowrap="nowrap">Name</th></tr></thead><tbody id="QuickFinderContacts"></tbody>');		
+					$( "#horde-content table" ).remove();
+					document.getElementById("horde-content").innerHTML = "";
+					$( "#horde-content" ).append('<table cellspacing="0" width="100%" class="linedRow"><thead><tr><th class="item leftAlign" width="90%" nowrap="nowrap">Name</th><th class="item leftAlign" width="90%" nowrap="nowrap">Surname</th><th class="item leftAlign" width="90%" nowrap="nowrap">Email</th></tr></thead><tbody id="QuickFinderContacts"></tbody></table>');		
 					for(var i = 0; i < result.length; i++) {	
 					//var st=output[i].name.concat(' <').concat(' ' +output[i].email+ ' ').concat('>');
-					$( "#QuickFinderContacts" ).append('<tr class=""><td class="turba-browse-icon"><input type="checkbox" class="checkbox" id="_kiJ_tQo52vg599rPhIl6g2:tV8lyqUyZ2BOTIC0B24oZQ7"></td><td class="turba-browse-icon"><a><span class="iconImg editImg"></span></a></td><td class="turba-browse-icon"><a><span class="iconImg vcardImg"></span></a></td><td class="turba-browse-icon">&nbsp;</td><td><a>'+result[i].name+'</a></td></tr>');
+					$( "#QuickFinderContacts" ).append('<tr class=""><td><a>'+result[i].name+'</a></td><td><a>'+result[i].surname+'</a></td><td><a>'+result[i].email+'</a></td></tr>');
 		
 					}
 				}else{
+					document.getElementById("horde-content").innerHTML = "";
+					$( "#horde-content table" ).remove();
 					$( "#horde-content" ).append('<div><span class="light_red">No matching contacts!</span></div>');
 				}				
 			});
@@ -39,11 +44,13 @@ $( document ).ready(function() {
 	$( "#turba_form_addcontact" ).submit(function( event ) {
 		var object_firstname_ = document.getElementById('object_firstname_');
 		var object_lastname_ = document.getElementById('object_lastname_');
+		var object_surname_ = document.getElementById('object_surname_');
 		var fname = object_firstname_.value;
+		var surname = object_surname_.value;
 		var usermail = object_lastname_.value;
 		
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;        
-        if (!filter.test(usermail )) {
+        if (!filter.test(usermail)) {
           alert('Please provide a valid email address'); 
 		  event.preventDefault();
           return;
@@ -55,8 +62,11 @@ $( document ).ready(function() {
 		if (usermail.replace(/ /g,'') != '') {
 			//alert(usermail);
 		}
-		todoDB.createfromuiTodo(usermail,fname,function(){
-			alert('enrty created '+fname+" "+usermail);
+		if (surname.replace(/ /g,'') != '') {
+			//alert(usermail);
+		}
+		todoDB.createfromuiTodo(fname,surname,usermail,function(){
+			alert('enrty created '+fname+" "+usermail+" "+usermail);
 		});
 		// Reset the input field.
 		object_firstname_.value = '';

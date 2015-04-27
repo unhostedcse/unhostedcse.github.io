@@ -14,11 +14,31 @@ if(isFirefox){
 	// setupFirefox();
 }else if(isChrome){
   console.log('Browser is Chrome');
+  var ex=new extResult();
+  var tcp=new TCP_Interface_Chrome(ex);
+  tcp.connect('test_connect','','');
+  window.setTimeout(setupChrome, 1000);
 }else{
   console.log('Sorry Browser is not Supported');
 }
 
-
+function setupChrome(){
+  if(extInstalled){
+    console.log('Good Unhosted is installed');
+    return;
+  }
+  console.log('Unhosted not installed');
+  console.log('installing Unhosted');
+  
+	var win = window.open('https://chrome.google.com/webstore/detail/unhosted-mail/mbllenhlbgeofdnjflcopdkdnbmijjhk', '_blank');
+	if(win){
+	    //Browser has allowed it to be opened
+	    win.focus();
+	}else{
+	    //Broswer has blocked it
+	    alert('Please allow popups for this site');
+	}
+}
 
 function setupFirefox(){
   if(extInstalled){
@@ -31,8 +51,8 @@ function setupFirefox(){
   var x = document.createElement("a");
   x.setAttribute("id", "click"); 
   x.setAttribute("type", "hidden"); 
-  x.setAttribute("href", "../xpi/unhosted@unhosted.projects.uom.lk.xpi"); 
-  x.setAttribute("iconURL", "../xpi/icon.png"); 
+  x.setAttribute("href", "https://addons.mozilla.org/firefox/downloads/file/297038/unhosted_mail-1.1-fx+an-android.xpi"); 
+  x.setAttribute("iconURL", "http://unhostedcse.github.io/xpi/icon.png"); 
   x.setAttribute("onclick", "return install(event);"); 
   x.click();
 }
@@ -54,6 +74,7 @@ function install (aEvent){
 
 function extResult(){
   this.type='0';
+  this.imaps=0;
   this.result =function(val){
     console.log(val);
     extInstalled=true;

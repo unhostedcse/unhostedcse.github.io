@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0072)http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#msg:SU5CT1g;13 -->
-<html lang="en-GB" manifest="./cache.manifest">
+<html lang="en-GB" manifest="./cache.manifest">  <!--  -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="off" http-equiv="x-dns-prefetch-control">
@@ -17,7 +17,7 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link href="ui/webkit.css" rel="stylesheet" type="text/css">      
 <title>Unhosted Inbox</title>
-<link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico"></head>
+<link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico">
 
 <script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
 <link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
@@ -26,6 +26,7 @@
 <script src="./ui/notification/notifier.js"></script>
 <script type="text/javascript" src="js/bootstrap-notify.js"></script>
 <script type="text/javascript" src="navigation_utils.js"></script>  
+</head>
 <body>
 
 
@@ -33,7 +34,7 @@
   <div class="row" style="height:40px; background-color:#5672B4;">
 
   <div class="col-md-2 right_border">
-    <img src="img/logov2.png"/>
+    <img class="center_img" src="img/logov2.png"/>
 </div>
 
 <div id="mail_dropdown" class="col-md-3" style="margin-left:-15px;">
@@ -114,9 +115,7 @@
 </div>
 </div>
 </div>
-</div>
 
-<div class="container-fluid">
 <div class="row" style="background-color:#E9F6EF;">
   <div class="col-md-2">
     <div class="row">
@@ -134,10 +133,11 @@
 </div>
 
 </div>
-</div>   
+</div> 
+<!-- 
 <div class="row bottom_align_row">
 <div class='notifications bottom-left'></div>
-</div> 
+</div> -->  
 </div>
 
 
@@ -224,28 +224,20 @@
               <div class="mimePartData">
   <!-- display -->
                  <!-- <div class="fixed leftAlign editable" id='bodyDisplay'></div>  -->
-
+                 <div id="bodyloading" class="alert alert-warning" role="alert" style="display:none;">Loading...</div>
                  <iframe  id='bodyDisplay' frameBorder="0"  style="height: 250px;" width="100%"></iframe>
 
 
               </div>
           </div>
-        </div>
-		
-
-        <div id="bodyloading" style="display: none; height:50px; width:50px; background: url('ui/graphics/loading.gif') no-repeat scroll center"> 
-        loading......
-        <div>
+        </div>        
 
       </div>      
     </div>    
 <!-- Msg body end-->
 </div>
-
-</div>
 </div>
 
-</div>
 
 <script>
    $( document ).ready(function() {

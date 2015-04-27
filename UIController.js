@@ -98,7 +98,7 @@ function initUnhosted(){
 	a[3].setAttribute("style","display: none");
 	a[4].setAttribute("style","display: none");
 	a[5].setAttribute("style","display: none");
-	loadSettings();
+	//loadSettings();
 }
 
 function startSMTP(){ 

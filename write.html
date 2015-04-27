@@ -471,9 +471,16 @@ function setReplyWindow(msg){
 
   document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
-  var to=mail.to.replace("<","");
-  to=to.replace(">","");
-  data[0].value=to;
+
+  var a=SimpleMailAddress.parseList(mail.to);
+  console.log(a[0]);
+
+  $("#sendto ul").append('<li class="hordeACListItem" title="'+a[0].email+'"> ' + a[0].name + ' <img class="hordeACItemRemove impACItemRemove" src="./ui/graphics/delete-small.png"></li>');
+  $("#to").val(a[0].name+"<"+a[0].email+">");
+
+  //var to=mail.to.replace("<","");
+  //to=to.replace(">","");
+  // data[0].value=to;
 
 }
 
@@ -491,7 +498,7 @@ function setForwardWindow(msg){
   // $("#htmlEditor").igHtmlEditor("setContent", "This is text content.", "text");
   $("#htmlEditor").igHtmlEditor("setContent",mail.body, "html");
 
-  //document.getElementById('subject').value=mail.subject;
+  document.getElementById('subject').value=mail.subject;
   var data=document.getElementsByClassName('hordeACTrigger impACTrigger');
   // data[0].value=mail.from;
 }
