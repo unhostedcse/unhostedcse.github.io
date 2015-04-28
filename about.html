@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://getbootstrap.com/examples/carousel/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>About | Unhosted</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./scripts/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/carousel/carousel.css" rel="stylesheet">
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+
+      <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="./index.html">Unhosted</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="./index.html">Home</a></li>
+                <li class="active"><a href="about.html">About</a></li>
+                <li ><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html">Try Unhosted</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav> 
+
+      
+
+
+<hr class="featurette-divider">
+
+<section>
+<div class="container">
+<div class="row">
+<div class="col-lg-12">
+<h1 class="section-heading">Unhosted Email Client</h1>
+<p class="lead section-lead">Introduction</p>
+                    
+<p align="justify"> 
+Emails are probably the grandparent of internet technologies. Today it has become a  formal line of communication. It is a quick and easy way to stay in touch with family, friends, business contacts, and strangers.  In the business world, it is any easy, fast way to keep in touch with co-workers and employers and it  keep us from wasting valuable time. 
+
+But when considering the webmail email clients which are available today, we can identify set of common drawbacks in all of them. Nowadays people tends to have more than one email client, mostly on different email service providers. They might have one email account for personal usage, one account for business purposes, one account for university/education purposes and so on.  All the webmail clients available on today are hosted within vender servers. So that we cannot simply use one webmail client to go and read mails on another mail service. In that case we have to swith to another webmail client. Switching between these webmail clients could be a cumbersome experience for the end user. The user has to cope with certain pros and cons of each mail client as well. 
+</p>
+
+<p align="justify"> 
+Today none of the webmail clients support offline features. If the user doesn’t have a functioning internet connection, user cannot login to the email client and access the emails. Even today we experience internet connection problems when we travel from outside the city. This makes us trouble in utilizing our time in reading/responding emails and other works. Today many web applications have started to support offline features. Almost all the popular browsers ships with APIs which facilitate building offline web applications. But still no webmail clients have started to provide this feature. We as unhosted email client team researched on how we can use these features to provide offline email features to the end user. 
+</p>
+<p align="justify"> 
+Unhosted web applications are also known  as "serverless", "client-side", or "static" web apps. Serverless in the sense they are not tied up with any particular server. This allows frontend developers to focus on user experience and give backend developers more flexibility on the implementation side. These are typical web apps which are written using HTML, CSS, JavaScript. So that it runs on any device, no matter which underlying platform it has. Only the need, is a compatible browser. 
+
+It is an approach to decouple apps from backends, by abstracting backend tasks with frontend code. End user can choose the backend service provider independent of the capabilities of the frontend. Users choice is not narrowed down by the backend. 
+</p>
+<p align="justify"> 
+Unhosted email client addresses all concerns above mentioned following unhosted web application architecture. Here the front end web application is an email client. It can connect to any backend email servers, using standard IMAP, SMTP protocols. This email client is completely written using HTML,CSS, JavaScript so that it doesn’t need any servers to run the application. Using HTML5 features, unhosted email client is featured with offline capabilities as well. User can download the source code from internet or get it from any media. Once the user loads the application into the browser, it caches all resources within the browser. Emails will be also stored within the browser. When user accesses the email client next time, all resources will be loaded from the browser. </p>
+</p>
+
+<p class="lead section-lead">Goals and Objectives</p>
+<p align="justify"> 
+One of our main objectives of our project was that the basic email functionalities should work properly, without any anomalies. We didn’t expect a email client which has lots of features but not properly implemented. So we always make sure that sending/receiving emails works properly and it doesn’t delete any mails on the server. 
+
+Another objective was, this should work independent of the underlying platform. We expected to work this on Windows, Apple, Ubuntu  distributions and Android/iOS operating systems. Also to make this work properly on at least two popular web browsers. 
+</p>
+
+<p align="justify"> 
+Another objective was to support offline features to this email client. User should be able to access the email client even without availability of internet connection. Also users’ emails should load from the cache as well. Application should go and check only the delta changes in the server(recent emails since the last fetch) so that this could reduce the number of requests to the server and reduce the network bandwidth usage. 
+
+Another objective was to reuse the existing codes as much as possible. We expected to use Open Source webmail client as our frontend mail client. We have already identified few Webmail systems like Horde, Roundcube, Squirrelmail. Also another objective was to provide extensibility to this email client. When considering Open source webmail clients, those have many additional modules that the user can install on his own wish. Address module and calendar module are few of them. We wanted to prove that this new email client also supports such additional modules. 
+</p>
+
+<p align="justify"> 
+One another objective of our project was, this new email client should be able to talk with backend email servers without any need of  intermediate server. Because installing an intermediate server can lead to security and privacy problems. Also having  intermediate server, breaks the unhosted nature. Then our client will start to depend on another server. 
+
+The other objective was to provide a unified user experience to emails. Today we have separate email client for each email services. We expect to give a unified user experience to the end user over every email service using our browser based unhosted email client. Also we hope this product would motivate the open source community to work on this product and improve this. So that they can come up with new more user friendly email clients. 
+</p>
+                    
+</div>
+</div>
+</div>
+</section>   
+     
+
+      <hr class="featurette-divider">
+
+      <footer>
+        <p class="pull-right"><a href="./about.html">Back to top</a></p>
+        <p>Rukshan | Apr-2015 · <a href="">Privacy</a> · <a href="">Terms</a></p>
+      </footer>
+
+    </div><!-- /.container -->
+</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./scripts/jquery.min.js"></script>
+    <script src="./scripts/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./scripts/holder.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./scripts/ie10-viewport-bug-workaround.js"></script>
+  
+
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs></defs><text x="0" y="23" style="font-weight:bold;font-size:23pt;font-family:Arial, Helvetica, Open Sans, sans-serif;dominant-baseline:middle">500x500</text></svg></body></html>

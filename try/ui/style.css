@@ -1,0 +1,162 @@
+/*.attachment {
+	width: auto;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 5px;
+	margin-right: 5px;
+	color: #3300CC;
+	font-size: 18px;
+	font-variant: small-caps;
+	text-align: center;
+	display: block;
+	background-color: #999999;
+	/*margin-bottom: 1em;*/
+}*/
+
+.attachment{
+  margin-left: 1px;
+  padding-left: 20px;
+  background: url(toolbarOxygen/paperclip.png) center left no-repeat;
+}
+
+/*#bodyDisplay a {
+	text-decoration: none;
+}*/
+
+#composeMessageParent a {
+	text-decoration: none;
+}
+
+.att {
+	background-color: #eceff0;
+	display: inline-block;
+	border: 1px solid #d0d0d0;
+	margin-right: 2px;
+	margin-left: 2px;
+}
+.att:hover {
+	background-color: #33CCFF;
+}
+.iconU {
+	
+	background-color: transparent;
+	background-position: center top;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 20px;	
+	width: 20px;
+}
+
+.logo{
+	
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.downloadU {
+	background-image: url('./graphics/download.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	/* [disabled]background-position: right; */
+}
+.closeU {
+	background-image: url('closebox.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.accountHolder{
+	margin: auto;
+	width: 100%;
+}
+
+.accountBox{
+	width: 100%;
+	height: 40px;
+	padding: 10px;
+	display: block;
+	text-indent: 20px;
+	text-align: left;
+	background-color: #E4E4E4;
+	border-top: 1px solid #A8A8A8;
+	border-bottom: 1px solid #A8A8A8;
+}
+
+.accountBox:hover {
+	background-color: #B6B6B6;
+}
+
+.accountBoxSelect{
+	background-color: #B6B6B6;
+}
+
+.accountName{
+	display: inline-block;
+}
+
+.accountEdit{
+	background-image: url('graphics/edit.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+	float: right;
+}
+
+
+.accountRemove{
+	background-image: url('closebox.png');
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: right;
+	float: right;
+}
+
+.container-form {
+    font-size: 100%;
+    width: 40em;
+    margin: 5em auto;
+
+    background-color: #fff;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -moz-box-shadow: 0 0 2em #ccc;
+    -webkit-box-shadow: 0 0 2em #ccc;
+    box-shadow: 0 0 2em #ccc;
+}
+
+div.container-form .submit-button {
+    display: block;
+    margin: .5em auto;
+    width: auto;
+}
+
+.container-form-nest {
+	font-size: 90%;
+	width: 30em;
+	background-color: #fff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0 0 2em #ccc;
+	-webkit-box-shadow: 0 0 2em #ccc;
+	box-shadow: 0 0 2em #ccc;
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}
+
+.dimpactionPreviousPage{
+    background-image: url("../ui/graphics/copied/left.png");
+}
+
+.dimpactionNextPage {
+    background-image: url("../ui/graphics/copied/right.png");
+}

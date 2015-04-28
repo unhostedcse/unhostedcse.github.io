@@ -1,281 +1,211 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0072)http://cse.rukspot.com/horde/imp/dynamic.php?page=mailbox#msg:SU5CT1g;13 -->
-<html lang="en-GB" manifest="./cache.manifest">  <!--  -->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta content="off" http-equiv="x-dns-prefetch-control">
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://getbootstrap.com/examples/carousel/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
-<link href="css/custom.css" rel="stylesheet"> 
-<link href="ui/style.css" rel="stylesheet" type="text/css">
-<link href="ui/mime.css" rel="stylesheet" type="text/css">
-<link href="ui/screen.css" rel="stylesheet" type="text/css">
-<link href="ui/screen(1).css" rel="stylesheet" type="text/css">
-<link href="ui/screen(2).css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-dialog.css" rel="stylesheet">
-<script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<link href="ui/webkit.css" rel="stylesheet" type="text/css">      
-<title>Unhosted Inbox</title>
-<link type="image/x-icon" rel="icon" href="http://cse.rukspot.com/horde/imp/themes/default/graphics/favicon.ico">
+    <title>Welcome Unhosted</title>
 
-<script type="text/javascript" src="ui/jquery-2.1.1.js"></script>
-<link href="./ui/notification/notifier.css" rel="stylesheet" type="text/css">
-<!-- <script src="./ui/notification/jquery.min.js"></script> -->
-<script src="./ui/notification/jquery-ui.min.js"></script>
-<script src="./ui/notification/notifier.js"></script>
-<script type="text/javascript" src="js/bootstrap-notify.js"></script>
-<script type="text/javascript" src="navigation_utils.js"></script>  
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./scripts/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/carousel/carousel.css" rel="stylesheet">
+    <style type="text/css">
+    .black-font {
+	color: #000000;
+}
+    </style>
 </head>
-<body>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
 
-
-  <div class = "container-fluid">
-  <div class="row" style="height:40px; background-color:#5672B4;">
-
-  <div class="col-md-2 right_border">
-    <img class="center_img" src="img/logov2.png"/>
-</div>
-
-<div id="mail_dropdown" class="col-md-3" style="margin-left:-15px;">
-<ul class="nav nav-pills">
-  
-  <li role="presentation" class="dropdown" style="background-color:#c5d5d5">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-      Mails <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Inbox</a></li>
-        <li role="presentation" onclick="openWriteWindow();"><a role="menuitem" tabindex="-1" href="#">Compose Message</a></li>
-    </ul>
-  </li>
-  <li role="presentation" class="dropdown" style="background-color:#c5d5d5; margin-left=-2px;">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-     Address Book <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-        <li role="presentation" onclick="redirectToAddContact();"><a role="menuitem" tabindex="1" href="#">Add Contact</a></li>
-		<li role="presentation" onclick="redirectToLoadCSV();"><a role="menuitem" tabindex="2" href="#">Add Contact Book</a></li>
-        <li role="presentation" onclick="redirectToBrowseContact();"><a role="menuitem" tabindex="3" href="#">Browse Contact</a></li>
-    </ul>
-  </li>
-  
-</ul>
-</div>
-
-
-
-<div class="col-md-3">
-  <div><h2 class="con_status">Connection Status</h2></div>
-</div>
-
-  <div class="col-md-4" style="float:right;">
-
-
-  <!-- Split button -->
-<ul class="nav nav-pills" style="float:right;">
-  <li role="presentation" class="dropdown" style="background-color:#c5d5d5;">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-      <span id="accountName"></span> <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu" id="otherAcc">
-    <li role="presentation" class="dropdown-header">Other Accounts</li>
-    </ul>
-  </li>
-</ul>
-</div>
-
-</div>
-
-
-
-<!-- 
-  //// end comment
- --> 
-
-<div class="row" style="height:30px; background-color:#35383B;">
-<div class="col-md-*">
-  <div id="horde-date"></div>
-  <div id="horde-info"><span id="mailboxLabel">
-  <!--<span id="accountName"></span>
-  <span id=""> | </span> -->
-  <span id="mailboxName"></span>
- <span class="iconImg readonlyImg" style="display: none;" title="Read-Only"></span>
-</span>
-</div>
-</div>
-</div>
-
-<div id="progress_row" class="row" style="height:0px;">
-<div class="col-md-*">
-<div class="progress">
-  <div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; display:none;">
-    <span class="sr-only"></span>
-  </div>
-</div>
-</div>
-</div>
-
-<div class="row" style="background-color:#E9F6EF;">
-  <div class="col-md-2">
-    <div class="row">
-     <div class="col-md-*" style="background-color:#00B159; box-shadow: 2px 2px 2px #888888; margin-bottom:4px;">
-          <button id="composelink" type="button" class="btn btn-link btn-lg btn-block" onclick="openWriteWindow();"><span class="white">Compose Message</span></button>
-      </div>
-    </div>
-
-<div class="row">
-<div class="col-md-*">
-<!-- Mail box showing area -->
-<div id="foldersLoading" style="display: none;">Loading...</div>
-<div id="imp-specialmboxes">
-
-</div>
-
-</div>
-</div> 
-<!-- 
-<div class="row bottom_align_row">
-<div class='notifications bottom-left'></div>
-</div> -->  
-</div>
-
-
-
-
-  <div class="col-md-10 left_border" >   
-    <div class="row light_blue">
-        <div id="div_checkmaillink" class="col-md-2 right_border horde-icon">
-            <button id="checkmaillink" type="button" class="btn btn-link btn-lg btn-block"><span class="grey">Refresh</span></button>
-        </div>
-        <div id="div_button_previous" class="col-md-2 horde-icon right_border">
-            <button id="button_previous" type="button" class="btn btn-link btn-lg btn-block" onclick="previousPage()"><span class="grey">Previous Page</span></button>
-        </div>
-        <div id="div_button_next" class="col-md-2 horde-icon right_border">
-          <button id="button_next" type="button" class="btn btn-link btn-lg btn-block" onclick="nextPage()"><span class="grey">Next Page</span></button>
-        </div>
-        <div id="div_button_reply" class="col-md-2 horde-icon right_border">
-          <button id="button_reply" type="button" class="btn btn-link btn-lg btn-block" onclick="openReplyWindow()"><span class="grey">Reply</span></button>
-        </div>
-        <div id="div_button_forward" class="col-md-2 horde-icon right_border">
-          <button id="button_forward" type="button" class="btn btn-link btn-lg btn-block" onclick="openForwardWindow()"><span class="grey">Forward</span></button>
-        </div>
-        <div id="div_button_delete" class="col-md-2 horde-icon">
-          <button id="button_delete" type="button" class="btn btn-link btn-lg btn-block" onclick="DeleteMessages()"><span class="grey">Delete</span></button>
-        </div>
-    </div>
-    <div class="row lighter_blue bottom_border" style="padding-top:4px; padding-bottom:4px;">
-        <div class="col-md-1 right_border">
-            
-        </div>
-        <div class="col-md-2 right_border">
-            <h3><span class="grey">From</span></h3>
-        </div>
-        <div class="col-md-7 right_border">
-          <h3><span class="grey">Subject</span></h3>
-        </div>
-        <div class="col-md-1 right_border">
-          <h3><span class="grey">Date</span></h3>
-        </div>
-        <div class="col-md-1">
-          <h3><span class="grey">Size</span></h3>
-        </div>
-    </div>
-
-    <!-- Msg List Start -->
-    <div class="row msglist_body">
-        <div class="col-md-*">
-            <div class="msglist" style="width: auto; height: 200px; overflow-y:scroll; width: auto; ;position: relative;"></div>
-        </div>
-    </div>
-    <!-- Msg List end -->
-
-
-    <!-- Msg header start -->
-    <div class="row">
-      <div class="col-md-* top_border" style="margin-top:10px;">
-          <div class="msgHeaders">
-          <div id="msgHeadersColl">
-         <ul class="rightFloat">
-          <li>
-           <div class="date"></div>
-          </li>
-         </ul>
-         <ul>
-          <li>
-           <span class="subject allowTextSelection"></span>
-           <span class="from_allowTextSelection"></span>           
-           <span class="from">
-            <a class="horde-button address" id="anonymous_element_15"></a></span>
-          </li>
-         </ul>
-        </div>
-        </div>
-      </div>
-    </div>
-<!-- Msg header end-->
-
-
-<!-- Msg body start-->
-    <div class="row" style="height: 250px;background-color:#ffffff;">
-      
-        <div id="messageBody"  class="allowTextSelection">
-          <div class="mimePartBase">
-              <div class="mimePartData">
-  <!-- display -->
-                 <!-- <div class="fixed leftAlign editable" id='bodyDisplay'></div>  -->
-                 <div id="bodyloading" class="alert alert-warning" role="alert" style="display:none;">Loading...</div>
-                 <iframe  id='bodyDisplay' frameBorder="0"  style="height: 250px;" width="100%"></iframe>
-
-
-              </div>
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="./index.html">Unhosted</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="./index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html">Try Unhosted</a></li>
+              </ul>
+            </div>
           </div>
-        </div>        
+        </nav>
 
-      </div>      
-    </div>    
-<!-- Msg body end-->
-</div>
-</div>
+      </div>
+    </div>
 
 
-<script>
-   $( document ).ready(function() {
-      document.getElementById("div_button_reply").style.visibility="hidden";
-      document.getElementById("div_button_forward").style.visibility="hidden";
-      document.getElementById("div_button_delete").style.visibility="hidden";
-      document.getElementById("progress_bar").style.display="none";
-   });
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item">
+          <img class="first-slide" src="images/4.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="black-font">Experince the first Unhosted email client.</h1>
+              <p class="black-font">The first email client which is unhosted. 
+              Complete running on the web browser provding all the email features.</p> 
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="images/2.jpg" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="black-font">Connect with any Email service.</h1>
+              <p class="black-font">Connect and start using any email service which support SMTP and IMAP including Gmail,
+              Outlook and Yahoo.</p>              
+            </div>
+          </div>
+        </div>
+        <div class="item active">
+          <img class="third-slide" src="images/3.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">              
+              <h1  class="black-font">Work with any device</h1>
+              <p class="black-font" color="red">cross platform,cross browser and device independent application running on the browser provideing same set of features.</p>                           
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
 
-   function showMsgUtils(){
-      document.getElementById("div_button_reply").style.visibility="visible";
-      document.getElementById("div_button_forward").style.visibility="visible";
-      document.getElementById("div_button_delete").style.visibility="visible";
-   }
 
-   
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
 
-</script>
+    <div class="container marketing">
 
-<script type="text/javascript" src="Mail_Settings.js"></script>
-<script type="text/javascript" src="ui/do3.js"></script>
-<script type="text/javascript" src="ui/do.js"></script>
-<script type="text/javascript" src="ui/do2.js"></script>
-<script type="text/javascript" src="logger.js"></script>
-<script type="text/javascript" src="TCP_Interface.js"></script>
-<script type="text/javascript" src="TCP_Interface_Chrome.js"></script>
-<script type="text/javascript" src="IMAP_Interface.js"></script>
-<script type="text/javascript" src="IMAP_Fetch.js"></script>  <!-- -->
-<script type="text/javascript" src="SMTP_Interface.js"></script>  <!-- -->
-<script type="text/javascript" src="SMTP_Sendmail.js"></script>  <!-- -->
-<script type="text/javascript" src="Offline_Interface.js"></script> 
-<script type="text/javascript" src="Sync_Module.js"></script>
-<script type="text/javascript" src="DBController.js"></script>
-<script type="text/javascript" src="BrowserSetUp.js"></script>  
-<script type="text/javascript" src="Encoder.js"></script>
-<script type="text/javascript" src="File.js"></script>  
-<script type="text/javascript" src="UIController.js"></script>
-<script type="text/javascript" src="utils.js"></script> 
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="img-circle" src="images/offline.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Offline</h2>
+          <p>Use the offline feature which let users to use email functionality even without internet connectivity. Read/Send emails without internet connectivity, email client will handle and notify the status of the connection.</p>
+          
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src="images/config.png" alt="Generic placeholder image" width="140" height="140">
+          <h2>Autoconfiguration</h2>
+          <p>Use the easyness of the self configuration features, let users to configure the SMTP/IMAP configuration automatically. Wrok for most of the email service providers with precise settings.</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src="images/modularity.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Modularity</h2>
+          <p>several modules are interrade to mail clinet to enhance the capablities and improve the usability. Use the contact modules and more modules comming up which can plugable to client.</p>
+          
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
 
-</body>
-</html>
+
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Unhosted Mail client on Firefox. <span class="text-muted">see Firefox store.</span></h2>
+          <p class="lead">Use the Firefox extension for unhosted mail client to provide Connectiviy support for mail servers. It communicate with mail servers using standard protocols with provided security mechanisms.</p>
+          <p><a class="btn btn-default" href="https://addons.mozilla.org/en-us/firefox/addon/unhosted-mail/" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" alt="500x500" src="images/firefox.png" data-holder-rendered="true">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7 col-md-push-5">
+          <h2 class="featurette-heading">Unhosted Mail client on Google chrome. <span class="text-muted">see Chrome store.</span></h2>
+          <p class="lead">Chrome app provide the capability to comunicate with email servers to comunicate. It also support standard protocols and security mechanism</p>
+          <p><a class="btn btn-default" href="https://chrome.google.com/webstore/detail/unhosted-mail/mbllenhlbgeofdnjflcopdkdnbmijjhk" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-5 col-md-pull-7">
+          <img class="featurette-image img-responsive center-block" alt="500x500" src="images/chrome.png" data-holder-rendered="true">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">New Inbox, easy to cross among accounts. <span class="text-muted">use unhosted.</span></h2>
+          <p class="lead">Users can add more than one mail accounts to mail clinet and wok with them simultaniously. For that new inbox view helps to easily move fome one to another. </p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" alt="500x500" src="images/inbox.png" data-holder-rendered="true" >
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="./index.html">Back to top</a></p>
+        <p>Rukshan | Apr-2015 · <a href="">Privacy</a> · <a href="">Terms</a></p>
+      </footer>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./scripts/jquery.min.js"></script>
+    <script src="./scripts/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./scripts/holder.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./scripts/ie10-viewport-bug-workaround.js"></script>
+  
+
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs></defs><text x="0" y="23" style="font-weight:bold;font-size:23pt;font-family:Arial, Helvetica, Open Sans, sans-serif;dominant-baseline:middle">500x500</text></svg></body></html>
