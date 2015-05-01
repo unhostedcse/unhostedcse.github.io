@@ -87,14 +87,14 @@
           </div>
         </nav>     
 
-<form name="contactform" method="post" action="http://unhosted.projects.uom.lk/send_form_email.php"> 
+<div name="contactform"> 
 <table width="450px"> 
 <tr>
   <td valign="top"> 
   <label for="first_name">First Name *</label> 
  </td> 
  <td valign="top"> 
-  <input  type="text" name="first_name" maxlength="50" size="30"> 
+  <input  id="first_name" type="text" name="first_name" maxlength="50" size="30"> 
  </td> 
 </tr> 
 <tr> 
@@ -102,7 +102,7 @@
   <label for="last_name">Last Name *</label> 
  </td> 
  <td valign="top"> 
-  <input  type="text" name="last_name" maxlength="50" size="30"> 
+  <input  id="last_name" type="text" name="last_name" maxlength="50" size="30"> 
  </td> 
 </tr> 
 <tr> 
@@ -110,7 +110,7 @@
   <label for="email">Email Address *</label> 
  </td> 
  <td valign="top"> 
-  <input  type="text" name="email" maxlength="80" size="30"> 
+  <input  id="email" type="text" name="email" maxlength="80" size="30"> 
  </td> 
 </tr> 
 <tr> 
@@ -118,7 +118,7 @@
   <label for="telephone">Telephone Number</label> 
  </td> 
  <td valign="top"> 
-  <input  type="text" name="telephone" maxlength="30" size="30"> 
+  <input  id="telephone" type="text" name="telephone" maxlength="30" size="30"> 
  </td> 
 </tr> 
 <tr> 
@@ -126,16 +126,16 @@
   <label for="comments">Comments *</label> 
  </td> 
  <td valign="top"> 
-  <textarea  name="comments" maxlength="1000" cols="25" rows="6"></textarea> 
+  <textarea id="comments" name="comments" maxlength="1000" cols="25" rows="6"></textarea> 
  </td> 
 </tr> 
 <tr> 
  <td colspan="2" style="text-align:center"> 
-  <input type="submit" value="Submit">    
+  <button onclick="send()">send</button>
  </td> 
 </tr> 
 </table> 
-</form>
+</div>
 
 <hr class="featurette-divider">
 
@@ -184,4 +184,57 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs></defs><text x="0" y="23" style="font-weight:bold;font-size:23pt;font-family:Arial, Helvetica, Open Sans, sans-serif;dominant-baseline:middle">500x500</text></svg>
 </body>
+
+<script>
+var ok;
+var res;
+function send(){
+
+var first_name=document.getElementById("first_name").value || "";
+var last_name=document.getElementById("last_name").value || "";
+var email=document.getElementById("email").value || "";
+var telephone=document.getElementById("telephone").value || "";
+var Comments=document.getElementById("comments").value || "";
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    //document.getElementById("comments").innerHTML=xmlhttp.responseText;
+	console.log(xmlhttp.responseText);
+	res=xmlhttp.responseText;
+	res=res.trim();
+	ok=res=="success";
+	
+		if(ok){
+			document.getElementById("first_name").value = "";
+			document.getElementById("last_name").value = "";
+			document.getElementById("email").value = "";
+			document.getElementById("telephone").value = "";
+			document.getElementById("comments").value = "";
+			alert("Thank you for contacting us. We will be in touch with you very soon.");
+		}else{
+			alert(res);
+		}
+    }
+  } 
+
+
+var para='first_name='+first_name+'&last_name='+last_name+'&email='+email+'&telephone='+telephone+'&comments='+Comments;
+console.log(para);
+xmlhttp.open("POST","http://unhosted.projects.uom.lk/send_form_email.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send(para);
+}
+</script>
+
 </html>

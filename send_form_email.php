@@ -1,4 +1,12 @@
 <?php
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Credentials: true");
+    header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+    header('Access-Control-Max-Age: 600');
+    header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description, Server');	
+?>
+
+<?php
  
 if(isset($_POST['email'])) {
  
@@ -6,7 +14,7 @@ if(isset($_POST['email'])) {
  
     // EDIT THE 2 LINES BELOW AS REQUIRED
  
-    $email_to = "Unhostedcse@gmail.com";
+    $email_to = "unhostedcse@gmail.com";
  
     $email_subject = "Unhosted-cse feedback recieved";
  
@@ -48,8 +56,6 @@ if(isset($_POST['email'])) {
  
     }
  
-     
- 
     $first_name = $_POST['first_name']; // required
  
     $last_name = $_POST['last_name']; // required
@@ -59,9 +65,8 @@ if(isset($_POST['email'])) {
     $telephone = $_POST['telephone']; // not required
  
     $comments = $_POST['comments']; // required
- 
-     
- 
+	
+	
     $error_message = "";
  
     $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
@@ -136,9 +141,8 @@ $headers = 'From: '.$email_from."\r\n".
  
 @mail($email_to, $email_subject, $email_message, $headers);  
  
-?> 
-<!-- include your own success html here -->  
-Thank you for contacting us. We will be in touch with you very soon. 
+echo "success";
+?>  
 <?php
  
 }
